@@ -9,6 +9,10 @@ class ImageCard extends React.Component {
     };
   }
 
+  onKeyDown() {
+
+  }
+
   highlightCard() {
     const { highlight } = this.state;
     this.setState({
@@ -24,7 +28,7 @@ class ImageCard extends React.Component {
       removeImageFromBoard,
     } = this.props;
     const { highlight } = this.state;
-    const cardStyle = highlight ? 'ImageCard--highlight' : 'ImageCard';
+    const cardStyle = highlight ? 'ImageCard__highlight' : 'ImageCard';
     return (
       <div
         role="button"
@@ -34,8 +38,7 @@ class ImageCard extends React.Component {
         droppable="true"
         onDragStart={e => onDragStart({ e, image })}
         onDrop={e => onDropOverImage({ e, image })}
-        onKeyDown={removeImageFromBoard ? () => removeImageFromBoard(image)
-          : () => this.highlightCard()}
+        onKeyDown={() => this.onKeyDown()}
         onClick={removeImageFromBoard ? () => removeImageFromBoard(image)
           : () => this.highlightCard()}
       >

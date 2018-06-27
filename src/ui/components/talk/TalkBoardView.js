@@ -1,8 +1,9 @@
 import React from 'react';
 import _ from 'underscore';
-import TalkBoardSelect from './TalkBoardSelect';
+import TalkBoardSelectContainer from '../../containers/TalkBoardSelectContainer';
 import CategoriesList from './CategoriesList';
 import StoryBoardContext from './StoryBoardContext';
+import getCategories from '../../../modules/get-categories';
 
 const onDragStart = ({ e, image }) => {
   e.dataTransfer.setData('text/plain', image);
@@ -18,13 +19,14 @@ class TalkBoardView extends React.Component {
     super(props);
     this.state = {
       storyBoard: [],
+      category: getCategories()[0].toLowerCase(),
     };
     this.onDrop = this.onDrop.bind(this);
     this.onDragLeave = this.onDragLeave.bind(this);
     this.onDropOverImage = this.onDropOverImage.bind(this);
     this.removeImageFromBoard = this.removeImageFromBoard.bind(this);
+    this.switchCategories = this.switchCategories.bind(this);
   }
-
 
   onDragLeave({ e }) {
     const { storyBoard } = this.state;
@@ -53,13 +55,19 @@ class TalkBoardView extends React.Component {
     const { storyBoard } = this.state;
     const image = e.dataTransfer.getData('text');
     const duplicate = _.contains(storyBoard, image);
-    if (!duplicate && storyBoard.length < 5) {
+    if (!duplicate && storyBoard.length < 3) {
       const newBoard = storyBoard;
       newBoard.push(image);
       this.setState({
         storyBoard: newBoard,
       });
     }
+  }
+
+  switchCategories({ category }) {
+    this.setState({
+      category,
+    });
   }
 
   removeImageFromBoard(image) {
@@ -73,19 +81,23 @@ class TalkBoardView extends React.Component {
 
 
   render() {
+    const { category } = this.state;
     return (
       <div
         className="TalkBoardView"
       >
-        <CategoriesList />
+        <CategoriesList
+          switchCategories={this.switchCategories}
+        />
         <StoryBoardContext.Provider value={this.state}>
-          <TalkBoardSelect
+          <TalkBoardSelectContainer
             onDrop={this.onDrop}
             onDragStart={onDragStart}
             onDragOver={onDragOver}
             onDragLeave={this.onDragLeave}
             onDropOverImage={this.onDropOverImage}
             removeImageFromBoard={this.removeImageFromBoard}
+            category={category}
           />
         </StoryBoardContext.Provider>
       </div>
