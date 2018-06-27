@@ -53,7 +53,7 @@ class TalkBoardView extends React.Component {
     const { storyBoard } = this.state;
     const image = e.dataTransfer.getData('text');
     const duplicate = _.contains(storyBoard, image);
-    if (!duplicate && storyBoard.length < 5) {
+    if (!duplicate && storyBoard.length < 3) {
       const newBoard = storyBoard;
       newBoard.push(image);
       this.setState({

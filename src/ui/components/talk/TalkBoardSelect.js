@@ -5,15 +5,15 @@ import TalkBoardStory from './TalkBoardStory';
 
 // test images
 
-import afternoon from '../../assets/images/afternoon.jpg';
-import bacon from '../../assets/images/bacon.jpg';
-import birthday from '../../assets/images/birthday.jpg';
-import bowl from '../../assets/images/bowl.jpg';
-import dog from '../../assets/images/dog.jpg';
-import horse from '../../assets/images/horse.jpg';
-import knee from '../../assets/images/knee.jpg';
-import shirt from '../../assets/images/shirt.jpg';
-import strawberry from '../../assets/images/strawberry.jpg';
+import afternoon from '../../../assets/images/afternoon.jpg';
+import bacon from '../../../assets/images/bacon.jpg';
+import birthday from '../../../assets/images/birthday.jpg';
+import bowl from '../../../assets/images/bowl.jpg';
+import dog from '../../../assets/images/dog.jpg';
+import horse from '../../../assets/images/horse.jpg';
+import knee from '../../../assets/images/knee.jpg';
+import shirt from '../../../assets/images/shirt.jpg';
+import strawberry from '../../../assets/images/strawberry.jpg';
 
 
 class TalkBoardSelect extends React.Component {
@@ -39,12 +39,14 @@ class TalkBoardSelect extends React.Component {
     } = this.props;
     return (
       <div className="TalkBoardSelect">
-        {images.map(image => (
-          <ImageCard
-            key={image}
-            image={image}
-            onDragStart={onDragStart}
-          />))}
+        <div className="TalkBoardSelect--Images">
+          {images.map(image => (
+            <ImageCard
+              key={image}
+              image={image}
+              onDragStart={onDragStart}
+            />))}
+        </div>
         <TalkBoardStory
           onDragOver={onDragOver}
           onDrop={onDrop}

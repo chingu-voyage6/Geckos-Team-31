@@ -1,8 +1,14 @@
 .TalkBoardSelect {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+  margin: 0px auto;
+}
+
+.TalkBoardSelect--Images {
+  display:flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 70%;
-
 }
