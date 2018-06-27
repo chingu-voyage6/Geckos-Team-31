@@ -14,24 +14,26 @@ const TalkBoardStory = (props) => {
     removeImageFromBoard,
   } = props;
   return (
-    <div
-      className="TalkBoardStory"
-      droppable="true"
-      onDragOver={e => onDragOver({ e })}
-      onDrop={e => onDrop({ e })}
-    >
-      <StoryBoardContext.Consumer>
-        {state => (
-          state.storyBoard.map(image => (
-            <ImageCard
-              key={image}
-              image={image}
-              onDragStart={onDragStart}
-              dragInProcess={dragInProcess}
-              onDropOverImage={onDropOverImage}
-              removeImageFromBoard={removeImageFromBoard}
-            />)))}
-      </StoryBoardContext.Consumer>
+    <div className="TalkBoardStory--wrapper">
+      <div
+        className="TalkBoardStory"
+        droppable="true"
+        onDragOver={e => onDragOver({ e })}
+        onDrop={e => onDrop({ e })}
+      >
+        <StoryBoardContext.Consumer>
+          {state => (
+            state.storyBoard.map(image => (
+              <ImageCard
+                key={image}
+                image={image}
+                onDragStart={onDragStart}
+                dragInProcess={dragInProcess}
+                onDropOverImage={onDropOverImage}
+                removeImageFromBoard={removeImageFromBoard}
+              />)))}
+        </StoryBoardContext.Consumer>
+      </div>
     </div>
   );
 };
