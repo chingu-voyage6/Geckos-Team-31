@@ -5,6 +5,7 @@ import CategoriesList from './CategoriesList';
 import StoryBoardContext from './StoryBoardContext';
 import getCategories from '../../../modules/get-categories';
 
+
 const onDragStart = ({ e, image }) => {
   e.dataTransfer.setData('text/plain', image);
 };
@@ -20,12 +21,14 @@ class TalkBoardView extends React.Component {
     this.state = {
       storyBoard: [],
       category: getCategories()[0].toLowerCase(),
+      fadeBackground: false,
     };
     this.onDrop = this.onDrop.bind(this);
     this.onDragLeave = this.onDragLeave.bind(this);
     this.onDropOverImage = this.onDropOverImage.bind(this);
     this.removeImageFromBoard = this.removeImageFromBoard.bind(this);
     this.switchCategories = this.switchCategories.bind(this);
+    this.toggleBackgroundFade = this.toggleBackgroundFade.bind(this);
   }
 
   onDragLeave({ e }) {
@@ -64,6 +67,12 @@ class TalkBoardView extends React.Component {
     }
   }
 
+  toggleBackgroundFade({ fade }) {
+    this.setState({
+      fadeBackground: fade,
+    });
+  }
+
   switchCategories({ category }) {
     this.setState({
       category,
@@ -81,7 +90,7 @@ class TalkBoardView extends React.Component {
 
 
   render() {
-    const { category } = this.state;
+    const { category, fadeBackground } = this.state;
     return (
       <div
         className="TalkBoardView"
@@ -98,8 +107,10 @@ class TalkBoardView extends React.Component {
             onDropOverImage={this.onDropOverImage}
             removeImageFromBoard={this.removeImageFromBoard}
             category={category}
+            toggleBackgroundFade={this.toggleBackgroundFade}
           />
         </StoryBoardContext.Provider>
+        {fadeBackground ? <div className="TalkBoardView__overlay" /> : null}
       </div>
     );
   }

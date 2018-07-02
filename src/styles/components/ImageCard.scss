@@ -20,13 +20,14 @@
 }
 
 .ImageCard__highlight {
-  width: 150px;
+  width: 300px;
   margin: 10px;
   box-shadow: $box-shadow;
-  height: 20vh;
+  z-index: 10;
+  position:absolute;
   padding: 0;
   box-shadow: $box-shadow-inset;
-  outline: 3px solid $highlight-red;
+  border: none;
   img {
     width: 100%;
     position: relative;
