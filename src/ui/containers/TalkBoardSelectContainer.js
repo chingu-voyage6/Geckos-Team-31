@@ -15,6 +15,7 @@ const TalkBoardSelectContainer = (props) => {
     onDragStart,
     onDropOverImage,
     removeImageFromBoard,
+    toggleBackgroundFade,
   } = props;
   return (
     <TalkBoardSelect
@@ -25,6 +26,7 @@ const TalkBoardSelectContainer = (props) => {
       onDragLeave={onDragLeave}
       onDropOverImage={onDropOverImage}
       removeImageFromBoard={removeImageFromBoard}
+      toggleBackgroundFade={toggleBackgroundFade}
     />);
 };
 
@@ -36,6 +38,7 @@ TalkBoardSelectContainer.propTypes = {
   onDropOverImage: PropTypes.func,
   removeImageFromBoard: PropTypes.func,
   category: PropTypes.string,
+  toggleBackgroundFade: PropTypes.func,
 };
 
 TalkBoardSelectContainer.defaultProps = {
@@ -46,6 +49,7 @@ TalkBoardSelectContainer.defaultProps = {
   onDragLeave: undefined,
   removeImageFromBoard: undefined,
   category: undefined,
+  toggleBackgroundFade: undefined,
 };
 
 export default TalkBoardSelectContainer;

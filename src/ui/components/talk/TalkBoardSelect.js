@@ -22,6 +22,7 @@ class TalkBoardSelect extends React.Component {
       onDropOverImage,
       removeImageFromBoard,
       images,
+      toggleBackgroundFade,
     } = this.props;
     return (
       <div className="TalkBoardSelect">
@@ -31,6 +32,7 @@ class TalkBoardSelect extends React.Component {
               key={image}
               image={image}
               onDragStart={onDragStart}
+              toggleBackgroundFade={toggleBackgroundFade}
             />))}
         </div>
         <TalkBoardStory
@@ -54,6 +56,7 @@ TalkBoardSelect.propTypes = {
   onDropOverImage: PropTypes.func,
   removeImageFromBoard: PropTypes.func,
   images: PropTypes.arrayOf(PropTypes.string),
+  toggleBackgroundFade: PropTypes.func,
 };
 
 TalkBoardSelect.defaultProps = {
@@ -64,6 +67,7 @@ TalkBoardSelect.defaultProps = {
   onDragLeave: undefined,
   removeImageFromBoard: undefined,
   images: undefined,
+  toggleBackgroundFade: undefined,
 };
 
 export default TalkBoardSelect;
