@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getCategories from '../../../modules/get-categories';
+import Button from '../_common/Button';
 
 class CategoriesList extends React.Component {
   constructor() {
@@ -15,7 +16,16 @@ class CategoriesList extends React.Component {
     const { switchCategories } = this.props;
     return (
       <div className="CategoriesList">
-        {categories.map(category => <button onClick={() => switchCategories({category: category.toLowerCase()})} style={{width:'150px'}} key={category}>{category}</button>)}
+        {categories.map(category => (
+          <Button
+              onClick={() => switchCategories({ category: category.toLowerCase()})}
+              label={category}
+              key={category}
+            >
+              {category}
+            </Button>
+        ))
+        }
       </div>
     );
   }

@@ -1,9 +1,17 @@
 @import '../styles/_variables.scss';
 
+//common
+
+
 @import '../styles/components/_common/Navbar.scss';
+@import '../styles/components/_common/Button.scss';
+
+
 
 
 @import '../styles/App.scss';
+
+// components
 
 @import '../styles/components/TalkBoardView.scss';
 @import '../styles/components/TalkBoardSelect.scss';
