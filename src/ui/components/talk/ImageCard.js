@@ -5,19 +5,38 @@ class ImageCard extends React.Component {
   constructor() {
     super();
     this.state = {
-      highlight: false,
+      highlightedImage: false,
     };
   }
 
-  onKeyDown() {
-
+  highlightCard(image) {
+    const { highlightedImage } = this.state;
+    const { toggleBackgroundFade } = this.props;
+    if (!highlightedImage) {
+      this.setState({ highlightedImage: image });
+      toggleBackgroundFade({ fade: true });
+    } else {
+      this.setState({ highlightedImage: '' });
+      toggleBackgroundFade({ fade: false });
+    }
   }
 
-  highlightCard() {
-    const { highlight } = this.state;
-    this.setState({
-      highlight: !highlight,
-    });
+  renderHighlightedImage() {
+    const { highlightedImage } = this.state;
+    const { onDropOverImage, onDragStart } = this.props;
+    return highlightedImage ? (
+      <div
+        role="button"
+        tabIndex={-1}
+        draggable
+        droppable="true"
+        onDragStart={e => onDragStart({ e, image: highlightedImage })}
+        onDrop={e => onDropOverImage({ e, image: highlightedImage })}
+        className="ImageCard__highlight"
+        onClick={() => this.highlightCard()}
+      >
+        <img src={highlightedImage} alt={highlightedImage} />
+      </div>) : null;
   }
 
   render() {
@@ -27,23 +46,24 @@ class ImageCard extends React.Component {
       onDropOverImage,
       removeImageFromBoard,
     } = this.props;
-    const { highlight } = this.state;
-    const cardStyle = highlight ? 'ImageCard__highlight' : 'ImageCard';
+    const cardStyle = 'ImageCard';
     return (
-      <div
-        role="button"
-        tabIndex={-1}
-        className={cardStyle}
-        draggable
-        droppable="true"
-        onDragStart={e => onDragStart({ e, image })}
-        onDrop={e => onDropOverImage({ e, image })}
-        onKeyDown={() => this.onKeyDown()}
-        onClick={removeImageFromBoard ? () => removeImageFromBoard(image)
-          : () => this.highlightCard()}
-      >
-        <img src={image} alt={image} />
-      </div>
+      <React.Fragment>
+        <div
+          role="button"
+          tabIndex={-1}
+          className={cardStyle}
+          draggable
+          droppable="true"
+          onDragStart={e => onDragStart({ e, image })}
+          onDrop={e => onDropOverImage({ e, image })}
+          onClick={removeImageFromBoard ? () => removeImageFromBoard(image)
+            : () => this.highlightCard(image)}
+        >
+          <img src={image} alt={image} />
+        </div>
+        {this.renderHighlightedImage()}
+      </React.Fragment>
     );
   }
 }
@@ -53,6 +73,7 @@ ImageCard.propTypes = {
   onDragStart: PropTypes.func,
   onDropOverImage: PropTypes.func,
   removeImageFromBoard: PropTypes.func,
+  toggleBackgroundFade: PropTypes.func,
 };
 
 ImageCard.defaultProps = {
@@ -60,6 +81,7 @@ ImageCard.defaultProps = {
   onDragStart: undefined,
   onDropOverImage: undefined,
   removeImageFromBoard: undefined,
+  toggleBackgroundFade: undefined,
 };
 
 export default ImageCard;

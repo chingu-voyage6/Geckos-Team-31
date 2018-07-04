@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'underscore';
+import { connect } from 'react-redux';
 import TalkBoardSelectContainer from '../../containers/TalkBoardSelectContainer';
 import CategoriesList from './CategoriesList';
-import StoryBoardContext from './StoryBoardContext';
 import getCategories from '../../../modules/get-categories';
+
 
 const onDragStart = ({ e, image }) => {
   e.dataTransfer.setData('text/plain', image);
@@ -18,50 +20,26 @@ class TalkBoardView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      storyBoard: [],
       category: getCategories()[0].toLowerCase(),
+      fadeBackground: false,
     };
-    this.onDrop = this.onDrop.bind(this);
-    this.onDragLeave = this.onDragLeave.bind(this);
     this.onDropOverImage = this.onDropOverImage.bind(this);
     this.removeImageFromBoard = this.removeImageFromBoard.bind(this);
     this.switchCategories = this.switchCategories.bind(this);
-  }
-
-  onDragLeave({ e }) {
-    const { storyBoard } = this.state;
-    const image = e.dataTransfer.getData('text');
-    const newBoard = storyBoard;
-    const board = newBoard.filter(img => image === img);
-    this.setState({
-      storyBoard: board,
-    });
+    this.toggleBackgroundFade = this.toggleBackgroundFade.bind(this);
   }
 
   onDropOverImage({ e, image }) {
-    const { storyBoard } = this.state;
-    const newBoard = storyBoard;
-    const board = newBoard.filter(img => e.dataTransfer.getData('text') !== img);
-    const index = newBoard.indexOf(image);
-    if (index >= 0) {
-      board.splice(index, 0, e.dataTransfer.getData('text'));
-      this.setState({
-        storyBoard: board,
-      });
+    const { dispatch, storyBoard } = this.props;
+    if (_.contains(storyBoard, e.dataTransfer.getData('text'))) {
+      dispatch({ type: 'STORYBOARD__ARRANGE-IMAGES', targetImage: image, replacementImage: e.dataTransfer.getData('text') });
     }
   }
 
-  onDrop({ e }) {
-    const { storyBoard } = this.state;
-    const image = e.dataTransfer.getData('text');
-    const duplicate = _.contains(storyBoard, image);
-    if (!duplicate && storyBoard.length < 3) {
-      const newBoard = storyBoard;
-      newBoard.push(image);
-      this.setState({
-        storyBoard: newBoard,
-      });
-    }
+  toggleBackgroundFade({ fade }) {
+    this.setState({
+      fadeBackground: fade,
+    });
   }
 
   switchCategories({ category }) {
@@ -71,17 +49,13 @@ class TalkBoardView extends React.Component {
   }
 
   removeImageFromBoard(image) {
-    const { storyBoard } = this.state;
-    const newBoard = storyBoard;
-    const board = newBoard.filter(img => image !== img);
-    this.setState({
-      storyBoard: board,
-    });
+    const { dispatch } = this.props;
+    dispatch({ type: 'STORYBOARD__REMOVE_IMAGE', image });
   }
 
 
   render() {
-    const { category } = this.state;
+    const { category, fadeBackground } = this.state;
     return (
       <div
         className="TalkBoardView"
@@ -89,20 +63,35 @@ class TalkBoardView extends React.Component {
         <CategoriesList
           switchCategories={this.switchCategories}
         />
-        <StoryBoardContext.Provider value={this.state}>
-          <TalkBoardSelectContainer
-            onDrop={this.onDrop}
-            onDragStart={onDragStart}
-            onDragOver={onDragOver}
-            onDragLeave={this.onDragLeave}
-            onDropOverImage={this.onDropOverImage}
-            removeImageFromBoard={this.removeImageFromBoard}
-            category={category}
-          />
-        </StoryBoardContext.Provider>
+        <TalkBoardSelectContainer
+          onDrop={this.onDrop}
+          onDragStart={onDragStart}
+          onDragOver={onDragOver}
+          onDropOverImage={this.onDropOverImage}
+          removeImageFromBoard={this.removeImageFromBoard}
+          category={category}
+          toggleBackgroundFade={this.toggleBackgroundFade}
+        />
+        {fadeBackground ? <div className="TalkBoardView__overlay" /> : null}
       </div>
     );
   }
 }
 
-export default TalkBoardView;
+const mapStateToProps = state => ({
+  storyBoard: state.storyBoard,
+});
+
+
+TalkBoardView.propTypes = {
+  dispatch: PropTypes.func,
+  storyBoard: PropTypes.func,
+};
+
+TalkBoardView.defaultProps = {
+  dispatch: undefined,
+  storyBoard: undefined,
+};
+
+
+export default connect(mapStateToProps)(TalkBoardView);
