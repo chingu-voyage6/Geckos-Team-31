@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'underscore';
 import TalkBoardSelectContainer from '../../containers/TalkBoardSelectContainer';
 import CategoriesList from './CategoriesList';
@@ -23,7 +24,6 @@ class TalkBoardView extends React.Component {
       category: getCategories()[0].toLowerCase(),
       fadeBackground: false,
     };
-    this.onDrop = this.onDrop.bind(this);
     this.onDragLeave = this.onDragLeave.bind(this);
     this.onDropOverImage = this.onDropOverImage.bind(this);
     this.removeImageFromBoard = this.removeImageFromBoard.bind(this);
@@ -50,19 +50,6 @@ class TalkBoardView extends React.Component {
       board.splice(index, 0, e.dataTransfer.getData('text'));
       this.setState({
         storyBoard: board,
-      });
-    }
-  }
-
-  onDrop({ e }) {
-    const { storyBoard } = this.state;
-    const image = e.dataTransfer.getData('text');
-    const duplicate = _.contains(storyBoard, image);
-    if (!duplicate && storyBoard.length < 3) {
-      const newBoard = storyBoard;
-      newBoard.push(image);
-      this.setState({
-        storyBoard: newBoard,
       });
     }
   }
@@ -98,22 +85,31 @@ class TalkBoardView extends React.Component {
         <CategoriesList
           switchCategories={this.switchCategories}
         />
-        <StoryBoardContext.Provider value={this.state}>
-          <TalkBoardSelectContainer
-            onDrop={this.onDrop}
-            onDragStart={onDragStart}
-            onDragOver={onDragOver}
-            onDragLeave={this.onDragLeave}
-            onDropOverImage={this.onDropOverImage}
-            removeImageFromBoard={this.removeImageFromBoard}
-            category={category}
-            toggleBackgroundFade={this.toggleBackgroundFade}
-          />
-        </StoryBoardContext.Provider>
+        <TalkBoardSelectContainer
+          onDrop={this.onDrop}
+          onDragStart={onDragStart}
+          onDragOver={onDragOver}
+          onDragLeave={this.onDragLeave}
+          onDropOverImage={this.onDropOverImage}
+          removeImageFromBoard={this.removeImageFromBoard}
+          category={category}
+          toggleBackgroundFade={this.toggleBackgroundFade}
+        />
         {fadeBackground ? <div className="TalkBoardView__overlay" /> : null}
       </div>
     );
   }
 }
+
+
+TalkBoardView.propTypes = {
+  dispatch: PropTypes.func,
+};
+
+TalkBoardView.defaultProps = {
+  dispatch: undefined,
+
+};
+
 
 export default TalkBoardView;
