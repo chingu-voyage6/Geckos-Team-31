@@ -9,10 +9,6 @@ class ImageCard extends React.Component {
     };
   }
 
-  onKeyDown() {
-
-  }
-
   highlightCard(image) {
     const { highlightedImage } = this.state;
     const { toggleBackgroundFade } = this.props;
@@ -36,7 +32,6 @@ class ImageCard extends React.Component {
         droppable="true"
         onDragStart={e => onDragStart({ e, image: highlightedImage })}
         onDrop={e => onDropOverImage({ e, image: highlightedImage })}
-        onKeyDown={() => this.onKeyDown()}
         className="ImageCard__highlight"
         onClick={() => this.highlightCard()}
       >
@@ -62,7 +57,6 @@ class ImageCard extends React.Component {
           droppable="true"
           onDragStart={e => onDragStart({ e, image })}
           onDrop={e => onDropOverImage({ e, image })}
-          onKeyDown={() => this.onKeyDown()}
           onClick={removeImageFromBoard ? () => removeImageFromBoard(image)
             : () => this.highlightCard(image)}
         >
