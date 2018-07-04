@@ -17,7 +17,8 @@ function reducer(state = initialState, action) {
     };
     return newState;
   }
-  if (action.type === 'STORYBOARD__REMOVE_IMAGE') {
+  if (action.type === 'STORYBOARD__REMOVE-IMAGE') {
+    console.log(action.image)
     const storyBoard = state.storyBoard.filter(img => action.image !== img);
     const newState = {
       storyBoard,
@@ -34,6 +35,16 @@ function reducer(state = initialState, action) {
       };
       return newState;
     }
+  }
+  if (action.type === 'STORYBOARD__SWAP') {
+    const index = state.storyBoard.indexOf(action.targetImage);
+    let { storyBoard } = state;
+    storyBoard.splice(index, 0, action.replacementImage);
+    storyBoard = state.storyBoard.filter(img => action.targetImage !== img);
+    const newState = {
+      storyBoard,
+    };
+    return newState;
   }
   return state;
 }

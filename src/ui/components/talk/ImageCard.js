@@ -1,5 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import _ from 'underscore';
+
+const mapStateToProps = state => ({
+  storyBoard: state.storyBoard,
+});
+
+const onDragStart = ({ e, image }) => {
+  e.dataTransfer.setData('text/plain', image);
+};
 
 class ImageCard extends React.Component {
   constructor() {
@@ -7,6 +17,26 @@ class ImageCard extends React.Component {
     this.state = {
       highlightedImage: false,
     };
+  }
+
+  // look into this
+  onDropOffBoard({ event }) {
+    event.preventDefault();
+    const { dispatch } = this.props;
+    const image = event.dataTransfer.getData('text');
+    dispatch({ type: 'STORYBOARD__REMOVE-IMAGE', image });
+  }
+
+  onDropOverImage({ e, image }) {
+    const { dispatch, storyBoard } = this.props;
+    if (_.contains(storyBoard, e.dataTransfer.getData('text'))) {
+      dispatch({ type: 'STORYBOARD__ARRANGE-IMAGES', targetImage: image, replacementImage: e.dataTransfer.getData('text') });
+    } else dispatch({ type: 'STORYBOARD__SWAP', targetImage: image, replacementImage: e.dataTransfer.getData('text') });
+  }
+
+  removeImageFromBoard(image) {
+    const { dispatch } = this.props;
+    dispatch({ type: 'STORYBOARD__REMOVE-IMAGE', image });
   }
 
   highlightCard(image) {
@@ -23,7 +53,6 @@ class ImageCard extends React.Component {
 
   renderHighlightedImage() {
     const { highlightedImage } = this.state;
-    const { onDropOverImage, onDragStart } = this.props;
     return highlightedImage ? (
       <div
         role="button"
@@ -31,7 +60,7 @@ class ImageCard extends React.Component {
         draggable
         droppable="true"
         onDragStart={e => onDragStart({ e, image: highlightedImage })}
-        onDrop={e => onDropOverImage({ e, image: highlightedImage })}
+        onDrop={e => this.onDropOverImage({ e, image: highlightedImage })}
         className="ImageCard__highlight"
         onClick={() => this.highlightCard()}
       >
@@ -42,9 +71,7 @@ class ImageCard extends React.Component {
   render() {
     const {
       image,
-      onDragStart,
-      onDropOverImage,
-      removeImageFromBoard,
+      isStoryBoardItem,
     } = this.props;
     const cardStyle = 'ImageCard';
     return (
@@ -56,8 +83,9 @@ class ImageCard extends React.Component {
           draggable
           droppable="true"
           onDragStart={e => onDragStart({ e, image })}
-          onDrop={e => onDropOverImage({ e, image })}
-          onClick={removeImageFromBoard ? () => removeImageFromBoard(image)
+          onDrop={isStoryBoardItem ? e => this.onDropOverImage({ e, image })
+            : e => this.onDropOffBoard({ e })}
+          onClick={isStoryBoardItem ? () => this.removeImageFromBoard(image)
             : () => this.highlightCard(image)}
         >
           <img src={image} alt={image} />
@@ -70,18 +98,18 @@ class ImageCard extends React.Component {
 
 ImageCard.propTypes = {
   image: PropTypes.string,
-  onDragStart: PropTypes.func,
-  onDropOverImage: PropTypes.func,
-  removeImageFromBoard: PropTypes.func,
   toggleBackgroundFade: PropTypes.func,
+  dispatch: PropTypes.func,
+  storyBoard: PropTypes.arrayOf(PropTypes.string),
+  isStoryBoardItem: PropTypes.bool,
 };
 
 ImageCard.defaultProps = {
   image: undefined,
-  onDragStart: undefined,
-  onDropOverImage: undefined,
-  removeImageFromBoard: undefined,
   toggleBackgroundFade: undefined,
+  dispatch: undefined,
+  storyBoard: undefined,
+  isStoryBoardItem: undefined,
 };
 
-export default ImageCard;
+export default connect(mapStateToProps)(ImageCard);

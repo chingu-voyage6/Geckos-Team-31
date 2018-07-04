@@ -18,12 +18,10 @@ class CategoriesList extends React.Component {
       <div className="CategoriesList">
         {categories.map(category => (
           <Button
-              onClick={() => switchCategories({ category: category.toLowerCase()})}
-              label={category}
-              key={category}
-            >
-              {category}
-            </Button>
+            onClick={() => switchCategories({ category: category.toLowerCase() })}
+            label={category}
+            key={category}
+          />
         ))
         }
       </div>
