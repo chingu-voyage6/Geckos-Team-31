@@ -19,16 +19,24 @@ class ImageCard extends React.Component {
     };
   }
 
+  // look into this
+  onDropOffBoard({ event }) {
+    event.preventDefault();
+    const { dispatch } = this.props;
+    const image = event.dataTransfer.getData('text');
+    dispatch({ type: 'STORYBOARD__REMOVE-IMAGE', image });
+  }
+
   onDropOverImage({ e, image }) {
     const { dispatch, storyBoard } = this.props;
     if (_.contains(storyBoard, e.dataTransfer.getData('text'))) {
       dispatch({ type: 'STORYBOARD__ARRANGE-IMAGES', targetImage: image, replacementImage: e.dataTransfer.getData('text') });
-    }
+    } else dispatch({ type: 'STORYBOARD__SWAP', targetImage: image, replacementImage: e.dataTransfer.getData('text') });
   }
 
   removeImageFromBoard(image) {
     const { dispatch } = this.props;
-    dispatch({ type: 'STORYBOARD__REMOVE_IMAGE', image });
+    dispatch({ type: 'STORYBOARD__REMOVE-IMAGE', image });
   }
 
   highlightCard(image) {
@@ -75,7 +83,8 @@ class ImageCard extends React.Component {
           draggable
           droppable="true"
           onDragStart={e => onDragStart({ e, image })}
-          onDrop={e => this.onDropOverImage({ e, image })}
+          onDrop={isStoryBoardItem ? e => this.onDropOverImage({ e, image })
+            : e => this.onDropOffBoard({ e })}
           onClick={isStoryBoardItem ? () => this.removeImageFromBoard(image)
             : () => this.highlightCard(image)}
         >

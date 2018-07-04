@@ -16,13 +16,18 @@ class TalkBoardSelect extends React.Component {
       toggleBackgroundFade,
     } = this.props;
     return (
-      <div className="TalkBoardSelect">
-        <div className="TalkBoardSelect--Images">
+      <div
+        className="TalkBoardSelect"
+      >
+        <div
+          className="TalkBoardSelect--Images"
+        >
           {images.map(image => (
             <ImageCard
               key={image}
               image={image}
               toggleBackgroundFade={toggleBackgroundFade}
+              isStoryBoardItem={false}
             />))}
         </div>
         <TalkBoardStory />

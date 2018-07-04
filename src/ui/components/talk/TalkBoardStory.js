@@ -18,7 +18,7 @@ class TalkBoardStory extends React.Component {
     const { dispatch, storyBoard } = this.props;
     const image = e.dataTransfer.getData('text');
     const duplicate = _.contains(storyBoard, image);
-    if (!duplicate && storyBoard.length < 3) {
+    if (!duplicate && storyBoard.length < 4) {
       dispatch({ type: 'STORYBOARD__ADD-IMAGE', image });
     }
   }
@@ -41,6 +41,7 @@ class TalkBoardStory extends React.Component {
               image={image}
               isStoryBoardItem
             />))}
+          <div className="TalkBoardStory--bar" />
         </div>
       </div>
     );
