@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import ImageCard from './ImageCard';
 import TalkBoardStory from './TalkBoardStory';
 
-// test images
-
-
 class TalkBoardSelect extends React.Component {
   constructor() {
     super();
@@ -15,7 +12,6 @@ class TalkBoardSelect extends React.Component {
 
   render() {
     const {
-      onDragLeave,
       onDrop,
       onDragOver,
       onDragStart,
@@ -39,7 +35,6 @@ class TalkBoardSelect extends React.Component {
           onDragOver={onDragOver}
           onDrop={onDrop}
           onDragStart={onDragStart}
-          onDragLeave={onDragLeave}
           onDropOverImage={onDropOverImage}
           removeImageFromBoard={removeImageFromBoard}
         />
@@ -52,7 +47,6 @@ TalkBoardSelect.propTypes = {
   onDrop: PropTypes.func,
   onDragOver: PropTypes.func,
   onDragStart: PropTypes.func,
-  onDragLeave: PropTypes.func,
   onDropOverImage: PropTypes.func,
   removeImageFromBoard: PropTypes.func,
   images: PropTypes.arrayOf(PropTypes.string),
@@ -64,7 +58,6 @@ TalkBoardSelect.defaultProps = {
   onDragOver: undefined,
   onDropOverImage: undefined,
   onDragStart: undefined,
-  onDragLeave: undefined,
   removeImageFromBoard: undefined,
   images: undefined,
   toggleBackgroundFade: undefined,

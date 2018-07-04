@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import '../styles/main.css';
@@ -17,22 +17,36 @@ function reducer(state = initialState, action) {
     };
     return newState;
   }
+  if (action.type === 'STORYBOARD__REMOVE_IMAGE') {
+    const storyBoard = state.storyBoard.filter(img => action.image !== img);
+    const newState = {
+      storyBoard,
+    };
+    return newState;
+  }
+  if (action.type === 'STORYBOARD__ARRANGE-IMAGES') {
+    const index = state.storyBoard.indexOf(action.targetImage);
+    if (index >= 0) {
+      const storyBoard = state.storyBoard.filter(img => action.replacementImage !== img);
+      storyBoard.splice(index, 0, action.replacementImage);
+      const newState = {
+        storyBoard,
+      };
+      return newState;
+    }
+  }
   return state;
 }
 const store = createStore(reducer);
 
 
-class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <div className="App">
-          <NavBar />
-          <TalkBoardView />
-        </div>
-      </Provider>
-    );
-  }
-}
+const App = () => (
+  <Provider store={store}>
+    <div className="App">
+      <NavBar />
+      <TalkBoardView />
+    </div>
+  </Provider>
+);
 
 export default App;

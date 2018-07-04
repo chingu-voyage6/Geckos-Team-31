@@ -3,29 +3,15 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import PropTypes from 'prop-types';
 import ImageCard from './ImageCard';
-import StoryBoardContext from './StoryBoardContext';
-
-
-
 
 // Test images
 class TalkBoardStory extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   onDrop({ e }) {
-    const { dispatch, state } = this.props;
+    const { dispatch, storyBoard } = this.props;
     const image = e.dataTransfer.getData('text');
-    console.log(image)
-    const duplicate = _.contains(state.storyBoard, image);
-    if (!duplicate && state.storyBoard.length < 3) {
+    const duplicate = _.contains(storyBoard, image);
+    if (!duplicate && storyBoard.length < 3) {
       dispatch({ type: 'STORYBOARD__ADD-IMAGE', image });
-      // const newBoard = storyBoard;
-      // newBoard.push(image);
-      // this.setState({
-      //   storyBoard: newBoard,
-      // });
     }
   }
 
@@ -36,28 +22,27 @@ class TalkBoardStory extends React.Component {
       onDropOverImage,
       dragInProcess,
       removeImageFromBoard,
-      state,
+      storyBoard,
     } = this.props;
-    console.log(state.storyBoard);
     return (
-    <div className="TalkBoardStory--wrapper">
-      <div
-        className="TalkBoardStory"
-        droppable="true"
-        onDragOver={e => onDragOver({ e })}
-        onDrop={e => this.onDrop({ e })}
-      >
-        {state.storyBoard.map(image => (
-          <ImageCard
-            key={image}
-            image={image}
-            onDragStart={onDragStart}
-            dragInProcess={dragInProcess}
-            onDropOverImage={onDropOverImage}
-            removeImageFromBoard={removeImageFromBoard}
-          />))}
+      <div className="TalkBoardStory--wrapper">
+        <div
+          className="TalkBoardStory"
+          droppable="true"
+          onDragOver={e => onDragOver({ e })}
+          onDrop={e => this.onDrop({ e })}
+        >
+          {storyBoard.map(image => (
+            <ImageCard
+              key={image}
+              image={image}
+              onDragStart={onDragStart}
+              dragInProcess={dragInProcess}
+              onDropOverImage={onDropOverImage}
+              removeImageFromBoard={removeImageFromBoard}
+            />))}
+        </div>
       </div>
-    </div>
     );
   }
 }
@@ -84,7 +69,7 @@ TalkBoardStory.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  state,
+  storyBoard: state.storyBoard,
 });
 
 export default connect(mapStateToProps)(TalkBoardStory);
