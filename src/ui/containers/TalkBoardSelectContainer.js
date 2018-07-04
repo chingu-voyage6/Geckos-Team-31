@@ -9,45 +9,21 @@ const TalkBoardSelectContainer = (props) => {
   const { category } = props;
   const images = fetchImages({ category });
   const {
-    onDragLeave,
-    onDrop,
-    onDragOver,
-    onDragStart,
-    onDropOverImage,
-    removeImageFromBoard,
     toggleBackgroundFade,
   } = props;
   return (
     <TalkBoardSelect
       images={images}
-      onDrop={onDrop}
-      onDragStart={onDragStart}
-      onDragOver={onDragOver}
-      onDragLeave={onDragLeave}
-      onDropOverImage={onDropOverImage}
-      removeImageFromBoard={removeImageFromBoard}
       toggleBackgroundFade={toggleBackgroundFade}
     />);
 };
 
 TalkBoardSelectContainer.propTypes = {
-  onDrop: PropTypes.func,
-  onDragOver: PropTypes.func,
-  onDragStart: PropTypes.func,
-  onDragLeave: PropTypes.func,
-  onDropOverImage: PropTypes.func,
-  removeImageFromBoard: PropTypes.func,
   category: PropTypes.string,
   toggleBackgroundFade: PropTypes.func,
 };
 
 TalkBoardSelectContainer.defaultProps = {
-  onDrop: undefined,
-  onDragOver: undefined,
-  onDropOverImage: undefined,
-  onDragStart: undefined,
-  onDragLeave: undefined,
-  removeImageFromBoard: undefined,
   category: undefined,
   toggleBackgroundFade: undefined,
 };

@@ -4,7 +4,15 @@ import _ from 'underscore';
 import PropTypes from 'prop-types';
 import ImageCard from './ImageCard';
 
-// Test images
+const mapStateToProps = state => ({
+  storyBoard: state.storyBoard,
+});
+
+const onDragOver = ({ e }) => {
+  e.preventDefault();
+};
+
+
 class TalkBoardStory extends React.Component {
   onDrop({ e }) {
     const { dispatch, storyBoard } = this.props;
@@ -17,11 +25,6 @@ class TalkBoardStory extends React.Component {
 
   render() {
     const {
-      onDragOver,
-      onDragStart,
-      onDropOverImage,
-      dragInProcess,
-      removeImageFromBoard,
       storyBoard,
     } = this.props;
     return (
@@ -36,10 +39,7 @@ class TalkBoardStory extends React.Component {
             <ImageCard
               key={image}
               image={image}
-              onDragStart={onDragStart}
-              dragInProcess={dragInProcess}
-              onDropOverImage={onDropOverImage}
-              removeImageFromBoard={removeImageFromBoard}
+              isStoryBoardItem
             />))}
         </div>
       </div>
@@ -49,27 +49,13 @@ class TalkBoardStory extends React.Component {
 
 
 TalkBoardStory.propTypes = {
-  onDragOver: PropTypes.func,
-  onDragStart: PropTypes.func,
-  dragInProcess: PropTypes.bool,
-  onDropOverImage: PropTypes.func,
-  removeImageFromBoard: PropTypes.func,
   storyBoard: PropTypes.arrayOf(PropTypes.string),
   dispatch: PropTypes.func,
 };
 
 TalkBoardStory.defaultProps = {
-  onDragOver: undefined,
-  onDragStart: undefined,
-  dragInProcess: undefined,
-  onDropOverImage: undefined,
-  removeImageFromBoard: undefined,
   storyBoard: undefined,
   dispatch: undefined,
 };
-
-const mapStateToProps = state => ({
-  storyBoard: state.storyBoard,
-});
 
 export default connect(mapStateToProps)(TalkBoardStory);

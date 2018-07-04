@@ -6,7 +6,6 @@ const Button = ({
   onClick,
   className,
   theme,
-  key,
   isSubmit,
 }) => (
   <div className="Button">
@@ -14,7 +13,6 @@ const Button = ({
       type={isSubmit ? 'submit' : 'button'}
       onClick={onClick}
       className={theme || className || 'Button--list'}
-      key={key}
     >
       {label}
     </button>
@@ -26,7 +24,6 @@ Button.propTypes = {
   onClick: PropTypes.func,
   className: PropTypes.string,
   theme: PropTypes.string,
-  key: PropTypes.string,
   isSubmit: PropTypes.bool,
 };
 Button.defaultProps = {
@@ -34,7 +31,6 @@ Button.defaultProps = {
   onClick: undefined,
   className: undefined,
   theme: undefined,
-  key: undefined,
   isSubmit: undefined,
 };
 
