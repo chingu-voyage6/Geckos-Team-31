@@ -18,7 +18,6 @@ function reducer(state = initialState, action) {
     return newState;
   }
   if (action.type === 'STORYBOARD__REMOVE-IMAGE') {
-    console.log(action.image)
     const storyBoard = state.storyBoard.filter(img => action.image !== img);
     const newState = {
       storyBoard,

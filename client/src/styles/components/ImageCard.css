@@ -1,0 +1,13 @@
+.ImageCard {
+  width: 20%;
+  margin: 10px;
+  box-shadow: 0px 8px 15px -4px rgba(0, 0, 0, 0.5); }
+  .ImageCard img {
+    max-width: 100%;
+    padding: 5px;
+    position: relative; }
+
+.ImageCard:hover,
+.ImageCard:focus,
+.ImageCard:active {
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.8); }
