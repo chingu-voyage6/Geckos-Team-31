@@ -4,15 +4,16 @@ import PropTypes from 'prop-types';
 const Button = ({
   label,
   onClick,
-  className,
+  // className,
   theme,
-  isSubmit,
+  // isSubmit,
+  type,
 }) => (
   <div className="Button">
     <button
-      type={isSubmit ? 'submit' : 'button'}
+      type={type}
       onClick={onClick}
-      className={theme || className || 'Button--list'}
+      className={theme ? `Button--${theme}` : 'Button--list'}
     >
       {label}
     </button>
@@ -22,16 +23,18 @@ const Button = ({
 Button.propTypes = {
   label: PropTypes.string,
   onClick: PropTypes.func,
-  className: PropTypes.string,
+  // className: PropTypes.string,
   theme: PropTypes.string,
-  isSubmit: PropTypes.bool,
+  // isSubmit: PropTypes.bool,
+  type: PropTypes.string,
 };
 Button.defaultProps = {
   label: undefined,
   onClick: undefined,
-  className: undefined,
+  // className: undefined,
   theme: undefined,
-  isSubmit: undefined,
+  // isSubmit: undefined,
+  type: undefined,
 };
 
 export default Button;

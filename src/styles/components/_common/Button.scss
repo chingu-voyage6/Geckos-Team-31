@@ -29,6 +29,14 @@ cursor: pointer;
 
 }
 
-.Button--submit {
+.Button--upload {
+  width: 150px;
+  height: 30px;
+  background-color: $base-blue;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  box-shadow: $box-shadow;
+  cursor: pointer;
 
 }

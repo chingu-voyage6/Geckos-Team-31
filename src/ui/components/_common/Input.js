@@ -14,7 +14,9 @@ const Input = (props) => {
   } = props;
   return (
     <div className="Input">
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>
+        {label}
+      </label>
       <input
         name={name}
         type={type}

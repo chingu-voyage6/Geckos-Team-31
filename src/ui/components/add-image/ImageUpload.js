@@ -3,17 +3,22 @@ import PropTypes from 'prop-types';
 import Form from '../_common/Form';
 import Input from '../_common/Input';
 import Button from '../_common/Button';
+import Header from '../_common/Header';
 
 class ImageUpload extends React.Component {
 
   render() {
     return (
       <div className="ImageUpload">
+        <Header
+          heading="Upload your own image"
+          size="large"
+        />
         <Form id ="upload-image-form">
-          <h1>Upload your own image</h1>
           <Button
             label="Upload Image"
-            theme="upload"
+            theme="list"
+            type="file"
              />
           <Input
             label="Image Category"
@@ -26,7 +31,7 @@ class ImageUpload extends React.Component {
               type="text"
               />
             <Button
-              theme="submit"
+              theme="success"
               label="Submit"
               />
         </Form>
