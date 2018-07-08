@@ -1,15 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import NavLink from './NavLink';
 
-class NavBar extends React.Component {
 
-  render() {
-    return (
-      <div className="NavBar">
-      </div>
-    );
-  }
-}
+const NavBar = () => (
+  <div className="NavBar">
+    <NavLink
+      link="/"
+      label="Home"
+    />
+    <NavLink
+      link="/talk"
+      label="Talk board"
+    />
+    <NavLink
+      link="/add-images"
+      label="Add images"
+    />
+  </div>
+);
 
 NavBar.propTypes = {
 

@@ -1,11 +1,14 @@
 @import '../styles/_variables.scss';
+@import '../styles/global.scss';
+
 
 //common
 
 
 @import '../styles/components/_common/Navbar.scss';
+@import '../styles/components/_common/NavLink.scss';
 @import '../styles/components/_common/Button.scss';
-
+@import '../styles/components/_common/ImageCard.scss';
 
 
 
@@ -13,8 +16,15 @@
 
 // components
 
-@import '../styles/components/TalkBoardView.scss';
-@import '../styles/components/TalkBoardSelect.scss';
-@import '../styles/components/ImageCard.scss';
-@import '../styles/components/TalkBoardStory.scss';
-@import '../styles/components/CategoriesList.scss';
+
+// TalkBoardMain
+
+@import '../styles/components/talk/TalkBoardMain.scss';
+@import '../styles/components/talk/TalkBoardView.scss';
+@import '../styles/components/talk/TalkBoardSelect.scss';
+@import '../styles/components/talk/TalkBoardStory.scss';
+@import '../styles/components/talk/CategoriesList.scss';
+
+//Add Images
+
+@import '../styles/components/add-images/AddImageView.scss';

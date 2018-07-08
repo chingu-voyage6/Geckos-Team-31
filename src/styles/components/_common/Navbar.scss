@@ -3,4 +3,7 @@
   width: 100%;
   background-color: $base-blue;
   margin-bottom: $base-margin;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
