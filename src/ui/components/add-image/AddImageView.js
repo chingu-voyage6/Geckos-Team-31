@@ -13,8 +13,8 @@ class AddImageView extends React.Component {
       <NavBar />
       <div className="AddImageView">
       <ImageGalleryContainer />
-      </div>
       <ImageUpload />
+      </div>
       </div>
     );
   }

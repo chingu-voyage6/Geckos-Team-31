@@ -1,6 +1,7 @@
 .Button{
   width: 150px;
   margin: 10px;
+  text-align: center;
 
 }
 
@@ -25,5 +26,9 @@ cursor: pointer;
   font-size: 18px;
   box-shadow: $box-shadow;
   cursor: pointer;
+
+}
+
+.Button--submit {
 
 }
