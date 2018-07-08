@@ -9,9 +9,11 @@ class AddImageView extends React.Component {
 
   render() {
     return (
-      <div className="AddImageView">
+      <div className="AddImageView--wrapper">
       <NavBar />
+      <div className="AddImageView">
       <ImageGalleryContainer />
+      </div>
       <ImageUpload />
       </div>
     );

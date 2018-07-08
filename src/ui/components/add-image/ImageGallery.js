@@ -7,7 +7,7 @@ const ImageGallery = (props) => {
   const { gallery } = props;
   return (
     <div className="ImageGallery">
-      {gallery.map(image => <img src={image} alt={image} />)}
+      {gallery.map(image => <img src={image} alt={image} key={image} />)}
     </div>
   );
 };
