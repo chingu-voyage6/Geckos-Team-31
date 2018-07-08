@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import fetchImages from '../../modules/fetch-images';
+import getImages from '../../modules/get-images';
 import TalkBoardSelect from '../components/talk/TalkBoardSelect';
 
 // HOC or Container Component, gets the data to display in the core componenet
 
 const TalkBoardSelectContainer = (props) => {
   const { category } = props;
-  const images = fetchImages({ category });
+  const images = getImages({ category });
   const {
     toggleBackgroundFade,
   } = props;

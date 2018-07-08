@@ -32,6 +32,8 @@ import knee from '../assets/images/knee.jpg';
 import shirt from '../assets/images/shirt.jpg';
 
 // This module is currently replacing an API call to the database
+
+
 const categories = {
   eating: [bowl, bacon, strawberry, hotStove, chair, toast],
   activies: [birthday, afternoon, television, bowling, tablet],

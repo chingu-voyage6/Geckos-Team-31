@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'underscore';
 import PropTypes from 'prop-types';
-import ImageCard from './ImageCard';
+import ImageCard from '../_common/ImageCard';
 
 const mapStateToProps = state => ({
   storyBoard: state.storyBoard,

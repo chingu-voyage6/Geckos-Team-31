@@ -34,6 +34,9 @@ class ImageCard extends React.Component {
     } else dispatch({ type: 'STORYBOARD__SWAP', targetImage: image, replacementImage: e.dataTransfer.getData('text') });
   }
 
+  nextImage() {
+  }
+
   removeImageFromBoard(image) {
     const { dispatch } = this.props;
     dispatch({ type: 'STORYBOARD__REMOVE-IMAGE', image });
@@ -58,6 +61,7 @@ class ImageCard extends React.Component {
         role="button"
         tabIndex={-1}
         draggable
+        onKeyDown={() => this.nextImage()}
         droppable="true"
         onDragStart={e => onDragStart({ e, image: highlightedImage })}
         onDrop={e => this.onDropOverImage({ e, image: highlightedImage })}
@@ -82,6 +86,7 @@ class ImageCard extends React.Component {
           className={cardStyle}
           draggable
           droppable="true"
+          onKeyDown={() => this.nextImage()}
           onDragStart={e => onDragStart({ e, image })}
           onDrop={isStoryBoardItem ? e => this.onDropOverImage({ e, image })
             : e => this.onDropOffBoard({ e })}

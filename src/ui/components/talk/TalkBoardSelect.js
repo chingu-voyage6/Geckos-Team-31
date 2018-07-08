@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ImageCard from './ImageCard';
+import ImageCard from '../_common/ImageCard';
 import TalkBoardStory from './TalkBoardStory';
 
 class TalkBoardSelect extends React.Component {
