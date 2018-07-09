@@ -11,7 +11,9 @@ const ImageGallery = (props) => {
         heading="Add images from gallery"
         size="large"
       />
-      {gallery.map(image => <img src={image} alt={image} key={image} />)}
+      <div className="ImageGallery--images">
+        {gallery.map(image => <img src={image} alt={image} key={image} />)}
+      </div>
     </div>
   );
 };
