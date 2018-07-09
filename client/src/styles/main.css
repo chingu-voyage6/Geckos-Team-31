@@ -1,0 +1,238 @@
+body {
+  margin: 0;
+  font-family: 'Garamond', sans-serif; }
+
+.NavBar {
+  height: 60px;
+  width: 100%;
+  background-color: #38D4E3;
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; }
+
+.NavLink {
+  margin: 20px; }
+  .NavLink a {
+    text-decoration: none;
+    color: white; }
+
+.Button {
+  width: 150px;
+  margin: 10px;
+  text-align: center; }
+
+.Button--list {
+  width: 150px;
+  height: 30px;
+  background-color: #FFC03C;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  box-shadow: 0px 5px 13px -4px rgba(0, 0, 0, 0.3);
+  cursor: pointer; }
+
+.Button--success {
+  width: 150px;
+  height: 30px;
+  background-color: #15CF5A;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  box-shadow: 0px 5px 13px -4px rgba(0, 0, 0, 0.3);
+  cursor: pointer; }
+
+.Button--upload {
+  width: 150px;
+  height: 30px;
+  background-color: #38D4E3;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  box-shadow: 0px 5px 13px -4px rgba(0, 0, 0, 0.3);
+  cursor: pointer; }
+
+Form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0px auto;
+  padding-top: 25px; }
+
+Input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2px;
+  margin: 10px;
+  width: 150px;
+  height: 20px;
+  text-align: center;
+  border-radius: 3px;
+  border: 2px solid #38D4E3; }
+
+label {
+  margin: 10px; }
+
+.ImageCard {
+  width: 150px;
+  margin: 10px;
+  box-shadow: 0px 5px 13px -4px rgba(0, 0, 0, 0.3);
+  height: 20vh;
+  z-index: 2; }
+  .ImageCard img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 0; }
+
+.ImageCard:hover,
+.ImageCard:focus,
+.ImageCard:active {
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.7); }
+
+.ImageCard__highlight {
+  width: 400px;
+  margin: 10px;
+  box-shadow: 0px 5px 13px -4px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  position: absolute;
+  padding: 0;
+  box-shadow: inset 0 0 10px #000000;
+  border: none; }
+  .ImageCard__highlight img {
+    width: 100%;
+    position: relative;
+    padding: 0;
+    height: 100%; }
+
+Header {
+  margin: 10px;
+  font-family: 'Garamond', sans-serif;
+  color: #FF463C; }
+
+.App {
+  text-align: center;
+  width: 100%; }
+  .App body {
+    margin: 0; }
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px; }
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white; }
+
+.App-title {
+  font-size: 1.5em; }
+
+.App-intro {
+  font-size: large; }
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+
+.TalkBoardMain {
+  width: 100%;
+  padding: 0;
+  margin: 0; }
+
+.TalkBoardView {
+  width: 100%;
+  margin: 0px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+
+.TalkBoardView__overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 8;
+  margin: 0px auto;
+  background-color: rgba(0, 0, 0, 0.5); }
+
+.TalkBoardSelect {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+  margin: 0px auto; }
+
+.TalkBoardSelect--Images {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center; }
+
+.TalkBoardStory--wrapper {
+  width: 680px;
+  margin: 0px auto;
+  height: 22vh;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 0;
+  background-color: white; }
+
+.TalkBoardStory {
+  margin: 0px auto;
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative; }
+  .TalkBoardStory .ImageCard {
+    z-index: 10; }
+
+.TalkBoardStory--bar {
+  background-color: #FF463C;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  z-index: 9; }
+
+.CategoriesList {
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap; }
+
+.AddImageView {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+
+.ImageGallery {
+  width: 50%;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap; }
+  .ImageGallery img {
+    width: 100px;
+    height: 100px;
+    margin: 10px; }
+
+.ImageUpload {
+  margin: 10px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
