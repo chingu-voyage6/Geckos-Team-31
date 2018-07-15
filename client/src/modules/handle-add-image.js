@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 
 let modulePromise;
 
-const addImage = ({ image, userId }, promise) => {
+const addImage = ({ image, userId, category }, promise) => {
   modulePromise = promise;
   try {
     const url = '/api/add-image-to-account';
@@ -11,6 +11,7 @@ const addImage = ({ image, userId }, promise) => {
       body: JSON.stringify({
         image,
         userId,
+        category,
       }), // data can be `string` or {object}!
       headers: {
         'Content-Type': 'application/json',
@@ -33,8 +34,8 @@ const addImage = ({ image, userId }, promise) => {
   }
 };
 
-const handleAddImage = ({ image, userId }) => new Promise((resolve, reject) => {
-  addImage({ image, userId }, { resolve, reject });
+const handleAddImage = ({ image, userId, category }) => new Promise((resolve, reject) => {
+  addImage({ image, userId, category }, { resolve, reject });
 });
 
 export default handleAddImage;

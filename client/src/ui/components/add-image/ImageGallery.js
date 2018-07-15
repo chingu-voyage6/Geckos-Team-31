@@ -3,6 +3,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
+import $ from 'jquery';
 import handleAddImage from '../../../modules/handle-add-image';
 import Header from '../_common/Header';
 import Form from '../_common/Form';
@@ -39,6 +40,21 @@ class ImageGallery extends React.Component {
     });
   }
 
+  addImage() {
+    console.log('here')
+    const { currentImage } = this.state;
+    // const { userId } = this.props;
+    const userId = '5b4b31cc5e0d13fa72316796';
+    const category = document.querySelector('[name="categoryName"]').value;
+    handleAddImage({ image: currentImage, category, userId })
+    .then((response) => {
+      console.log(response)
+      this.closeImageModal();
+    })
+    .catch(error => console.log(error))
+
+  }
+
   renderAddImageModal() {
     const { isAddImageModalOpen, currentImage } = this.state;
     return (
@@ -53,15 +69,16 @@ class ImageGallery extends React.Component {
         <div
           className="AddImageModal"
         >
-        <img src={currentImage} alt={currentImage} />
-          <Form>
+          <img src={currentImage} alt={currentImage} />
+          <Form id="add-image">
             <Input
               type="text"
+              name="categoryName"
               label="Category Name"
             />
             <Button
               label="Add Image"
-              isSubmit
+              onClick={() => this.addImage()}
             />
           </Form>
         </div>
@@ -72,8 +89,6 @@ class ImageGallery extends React.Component {
 
   render() {
     const { gallery } = this.props;
-    // const { userId } = this.props;
-    const userId = '5b4b31cc5e0d13fa72316796';
     return (
       <div className="ImageGallery">
         <Header
