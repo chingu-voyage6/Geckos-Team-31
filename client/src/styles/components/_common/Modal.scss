@@ -1,0 +1,20 @@
+.ReactModal__Overlay--after-open {
+  background-color: rgba(173,216,230, 0.4) !important;
+}
+
+.Modal {
+  height: 300px;
+  width: 600px;
+  background: white;
+  margin: 0px auto;
+  margin-top: 150px;
+  border: 2px solid $highlight-red;
+
+  .Input {
+    margin: 0px auto;
+    margin-bottom: 25px;
+  }
+  .Button {
+    margin: 0px auto;
+  }
+}

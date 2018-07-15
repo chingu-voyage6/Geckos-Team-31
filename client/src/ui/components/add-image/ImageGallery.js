@@ -1,49 +1,79 @@
-import fetch from 'isomorphic-fetch';
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
+import Modal from 'react-modal';
+import PropTypes from 'prop-types';
+import handleAddImage from '../../../modules/handle-add-image';
 import Header from '../_common/Header';
+import Form from '../_common/Form';
+import Input from '../_common/Input';
+import Button from '../_common/Button';
+
 
 class ImageGallery extends React.Component {
   constructor() {
     super();
     this.state = {
-      gallery: [],
+      isAddImageModalOpen: false,
+      currentImage: '',
     };
+    this.openImageModal = this.openImageModal.bind(this);
+    this.closeImageModal = this.closeImageModal.bind(this);
   }
 
   componentDidMount() {
-    fetch('/api/images')
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new Error('Bad response from server');
-        }
-        return response.json();
-      })
-      .then((response) => {
-        this.setState({
-          gallery: response,
-        });
-      })
-      .catch(error => console.log(error));
-  }
-
-  addImageToUserAccount(image) {
-    const { gallery } = this.state;
-    console.log(image)
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/api/add-image-to-account', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({
-        value: image,
-    }));
-    xhr.onload = (data)  => {
-      console.log("HELLO")
-      console.log(data.currentTarget.response);
-  }
 
   }
+
+  openImageModal(image) {
+    this.setState({
+      isAddImageModalOpen: true,
+      currentImage: image,
+    });
+  }
+
+  closeImageModal() {
+    this.setState({
+      isAddImageModalOpen: false,
+      currentImage: '',
+    });
+  }
+
+  renderAddImageModal() {
+    const { isAddImageModalOpen, currentImage } = this.state;
+    return (
+      <Modal
+        isOpen={isAddImageModalOpen}
+        onRequestClose={this.closeImageModal}
+        className="Modal"
+        contentLabel="Add Image Details"
+        shouldCloseOnOverlayClick
+        ariaHideApp={false}
+      >
+        <div
+          className="AddImageModal"
+        >
+        <img src={currentImage} alt={currentImage} />
+          <Form>
+            <Input
+              type="text"
+              label="Category Name"
+            />
+            <Button
+              label="Add Image"
+              isSubmit
+            />
+          </Form>
+        </div>
+      </Modal>
+    );
+  }
+
 
   render() {
-    const { gallery } = this.state;
+    const { gallery } = this.props;
+    // const { userId } = this.props;
+    const userId = '5b4b31cc5e0d13fa72316796';
     return (
       <div className="ImageGallery">
         <Header
@@ -52,14 +82,18 @@ class ImageGallery extends React.Component {
         />
         <div className="ImageGallery--images">
           {gallery.map(image => (
-            <img
-              onClick={() => this.addImageToUserAccount(image)}
-              src={`${image}`}
-              alt={image}
+            <div
+              className="ImageGallery--image"
+              onClick={() => this.openImageModal(image)}
               key={image}
-              />)
-            )}
+            >
+              <img
+                src={image}
+                alt={image}
+              />
+            </div>))}
         </div>
+        {this.renderAddImageModal()}
       </div>
     );
   }
@@ -67,9 +101,11 @@ class ImageGallery extends React.Component {
 
 
 ImageGallery.propTypes = {
+  gallery: PropTypes.arrayOf(PropTypes.string),
 };
 
 ImageGallery.defaultProps = {
+  gallery: undefined,
 };
 
 export default ImageGallery;
