@@ -1,31 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import getImages from '../../modules/get-images';
 import TalkBoardSelect from '../components/talk/TalkBoardSelect';
+import handleGetCategoryImages from '../../modules/handle-get-category-images';
 
 // HOC or Container Component, gets the data to display in the core componenet
 
-const TalkBoardSelectContainer = (props) => {
-  const { category } = props;
-  const images = getImages({ category });
-  const {
-    toggleBackgroundFade,
-  } = props;
-  return (
-    <TalkBoardSelect
-      images={images}
-      toggleBackgroundFade={toggleBackgroundFade}
-    />);
-};
+class TalkBoardSelectContainer extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      gallery: [],
+    };
+  }
+
+  componentDidMount() {
+    const { category } = this.props;
+    // const { userId } = this.props;
+    const userId = '5b4b31cc5e0d13fa72316796';
+    handleGetCategoryImages({ userId, category })
+      .then((response) => {
+        this.setState({
+          gallery: response,
+        });
+      })
+      .catch(error => error);
+  }
+
+  render() {
+    const {
+      toggleBackgroundFade,
+    } = this.props;
+    const { gallery } = this.state;
+    return (
+      <TalkBoardSelect
+        gallery={gallery}
+        toggleBackgroundFade={toggleBackgroundFade}
+      />);
+  }
+}
 
 TalkBoardSelectContainer.propTypes = {
-  category: PropTypes.string,
   toggleBackgroundFade: PropTypes.func,
+  category: PropTypes.arrayOf(PropTypes.string),
 };
 
 TalkBoardSelectContainer.defaultProps = {
-  category: undefined,
   toggleBackgroundFade: undefined,
+  category: undefined,
 };
 
 export default TalkBoardSelectContainer;

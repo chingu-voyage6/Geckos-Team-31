@@ -41,18 +41,16 @@ class ImageGallery extends React.Component {
   }
 
   addImage() {
-    console.log('here')
     const { currentImage } = this.state;
     // const { userId } = this.props;
     const userId = '5b4b31cc5e0d13fa72316796';
     const category = document.querySelector('[name="categoryName"]').value;
     handleAddImage({ image: currentImage, category, userId })
-    .then((response) => {
-      console.log(response)
-      this.closeImageModal();
-    })
-    .catch(error => console.log(error))
-
+      .then((response) => {
+        console.log(response);
+        this.closeImageModal();
+      })
+      .catch(error => console.log(error));
   }
 
   renderAddImageModal() {

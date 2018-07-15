@@ -2,6 +2,36 @@ import fetch from 'isomorphic-fetch';
 
 let modulePromise;
 
+const addCategory = ({ userId, category }) => {
+  try {
+    const url = '/api/add-category';
+    fetch(url, {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify({
+        userId,
+        category,
+      }), // data can be `string` or {object}!
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(res => res.json())
+      .catch((error) => {
+        modulePromise.reject({
+          type: 'handleAddImage.addCategory',
+          reason: error.message,
+        });
+      })
+      .then((response) => {
+        modulePromise.resolve(response);
+      });
+  } catch (exception) {
+    modulePromise.reject({
+      type: 'handleAddImage.addCategory',
+      reason: exception,
+    });
+  }
+};
+
 const addImage = ({ image, userId, category }, promise) => {
   modulePromise = promise;
   try {
@@ -20,12 +50,13 @@ const addImage = ({ image, userId, category }, promise) => {
       .catch((error) => {
         modulePromise.reject({
           type: 'handleAddImage.addImage',
-          reason: error.reason,
+          reason: error.message,
         });
       })
       .then((response) => {
         modulePromise.resolve(response);
       });
+    addCategory({ userId, category });
   } catch (exception) {
     modulePromise.reject({
       type: 'handleAddImage.addImage',
