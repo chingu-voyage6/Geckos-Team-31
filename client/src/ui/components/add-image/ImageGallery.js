@@ -1,6 +1,5 @@
 import fetch from 'isomorphic-fetch';
 import React from 'react';
-import PropTypes from 'prop-types';
 import Header from '../_common/Header';
 
 class ImageGallery extends React.Component {
@@ -22,9 +21,25 @@ class ImageGallery extends React.Component {
       .then((response) => {
         this.setState({
           gallery: response,
-        })
+        });
       })
-      .catch(error => console.log(error))
+      .catch(error => console.log(error));
+  }
+
+  addImageToUserAccount(image) {
+    const { gallery } = this.state;
+    console.log(image)
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/api/add-image-to-account', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+        value: image,
+    }));
+    xhr.onload = (data)  => {
+      console.log("HELLO")
+      console.log(data.currentTarget.response);
+  }
+
   }
 
   render() {
@@ -36,20 +51,25 @@ class ImageGallery extends React.Component {
           size="large"
         />
         <div className="ImageGallery--images">
-          {gallery.map(image => <img src={`${image}`} alt={image} key={image} />)}
+          {gallery.map(image => (
+            <img
+              onClick={() => this.addImageToUserAccount(image)}
+              src={`${image}`}
+              alt={image}
+              key={image}
+              />)
+            )}
         </div>
       </div>
     );
-};
+  }
 }
 
 
 ImageGallery.propTypes = {
-  gallery: PropTypes.arrayOf(PropTypes.string),
 };
 
 ImageGallery.defaultProps = {
-  gallery: undefined,
 };
 
 export default ImageGallery;
