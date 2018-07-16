@@ -3,7 +3,6 @@
 import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
 import handleAddImage from '../../../modules/handle-add-image';
 import Header from '../_common/Header';
 import Form from '../_common/Form';
@@ -47,7 +46,6 @@ class ImageGallery extends React.Component {
     const category = document.querySelector('[name="categoryName"]').value;
     handleAddImage({ image: currentImage, category, userId })
       .then((response) => {
-        console.log(response);
         this.closeImageModal();
       })
       .catch(error => console.log(error));
