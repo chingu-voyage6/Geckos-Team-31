@@ -9,7 +9,7 @@ class TalkBoardSelectContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      gallery: [],
+      categoryImages: [],
     };
   }
 
@@ -19,8 +19,14 @@ class TalkBoardSelectContainer extends React.Component {
     const userId = '5b4b31cc5e0d13fa72316796';
     handleGetCategoryImages({ userId, category })
       .then((response) => {
+        const images = [];
+        response.images.forEach((image) => {
+          if (image.category.toLowerCase() === category.toLowerCase()) {
+            images.push(image.fileName);
+          }
+        });
         this.setState({
-          gallery: response,
+          categoryImages: images,
         });
       })
       .catch(error => error);
@@ -30,18 +36,19 @@ class TalkBoardSelectContainer extends React.Component {
     const {
       toggleBackgroundFade,
     } = this.props;
-    const { gallery } = this.state;
+    const { categoryImages } = this.state;
     return (
       <TalkBoardSelect
-        gallery={gallery}
+        categoryImages={categoryImages}
         toggleBackgroundFade={toggleBackgroundFade}
-      />);
+      />
+    );
   }
 }
 
 TalkBoardSelectContainer.propTypes = {
   toggleBackgroundFade: PropTypes.func,
-  category: PropTypes.arrayOf(PropTypes.string),
+  category: PropTypes.string,
 };
 
 TalkBoardSelectContainer.defaultProps = {

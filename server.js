@@ -51,29 +51,85 @@ app.get('/api/images', getDirectoryContent, function(req, res) {
   res.send(images);
 });
 
-app.post('/api/add-image-to-account', function (req, res) {
-  // Set our internal DB variable
+// find categories
+
+app.post('/api/categories', function (req, res) {
     var db = req.db;
-
-    // Get our form values. These rely on the "name" attributes
-    var userName = 'James Harding';
-
-    // Set our collection
     var collection = db.get('users');
+    collection.findOne({ _id: req.body.userId }, { categories: 1 }
+      , function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.json(err);
+        }
+        else {
+            // And forward to success page
+            res.json(doc);
+        }
+    });
+})
 
-    // Submit to the DB
-    collection.update({ name: userName }, {
+
+// find user gallery by categories
+
+app.post('/api/user-gallery', function (req, res) {
+    var db = req.db;
+    var collection = db.get('users');
+    collection.findOne(
+      { _id: req.body.userId }
+      , function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.json(err);
+        }
+        else {
+            // And forward to success page
+            res.json(doc);
+        }
+    });
+})
+
+// add a category
+
+app.post('/api/add-category', function (req, res) {
+    var db = req.db;
+    var collection = db.get('users');
+    collection.update({ _id: req.body.userId }, {
         $addToSet: {
-          images: req.body.value,
+          categories: req.body.category,
         }
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
-            res.send(err);
+            res.json(err);
+        }
+        else {
+            res.json(`Success`)
+        }
+    });
+})
+
+// add image object
+
+app.post('/api/add-image-to-account', function (req, res) {
+    var db = req.db;
+    var collection = db.get('users');
+    const image = {
+      fileName: req.body.image,
+      category: req.body.category,
+    }
+    collection.update({ _id: req.body.userId }, {
+        $addToSet: {
+          images: image,
+        }
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.json(err);
         }
         else {
             // And forward to success page
-            res.send("All is awesome")
+            res.json(`You have added the image ${req.body.image} to your account`)
         }
     });
 })

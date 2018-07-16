@@ -1,18 +1,30 @@
 import React from 'react';
 import TalkBoardSelectContainer from '../../containers/TalkBoardSelectContainer';
 import CategoriesList from './CategoriesList';
-import getCategories from '../../../modules/get-categories';
+import handleGetCategories from '../../../modules/handle-get-categories';
 
 
 class TalkBoardView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: getCategories()[0].toLowerCase(),
+      category: '',
       fadeBackground: false,
+      categories: [],
     };
     this.switchCategories = this.switchCategories.bind(this);
     this.toggleBackgroundFade = this.toggleBackgroundFade.bind(this);
+  }
+
+  componentDidMount() {
+    handleGetCategories({ userId: '5b4b31cc5e0d13fa72316796' })
+      .then((response) => {
+        this.setState({
+          category: response.categories[0],
+          categories: response.categories,
+        });
+      })
+      .catch(error => console.log(error));
   }
 
   toggleBackgroundFade({ fade }) {
@@ -28,18 +40,24 @@ class TalkBoardView extends React.Component {
   }
 
   render() {
-    const { category, fadeBackground } = this.state;
+    const { category, fadeBackground, categories } = this.state;
     return (
       <div
         className="TalkBoardView"
       >
         <CategoriesList
           switchCategories={this.switchCategories}
+          categories={categories}
         />
-        <TalkBoardSelectContainer
-          category={category}
-          toggleBackgroundFade={this.toggleBackgroundFade}
-        />
+        {category
+          ? (
+            <TalkBoardSelectContainer
+              key={category}
+              category={category}
+              toggleBackgroundFade={this.toggleBackgroundFade}
+            />
+          ) : null
+          }
         {fadeBackground ? <div className="TalkBoardView__overlay" /> : null}
       </div>
     );

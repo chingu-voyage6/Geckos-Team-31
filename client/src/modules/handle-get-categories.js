@@ -2,11 +2,10 @@ import fetch from 'isomorphic-fetch';
 
 let modulePromise;
 
-const getCategoryImages = ({ userId }, promise) => {
+const getCategories = ({ userId }, promise) => {
   modulePromise = promise;
   try {
-    const url = '/api/user-gallery';
-    fetch(url, {
+    fetch('/api/categories', {
       method: 'POST',
       body: JSON.stringify({
         userId,
@@ -31,14 +30,14 @@ const getCategoryImages = ({ userId }, promise) => {
       });
   } catch (exception) {
     modulePromise.reject({
-      type: 'handleGetUserGallery.getCategoryImages',
+      type: 'handleGetCategories.handleGetCategories',
       reason: exception,
     });
   }
 };
 
-const handleGetCategoryImages = ({ userId, category }) => new Promise((resolve, reject) => {
-  getCategoryImages({ userId, category }, { resolve, reject });
+const handleGetCategories = ({ userId }) => new Promise((resolve, reject) => {
+  getCategories({ userId }, { resolve, reject });
 });
 
-export default handleGetCategoryImages;
+export default handleGetCategories;

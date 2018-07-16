@@ -12,7 +12,7 @@ class TalkBoardSelect extends React.Component {
 
   render() {
     const {
-      images,
+      categoryImages,
       toggleBackgroundFade,
     } = this.props;
     return (
@@ -22,7 +22,7 @@ class TalkBoardSelect extends React.Component {
         <div
           className="TalkBoardSelect--Images"
         >
-          {images.map(image => (
+          {categoryImages.map(image => (
             <ImageCard
               key={image}
               image={image}
@@ -37,12 +37,12 @@ class TalkBoardSelect extends React.Component {
 }
 
 TalkBoardSelect.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string),
+  categoryImages: PropTypes.arrayOf(PropTypes.string),
   toggleBackgroundFade: PropTypes.func,
 };
 
 TalkBoardSelect.defaultProps = {
-  images: undefined,
+  categoryImages: undefined,
   toggleBackgroundFade: undefined,
 };
 
