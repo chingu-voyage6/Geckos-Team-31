@@ -69,10 +69,28 @@ app.post('/api/categories', function (req, res) {
     });
 })
 
+// return all user images
+
+app.post('/api/user-gallery', function (req, res) {
+    var db = req.db;
+    var collection = db.get('users');
+    collection.findOne({ _id: req.body.userId }, { images: 1}
+      , function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.json(err);
+        }
+        else {
+            // And forward to success page
+            res.json(doc);
+        }
+    });
+})
+
 
 // find user gallery by categories
 
-app.post('/api/user-gallery', function (req, res) {
+app.post('/api/user-category', function (req, res) {
     var db = req.db;
     var collection = db.get('users');
     collection.findOne(
@@ -129,7 +147,25 @@ app.post('/api/add-image-to-account', function (req, res) {
         }
         else {
             // And forward to success page
-            res.json(`You have added the image ${req.body.image} to your account`)
+            res.json(image)
+        }
+    });
+})
+
+app.post('/api/remove-image-from-account', function (req, res) {
+    var db = req.db;
+    var collection = db.get('users');
+    const image = req.body.image
+    collection.update({ _id: req.body.userId }, {
+        $pull: { images : { fileName : image }, }
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.json(err);
+        }
+        else {
+            // And forward to success page
+            res.json(doc)
         }
     });
 })

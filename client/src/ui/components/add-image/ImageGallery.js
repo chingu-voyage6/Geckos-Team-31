@@ -2,8 +2,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import Modal from 'react-modal';
+import _ from 'underscore';
 import PropTypes from 'prop-types';
+import GalleryImage from './GalleryImage';
+import userId from '../../../testData';
 import handleAddImage from '../../../modules/handle-add-image';
+import handleRemoveImage from '../../../modules/handle-remove-image';
 import Header from '../_common/Header';
 import Form from '../_common/Form';
 import Input from '../_common/Input';
@@ -11,18 +15,17 @@ import Button from '../_common/Button';
 
 
 class ImageGallery extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { userGallery } = this.props;
     this.state = {
       isAddImageModalOpen: false,
       currentImage: '',
+      userGallery,
     };
     this.openImageModal = this.openImageModal.bind(this);
     this.closeImageModal = this.closeImageModal.bind(this);
-  }
-
-  componentDidMount() {
-
+    this.removeImage = this.removeImage.bind(this);
   }
 
   openImageModal(image) {
@@ -38,14 +41,32 @@ class ImageGallery extends React.Component {
       currentImage: '',
     });
   }
+  removeImage(image) {
+    const { userGallery } = this.state;
+    console.log(image)
+    handleRemoveImage({ image, userId: userId() })
+    .then(() => {
+      const newUserGallery = _.without(userGallery, image);
+    this.setState({
+      userGallery: newUserGallery,
+    })
+  })
+    .catch(error => console.log(error));
+  }
+
 
   addImage() {
-    const { currentImage } = this.state;
+    const { currentImage, userGallery } = this.state;
     // const { userId } = this.props;
-    const userId = '5b4b31cc5e0d13fa72316796';
     const category = document.querySelector('[name="categoryName"]').value;
-    handleAddImage({ image: currentImage, category, userId })
+    handleAddImage({ image: currentImage, category, userId: userId() })
       .then((response) => {
+        const newUserGallery = userGallery;
+        newUserGallery.push(response.fileName)
+        this.setState({
+          userGallery: newUserGallery,
+        })
+        console.log(`You add the image: ${response.image}`);
         this.closeImageModal();
       })
       .catch(error => console.log(error));
@@ -85,6 +106,7 @@ class ImageGallery extends React.Component {
 
   render() {
     const { gallery } = this.props;
+    const { userGallery } = this.state;
     return (
       <div className="ImageGallery">
         <Header
@@ -92,17 +114,20 @@ class ImageGallery extends React.Component {
           size="large"
         />
         <div className="ImageGallery--images">
-          {gallery.map(image => (
-            <div
-              className="ImageGallery--image"
-              onClick={() => this.openImageModal(image)}
-              key={image}
-            >
-              <img
-                src={image}
-                alt={image}
-              />
-            </div>))}
+          {gallery.map((image) => {
+            let isOwnedByUser = false;
+            if (_.contains(userGallery, image)) {
+              isOwnedByUser = true;
+            }
+            return (
+              <GalleryImage
+                key={image + isOwnedByUser}
+                image={image}
+                isOwnedByUser={isOwnedByUser}
+                removeImage={this.removeImage}
+                openImageModal={this.openImageModal}
+              />);
+          })}
         </div>
         {this.renderAddImageModal()}
       </div>
@@ -113,10 +138,12 @@ class ImageGallery extends React.Component {
 
 ImageGallery.propTypes = {
   gallery: PropTypes.arrayOf(PropTypes.string),
+  userGallery: PropTypes.arrayOf(PropTypes.string),
 };
 
 ImageGallery.defaultProps = {
   gallery: undefined,
+  userGallery: undefined,
 };
 
 export default ImageGallery;
