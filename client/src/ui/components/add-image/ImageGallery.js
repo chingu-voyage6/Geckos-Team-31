@@ -44,7 +44,6 @@ class ImageGallery extends React.Component {
 
   removeImage(image) {
     const { userGallery } = this.state;
-    console.log(image)
     handleRemoveImage({ image, userId: userId() })
     .then(() => {
       const newUserGallery = _.without(userGallery, image);
@@ -60,7 +59,6 @@ class ImageGallery extends React.Component {
     const { currentImage, userGallery } = this.state;
     // const { userId } = this.props;
     const category = document.querySelector('[name="categoryName"]').value;
-    console.log(currentImage)
     handleAddImage({ image: currentImage, category, userId: userId() })
       .then((response) => {
         const newUserGallery = userGallery;
@@ -68,7 +66,7 @@ class ImageGallery extends React.Component {
         this.setState({
           userGallery: newUserGallery,
         })
-        console.log(`You add the image: ${response.image}`);
+        console.log(`You added the image: ${response.fileName}`);
         this.closeImageModal();
       })
       .catch(error => console.log(error));

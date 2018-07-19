@@ -37,7 +37,6 @@ class ImageGalleryContainer extends React.Component {
       toggleBackgroundFade,
     } = this.props;
     const { gallery, userGallery } = this.state;
-    console.log(userGallery.length)
     return (
       <ImageGallery
         key={userGallery.length}

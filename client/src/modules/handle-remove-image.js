@@ -47,14 +47,12 @@ const removeImage = ({ image, userId, category }, promise) => {
       },
     }).then(res => res.json())
       .catch((error) => {
-        console.log(error)
         modulePromise.reject({
           type: 'handleAddImage.addImage',
           reason: error.message,
         });
       })
       .then((response) => {
-        console.log(response)
         modulePromise.resolve(response);
       });
     // removeCategory({ userId, category });

@@ -19,7 +19,6 @@ class TalkBoardSelectContainer extends React.Component {
     // const { userId } = this.props;
     handleGetCategoryImages({ userId: userId(), category })
       .then((response) => {
-        console.log(response)
         this.setState({
           categoryImages: response,
         });
