@@ -20,7 +20,6 @@ class TalkBoardView extends React.Component {
   componentDidMount() {
     handleGetCategories({ userId: userId() })
       .then((response) => {
-        console.log(response)
         this.setState({
           category: response.categories[0],
           categories: response.categories,

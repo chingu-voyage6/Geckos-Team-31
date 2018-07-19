@@ -39,7 +39,7 @@ body {
   text-align: center; }
 
 .Button--list {
-  width: 150px;
+  min-width: 180px;
   height: 30px;
   background-color: #FFC03C;
   border: none;

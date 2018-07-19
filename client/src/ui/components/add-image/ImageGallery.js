@@ -12,6 +12,7 @@ import Header from '../_common/Header';
 import Form from '../_common/Form';
 import Input from '../_common/Input';
 import Button from '../_common/Button';
+import handleGetCategories from '../../../modules/handle-get-categories';
 
 
 class ImageGallery extends React.Component {
@@ -22,10 +23,35 @@ class ImageGallery extends React.Component {
       isAddImageModalOpen: false,
       currentImage: '',
       userGallery,
+      categories: [],
+      isUpdateCategoryModalOpen: false,
     };
     this.openImageModal = this.openImageModal.bind(this);
     this.closeImageModal = this.closeImageModal.bind(this);
+    this.closeUpdateCategoryModal = this.closeUpdateCategoryModal.bind(this);
     this.removeImage = this.removeImage.bind(this);
+  }
+
+  componentDidMount() {
+    handleGetCategories({ userId: userId() })
+      .then((response) =>{
+        this.setState({
+          categories: response,
+        });
+      })
+      .catch(error => console.log(error))
+  }
+
+  openUpdateCategoryModal() {
+    this.setState({
+      isUpdateCategoryModalOpen: true,
+    });
+  }
+
+  closeUpdateCategoryModal() {
+    this.setState({
+      isUpdateCategoryModalOpen: false,
+    });
   }
 
   openImageModal(image) {
@@ -45,13 +71,13 @@ class ImageGallery extends React.Component {
   removeImage(image) {
     const { userGallery } = this.state;
     handleRemoveImage({ image, userId: userId() })
-    .then(() => {
-      const newUserGallery = _.without(userGallery, image);
-    this.setState({
-      userGallery: newUserGallery,
-    })
-  })
-    .catch(error => console.log(error));
+      .then(() => {
+        const newUserGallery = _.without(userGallery, image);
+        this.setState({
+          userGallery: newUserGallery,
+        });
+      })
+      .catch(error => console.log(error));
   }
 
 
@@ -65,11 +91,41 @@ class ImageGallery extends React.Component {
         newUserGallery.push(response.fileName)
         this.setState({
           userGallery: newUserGallery,
-        })
+        });
         console.log(`You added the image: ${response.fileName}`);
         this.closeImageModal();
       })
       .catch(error => console.log(error));
+  }
+
+  renderUpdateCategoryModal() {
+    const { isUpdateCategoryModalOpen, currentImage } = this.state;
+    return (
+      <Modal
+        isOpen={isUpdateCategoryModalOpen}
+        onRequestClose={this.closeUpdateCategoryModal}
+        className="Modal"
+        contentLabel="Add Image Details"
+        shouldCloseOnOverlayClick
+        ariaHideApp={false}
+      >
+        <div
+          className="AddImageModal"
+        >
+          <Form id="add-image">
+            <Input
+              type="text"
+              name="categoryName"
+              label="Category Name"
+            />
+            <Button
+              label="Add Image"
+              onClick={() => this.addImage()}
+            />
+          </Form>
+        </div>
+      </Modal>
+    );
   }
 
   renderAddImageModal() {
@@ -113,6 +169,14 @@ class ImageGallery extends React.Component {
           heading="Add images from gallery"
           size="large"
         />
+        <Header
+          heading="Add and remove category titles"
+          size="small"
+        />
+        <Button
+          label="Update Categories"
+          onClick={() => this.openUpdateCategoryModal()}
+        />
         <div className="ImageGallery--images">
           {gallery.map((image) => {
             let isOwnedByUser = false;
@@ -130,6 +194,7 @@ class ImageGallery extends React.Component {
           })}
         </div>
         {this.renderAddImageModal()}
+        {this.renderUpdateCategoryModal()}
       </div>
     );
   }

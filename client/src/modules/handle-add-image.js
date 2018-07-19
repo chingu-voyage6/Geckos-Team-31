@@ -56,7 +56,7 @@ const addImage = ({ image, userId, category }, promise) => {
       .then((response) => {
         modulePromise.resolve(response);
       });
-    addCategory({ userId, category });
+    // addCategory({ userId, category });
   } catch (exception) {
     modulePromise.reject({
       type: 'handleAddImage.addImage',

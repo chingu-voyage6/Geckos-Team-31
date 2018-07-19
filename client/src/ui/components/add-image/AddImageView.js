@@ -5,19 +5,16 @@ import ImageGalleryContainer from '../../containers/add-image/ImageGalleryContai
 import ImageUpload from './ImageUpload';
 
 
-class AddImageView extends React.Component {
-
-  render() {
-    return (
-      <div className="AddImageView--wrapper">
+const AddImageView = () => {
+  return (
+    <div className="AddImageView--wrapper">
       <NavBar />
       <div className="AddImageView">
-      <ImageGalleryContainer />
-      <ImageUpload />
+        <ImageGalleryContainer />
+        <ImageUpload />
       </div>
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
 AddImageView.propTypes = {
