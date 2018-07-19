@@ -2,6 +2,7 @@ import React from 'react';
 import TalkBoardSelectContainer from '../../containers/TalkBoardSelectContainer';
 import CategoriesList from './CategoriesList';
 import handleGetCategories from '../../../modules/handle-get-categories';
+import userId from '../../../testData';
 
 
 class TalkBoardView extends React.Component {
@@ -17,8 +18,9 @@ class TalkBoardView extends React.Component {
   }
 
   componentDidMount() {
-    handleGetCategories({ userId: '5b4b31cc5e0d13fa72316796' })
+    handleGetCategories({ userId: userId() })
       .then((response) => {
+        console.log(response)
         this.setState({
           category: response.categories[0],
           categories: response.categories,

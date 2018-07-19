@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TalkBoardSelect from '../components/talk/TalkBoardSelect';
 import handleGetCategoryImages from '../../modules/handle-get-category-images';
+import userId from '../../testData';
 
 // HOC or Container Component, gets the data to display in the core componenet
 
@@ -16,9 +17,9 @@ class TalkBoardSelectContainer extends React.Component {
   componentDidMount() {
     const { category } = this.props;
     // const { userId } = this.props;
-    const userId = '5b4b31cc5e0d13fa72316796';
-    handleGetCategoryImages({ userId, category })
+    handleGetCategoryImages({ userId: userId(), category })
       .then((response) => {
+        console.log(response)
         this.setState({
           categoryImages: response,
         });

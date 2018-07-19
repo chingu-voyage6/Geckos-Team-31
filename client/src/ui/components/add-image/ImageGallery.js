@@ -41,6 +41,7 @@ class ImageGallery extends React.Component {
       currentImage: '',
     });
   }
+
   removeImage(image) {
     const { userGallery } = this.state;
     console.log(image)
@@ -59,6 +60,7 @@ class ImageGallery extends React.Component {
     const { currentImage, userGallery } = this.state;
     // const { userId } = this.props;
     const category = document.querySelector('[name="categoryName"]').value;
+    console.log(currentImage)
     handleAddImage({ image: currentImage, category, userId: userId() })
       .then((response) => {
         const newUserGallery = userGallery;

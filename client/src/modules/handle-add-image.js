@@ -35,6 +35,7 @@ const addCategory = ({ userId, category }) => {
 const addImage = ({ image, userId, category }, promise) => {
   modulePromise = promise;
   try {
+    console.log(image)
     const url = '/api/add-image-to-account';
     fetch(url, {
       method: 'POST', // or 'PUT'
@@ -48,12 +49,14 @@ const addImage = ({ image, userId, category }, promise) => {
       },
     }).then(res => res.json())
       .catch((error) => {
+        console.log(error)
         modulePromise.reject({
           type: 'handleAddImage.addImage',
           reason: error.message,
         });
       })
       .then((response) => {
+        console.log(response)
         modulePromise.resolve(response);
       });
     addCategory({ userId, category });
