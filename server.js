@@ -122,7 +122,7 @@ app.post('/api/add-category', function (req, res) {
             res.json(err);
         }
         else {
-            res.json(`Success`)
+            res.json(req.body.category)
         }
     });
 })

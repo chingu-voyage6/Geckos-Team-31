@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import GalleryImage from './GalleryImage';
 import userId from '../../../testData';
 import handleAddImage from '../../../modules/handle-add-image';
+import handleAddCategory from '../../../modules/handle-add-category';
 import handleRemoveImage from '../../../modules/handle-remove-image';
 import Select from '../_common/Select';
 import Header from '../_common/Header';
@@ -63,6 +64,21 @@ class ImageGallery extends React.Component {
       .catch(error => console.log(error));
   }
 
+  addCategory() {
+    // const { userId } = this.props;
+    const { updateNewCategory } = this.props;
+    const category = document.querySelector('[name="categoryName"]').value;
+    handleAddCategory({ category, userId: userId() })
+      .then((response) => {
+        console.log(response)
+        this.closeUpdateCategoryModal();
+        updateNewCategory(response);
+        console.log('hello')
+        console.log(`You added the category: ${response}`);
+      })
+      .catch(error => console.log(error));
+  }
+
 
   addImage() {
     const { currentImage } = this.state;
@@ -91,9 +107,10 @@ class ImageGallery extends React.Component {
         ariaHideApp={false}
       >
         <div
-          className="AddImageModal"
+          className="UpdateCategoryModal"
         >
-          <Form id="add-image">
+          <Form id="add-category">
+            <p>Add new</p>
             <Input
               type="text"
               name="categoryName"
@@ -101,7 +118,19 @@ class ImageGallery extends React.Component {
             />
             <Button
               label="Add Image"
-              onClick={() => this.addImage()}
+              onClick={() => this.addCategory()}
+            />
+          </Form>
+          <Form id="remove-category">
+            <p>Remove category</p>
+            <Input
+              type="text"
+              name="categoryName"
+              label="Category Name"
+            />
+            <Button
+              label="Add Image"
+              onClick={() => this.addCategory()}
             />
           </Form>
         </div>
@@ -196,6 +225,7 @@ ImageGallery.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.string),
   updateNewImage: PropTypes.func,
   updateRemoveImage: PropTypes.func,
+  updateNewCategory: PropTypes.func,
 };
 
 ImageGallery.defaultProps = {
@@ -203,6 +233,7 @@ ImageGallery.defaultProps = {
   userGallery: undefined,
   categories: undefined,
   updateNewImage: undefined,
+  updateNewCategory: undefined,
   updateRemoveImage: undefined,
 };
 

@@ -2,7 +2,8 @@ import fetch from 'isomorphic-fetch';
 
 let modulePromise;
 
-const addCategory = ({ userId, category }) => {
+const addCategory = ({ userId, category }, promise) => {
+  modulePromise = promise;
   try {
     const url = '/api/add-category';
     fetch(url, {

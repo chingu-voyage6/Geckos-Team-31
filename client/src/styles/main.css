@@ -293,6 +293,17 @@ select {
     margin: 0px auto;
     width: 100px; }
 
+.UpdateCategoryModal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%; }
+  .UpdateCategoryModal img {
+    position: relative;
+    margin: 0px auto;
+    width: 100px; }
+
 .ImageUpload {
   margin: 10px;
   width: 50%;

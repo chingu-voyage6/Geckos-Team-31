@@ -18,6 +18,7 @@ class ImageGalleryContainer extends React.Component {
     };
     this.updateNewImage = this.updateNewImage.bind(this);
     this.updateRemoveImage = this.updateRemoveImage.bind(this);
+    this.updateNewCategory = this.updateNewCategory.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +43,15 @@ class ImageGalleryContainer extends React.Component {
         });
       })
       .catch(error => console.log(error));
+  }
+
+  updateNewCategory(response) {
+    const { categories } = this.state;
+    const newCategories = categories
+    categories.push(response)
+    this.setState({
+      categories: newCategories,
+    });
   }
 
   updateRemoveImage(image) {
@@ -75,6 +85,7 @@ class ImageGalleryContainer extends React.Component {
         categories={categories}
         updateNewImage={this.updateNewImage}
         updateRemoveImage={this.updateRemoveImage}
+        updateNewCategory={this.updateNewCategory}
       />);
   }
 }
