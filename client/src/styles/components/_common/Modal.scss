@@ -3,16 +3,26 @@
 }
 
 .Modal {
-  height: 300px;
-  width: 600px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 400px;
+  width: 300px;
   background: white;
   margin: 0px auto;
   margin-top: 150px;
   border: 2px solid $highlight-red;
 
+
+  .Select {
+    select {
+      width: 150px;
+      height: 25px;
+    }
+  }
   .Input {
     margin: 0px auto;
-    margin-bottom: 25px;
   }
   .Button {
     margin: 0px auto;

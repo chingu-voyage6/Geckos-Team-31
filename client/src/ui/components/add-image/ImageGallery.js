@@ -8,38 +8,24 @@ import GalleryImage from './GalleryImage';
 import userId from '../../../testData';
 import handleAddImage from '../../../modules/handle-add-image';
 import handleRemoveImage from '../../../modules/handle-remove-image';
+import Select from '../_common/Select';
 import Header from '../_common/Header';
 import Form from '../_common/Form';
 import Input from '../_common/Input';
 import Button from '../_common/Button';
-import handleGetCategories from '../../../modules/handle-get-categories';
-
 
 class ImageGallery extends React.Component {
   constructor(props) {
     super(props);
-    const { userGallery } = this.props;
     this.state = {
       isAddImageModalOpen: false,
       currentImage: '',
-      userGallery,
-      categories: [],
       isUpdateCategoryModalOpen: false,
     };
     this.openImageModal = this.openImageModal.bind(this);
     this.closeImageModal = this.closeImageModal.bind(this);
     this.closeUpdateCategoryModal = this.closeUpdateCategoryModal.bind(this);
     this.removeImage = this.removeImage.bind(this);
-  }
-
-  componentDidMount() {
-    handleGetCategories({ userId: userId() })
-      .then((response) =>{
-        this.setState({
-          categories: response,
-        });
-      })
-      .catch(error => console.log(error))
   }
 
   openUpdateCategoryModal() {
@@ -69,37 +55,32 @@ class ImageGallery extends React.Component {
   }
 
   removeImage(image) {
-    const { userGallery } = this.state;
+    const { updateRemoveImage } = this.props;
     handleRemoveImage({ image, userId: userId() })
       .then(() => {
-        const newUserGallery = _.without(userGallery, image);
-        this.setState({
-          userGallery: newUserGallery,
-        });
+        updateRemoveImage(image);
       })
       .catch(error => console.log(error));
   }
 
 
   addImage() {
-    const { currentImage, userGallery } = this.state;
+    const { currentImage } = this.state;
+    const { updateNewImage } = this.props;
     // const { userId } = this.props;
     const category = document.querySelector('[name="categoryName"]').value;
     handleAddImage({ image: currentImage, category, userId: userId() })
       .then((response) => {
-        const newUserGallery = userGallery;
-        newUserGallery.push(response.fileName)
-        this.setState({
-          userGallery: newUserGallery,
-        });
-        console.log(`You added the image: ${response.fileName}`);
         this.closeImageModal();
+        updateNewImage(response);
+        console.log('hello')
+        console.log(`You added the image: ${response.fileName}`);
       })
       .catch(error => console.log(error));
   }
 
   renderUpdateCategoryModal() {
-    const { isUpdateCategoryModalOpen, currentImage } = this.state;
+    const { isUpdateCategoryModalOpen } = this.state;
     return (
       <Modal
         isOpen={isUpdateCategoryModalOpen}
@@ -130,6 +111,7 @@ class ImageGallery extends React.Component {
 
   renderAddImageModal() {
     const { isAddImageModalOpen, currentImage } = this.state;
+    const { categories } = this.props;
     return (
       <Modal
         isOpen={isAddImageModalOpen}
@@ -143,12 +125,20 @@ class ImageGallery extends React.Component {
           className="AddImageModal"
         >
           <img src={currentImage} alt={currentImage} />
+          <Select
+            label="Select a category"
+            name="categoryName"
+          >
+            {categories ? categories.map(category => (
+              <option
+                value={category}
+                key={category}
+              >
+                {category}
+              </option>
+            )) : null}
+          </Select>
           <Form id="add-image">
-            <Input
-              type="text"
-              name="categoryName"
-              label="Category Name"
-            />
             <Button
               label="Add Image"
               onClick={() => this.addImage()}
@@ -161,8 +151,7 @@ class ImageGallery extends React.Component {
 
 
   render() {
-    const { gallery } = this.props;
-    const { userGallery } = this.state;
+    const { gallery, userGallery } = this.props;
     return (
       <div className="ImageGallery">
         <Header
@@ -204,11 +193,17 @@ class ImageGallery extends React.Component {
 ImageGallery.propTypes = {
   gallery: PropTypes.arrayOf(PropTypes.string),
   userGallery: PropTypes.arrayOf(PropTypes.string),
+  categories: PropTypes.arrayOf(PropTypes.string),
+  updateNewImage: PropTypes.func,
+  updateRemoveImage: PropTypes.func,
 };
 
 ImageGallery.defaultProps = {
   gallery: undefined,
   userGallery: undefined,
+  categories: undefined,
+  updateNewImage: undefined,
+  updateRemoveImage: undefined,
 };
 
 export default ImageGallery;

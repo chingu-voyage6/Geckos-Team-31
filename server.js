@@ -5,7 +5,7 @@ const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const monk = require('monk');
-const db = monk('localhost:27017/users');
+const db = monk('localhost:27017/pecs-app');
 const fs = require('fs');
 
 const app = express();

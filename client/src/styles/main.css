@@ -15,15 +15,21 @@ body {
   background-color: rgba(173, 216, 230, 0.4) !important; }
 
 .Modal {
-  height: 300px;
-  width: 600px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 400px;
+  width: 300px;
   background: white;
   margin: 0px auto;
   margin-top: 150px;
   border: 2px solid #FF463C; }
+  .Modal .Select select {
+    width: 150px;
+    height: 25px; }
   .Modal .Input {
-    margin: 0px auto;
-    margin-bottom: 25px; }
+    margin: 0px auto; }
   .Modal .Button {
     margin: 0px auto; }
 
@@ -36,7 +42,8 @@ body {
 .Button {
   width: 150px;
   margin: 10px;
-  text-align: center; }
+  text-align: center;
+  margin-right: 30px; }
 
 .Button--list {
   min-width: 180px;
@@ -127,6 +134,20 @@ Header {
   margin: 10px;
   font-family: 'Garamond', sans-serif;
   color: #FF463C; }
+
+.Select {
+  position: relative;
+  margin: 0px auto; }
+
+.Select--input {
+  height: 50px;
+  width: 150px;
+  width: 100%;
+  height: 100%; }
+
+select {
+  height: 50px;
+  width: 150px; }
 
 .App {
   text-align: center;
