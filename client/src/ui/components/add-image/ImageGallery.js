@@ -9,6 +9,7 @@ import userId from '../../../testData';
 import handleAddImage from '../../../modules/handle-add-image';
 import handleAddCategory from '../../../modules/handle-add-category';
 import handleRemoveImage from '../../../modules/handle-remove-image';
+import handleRemoveCategory from '../../../modules/handle-remove-category';
 import Select from '../_common/Select';
 import Header from '../_common/Header';
 import Form from '../_common/Form';
@@ -64,16 +65,25 @@ class ImageGallery extends React.Component {
       .catch(error => console.log(error));
   }
 
+  removeCategory() {
+    const { updateRemoveCategory } = this.props;
+    const category = document.querySelector('[name="removeCategory"]').value;
+    handleRemoveCategory({ category, userId: userId() })
+      .then((response) => {
+        updateRemoveCategory(response);
+        this.closeUpdateCategoryModal();
+      })
+      .catch(error => console.log(error));
+  }
+
   addCategory() {
     // const { userId } = this.props;
     const { updateNewCategory } = this.props;
     const category = document.querySelector('[name="categoryName"]').value;
     handleAddCategory({ category, userId: userId() })
       .then((response) => {
-        console.log(response)
         this.closeUpdateCategoryModal();
         updateNewCategory(response);
-        console.log('hello')
         console.log(`You added the category: ${response}`);
       })
       .catch(error => console.log(error));
@@ -89,7 +99,6 @@ class ImageGallery extends React.Component {
       .then((response) => {
         this.closeImageModal();
         updateNewImage(response);
-        console.log('hello')
         console.log(`You added the image: ${response.fileName}`);
       })
       .catch(error => console.log(error));
@@ -97,6 +106,7 @@ class ImageGallery extends React.Component {
 
   renderUpdateCategoryModal() {
     const { isUpdateCategoryModalOpen } = this.state;
+    const { categories } = this.props;
     return (
       <Modal
         isOpen={isUpdateCategoryModalOpen}
@@ -110,27 +120,33 @@ class ImageGallery extends React.Component {
           className="UpdateCategoryModal"
         >
           <Form id="add-category">
-            <p>Add new</p>
+            <p>
+              Add new
+            </p>
             <Input
               type="text"
               name="categoryName"
               label="Category Name"
             />
             <Button
-              label="Add Image"
+              label="Add category"
               onClick={() => this.addCategory()}
             />
           </Form>
           <Form id="remove-category">
-            <p>Remove category</p>
-            <Input
-              type="text"
-              name="categoryName"
-              label="Category Name"
-            />
+            <p>
+              Remove category
+            </p>
+            <Select name="removeCategory">
+              {categories.map(category => (
+                <option value={category} key={category}>
+                  {category}
+                </option>
+              ))}
+            </Select>
             <Button
-              label="Add Image"
-              onClick={() => this.addCategory()}
+              label="Remove category"
+              onClick={() => this.removeCategory()}
             />
           </Form>
         </div>
@@ -226,6 +242,7 @@ ImageGallery.propTypes = {
   updateNewImage: PropTypes.func,
   updateRemoveImage: PropTypes.func,
   updateNewCategory: PropTypes.func,
+  updateRemoveCategory: PropTypes.func,
 };
 
 ImageGallery.defaultProps = {
@@ -235,6 +252,7 @@ ImageGallery.defaultProps = {
   updateNewImage: undefined,
   updateNewCategory: undefined,
   updateRemoveImage: undefined,
+  updateRemoveCategory: undefined,
 };
 
 export default ImageGallery;

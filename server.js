@@ -107,6 +107,26 @@ app.post('/api/user-category', function (req, res) {
     });
 })
 
+// remove a category
+
+app.post('/api/remove-category', function (req, res) {
+    var db = req.db;
+    var collection = db.get('users');
+    collection.update({ _id: req.body.userId }, {
+        $pull: {
+          categories: req.body.category,
+        }
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.json(err);
+        }
+        else {
+            res.json(req.body.category)
+        }
+    });
+})
+
 // add a category
 
 app.post('/api/add-category', function (req, res) {
