@@ -2,37 +2,7 @@ import fetch from 'isomorphic-fetch';
 
 let modulePromise;
 
-const addCategory = ({ userId, category }) => {
-  try {
-    const url = '/api/add-category';
-    fetch(url, {
-      method: 'POST', // or 'PUT'
-      body: JSON.stringify({
-        userId,
-        category,
-      }), // data can be `string` or {object}!
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then(res => res.json())
-      .catch((error) => {
-        modulePromise.reject({
-          type: 'handleAddImage.addCategory',
-          reason: error.message,
-        });
-      })
-      .then((response) => {
-        modulePromise.resolve(response);
-      });
-  } catch (exception) {
-    modulePromise.reject({
-      type: 'handleAddImage.addCategory',
-      reason: exception,
-    });
-  }
-};
-
-const addImage = ({ image, userId, category }, promise) => {
+const addImage = ({ image, userId, category, userSubmitted }, promise) => {
   modulePromise = promise;
   try {
     const url = '/api/add-image-to-account';
@@ -42,6 +12,7 @@ const addImage = ({ image, userId, category }, promise) => {
         image,
         userId,
         category,
+        userSubmitted,
       }), // data can be `string` or {object}!
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +27,6 @@ const addImage = ({ image, userId, category }, promise) => {
       .then((response) => {
         modulePromise.resolve(response);
       });
-    addCategory({ userId, category });
   } catch (exception) {
     modulePromise.reject({
       type: 'handleAddImage.addImage',
@@ -65,8 +35,12 @@ const addImage = ({ image, userId, category }, promise) => {
   }
 };
 
-const handleAddImage = ({ image, userId, category }) => new Promise((resolve, reject) => {
-  addImage({ image, userId, category }, { resolve, reject });
+const handleAddImage = ({
+  image, userId, category, userSubmitted
+}) => new Promise((resolve, reject) => {
+  addImage({
+    image, userId, category, userSubmitted
+  }, { resolve, reject });
 });
 
 export default handleAddImage;

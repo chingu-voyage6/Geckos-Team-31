@@ -5,12 +5,15 @@ import Input from '../_common/Input';
 import Button from '../_common/Button';
 import Header from '../_common/Header';
 import userId from '../../../testData';
-import handleAddNewUserImage from '../../../modules/handle-add-user-image';
+import handleAddImage from '../../../modules/handle-add-image';
 
 const addNewUserImage = () => {
   const file = document.querySelector('[name="newImageFile"]').value;
   const category = document.querySelector('[name="imageCategory"]').value;
-  handleAddNewUserImage({ image: file, category, userId: userId() })
+  const userSubmitted = true;
+  handleAddImage({
+    image: file, category, userId: userId(), userSubmitted
+  })
     .then(response => console.log(response))
     .catch(error => console.log(error));
 };
