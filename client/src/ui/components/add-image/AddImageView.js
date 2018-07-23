@@ -15,7 +15,7 @@ const AddImageView = () => {
       </div>
     </div>
   );
-}
+};
 
 AddImageView.propTypes = {
 

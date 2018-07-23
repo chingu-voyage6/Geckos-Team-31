@@ -33,7 +33,7 @@ const Input = (props) => {
 Input.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
-  onChange: PropTypes.string,
+  onChange: PropTypes.func,
   className: PropTypes.string,
   min: PropTypes.string,
   max: PropTypes.string,

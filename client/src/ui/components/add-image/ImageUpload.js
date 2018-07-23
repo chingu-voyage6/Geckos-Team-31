@@ -4,9 +4,18 @@ import Form from '../_common/Form';
 import Input from '../_common/Input';
 import Button from '../_common/Button';
 import Header from '../_common/Header';
+import userId from '../../../testData';
+import handleAddNewUserImage from '../../../modules/handle-add-user-image';
+
+const addNewUserImage = () => {
+  const file = document.querySelector('[name="newImageFile"]').value;
+  const category = document.querySelector('[name="imageCategory"]').value;
+  handleAddNewUserImage({ image: file, category, userId: userId() })
+    .then(response => console.log(response))
+    .catch(error => console.log(error));
+};
 
 class ImageUpload extends React.Component {
-
   render() {
     return (
       <div className="ImageUpload">
@@ -14,26 +23,17 @@ class ImageUpload extends React.Component {
           heading="Upload your own image"
           size="large"
         />
-        <Form id ="upload-image-form">
-          <Button
-            label="Upload Image"
-            theme="list"
-            type="file"
-             />
+        <Form id="upload-image-form">
           <Input
             label="Image Category"
             name="imageCategory"
             type="text"
-            />
-            <Input
-              label="Image Name"
-              name="imageName"
-              type="text"
-              />
-            <Button
-              theme="success"
-              label="Submit"
-              />
+          />
+          <input type="hidden" role="uploadcare-uploader" name="newImageFile" />
+          <Button
+            label="Submit file"
+            onClick={() => addNewUserImage()}
+          />
         </Form>
 
       </div>
