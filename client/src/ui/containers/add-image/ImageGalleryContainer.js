@@ -85,18 +85,11 @@ class ImageGalleryContainer extends React.Component {
     const {
       toggleBackgroundFade,
     } = this.props;
-    const { gallery, userGallery, categories } = this.state;
+    const { gallery } = this.state;
     return (
       <ImageGallery
-        key={userGallery.length}
         gallery={gallery}
-        userGallery={userGallery}
         toggleBackgroundFade={toggleBackgroundFade}
-        categories={categories}
-        updateNewImage={this.updateNewImage}
-        updateRemoveImage={this.updateRemoveImage}
-        updateNewCategory={this.updateNewCategory}
-        updateRemoveCategory={this.updateRemoveCategory}
       />);
   }
 }

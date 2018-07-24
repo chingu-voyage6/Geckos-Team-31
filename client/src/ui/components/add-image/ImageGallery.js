@@ -3,6 +3,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import _ from 'underscore';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import GalleryImage from './GalleryImage';
 import userId from '../../../testData';
@@ -15,6 +16,12 @@ import Header from '../_common/Header';
 import Form from '../_common/Form';
 import Input from '../_common/Input';
 import Button from '../_common/Button';
+
+const mapStateToProps = state => ({
+  userGallery: state.userGallery,
+  categories: state.categories,
+});
+
 
 class ImageGallery extends React.Component {
   constructor(props) {
@@ -138,11 +145,11 @@ class ImageGallery extends React.Component {
               Remove category
             </p>
             <Select name="removeCategory">
-              {categories.map(category => (
+              {categories ? categories.map(category => (
                 <option value={category} key={category}>
                   {category}
                 </option>
-              ))}
+              )) : null}
             </Select>
             <Button
               label="Remove category"
@@ -255,4 +262,4 @@ ImageGallery.defaultProps = {
   updateRemoveCategory: undefined,
 };
 
-export default ImageGallery;
+export default connect(mapStateToProps)(ImageGallery);
