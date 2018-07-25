@@ -23,30 +23,6 @@ function reducer(state = initialState, action) {
       categories,
     });
   }
-  if (action.type === 'USERGALLERY__ADDIMAGE') {
-    const userGallery = state.userGallery.concat(action.image);
-    return Object.assign({}, state, {
-      userGallery,
-    });
-  }
-  if (action.type === 'USERGALLERY__REMOVEIMAGE') {
-    const userGallery = _.without(state.userGallery, action.image);
-    return Object.assign({}, state, {
-      userGallery,
-    });
-  }
-  if (action.type === 'USERGALLERY__ADDCATEGORY') {
-    const categories = state.categories.concat(action.category);
-    return Object.assign({}, state, {
-      categories,
-    });
-  }
-  if (action.type === 'USERCATEGORY__REMOVECATEGORY') {
-    const categories = _.without(state.categories, action.category);
-    return Object.assign({}, state, {
-      categories,
-    });
-  }
   return state;
 }
 const store = createStore(reducer, applyMiddleware(thunk));

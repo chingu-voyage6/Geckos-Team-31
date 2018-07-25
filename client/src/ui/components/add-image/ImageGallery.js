@@ -7,9 +7,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import GalleryImage from './GalleryImage';
 import userId from '../../../testData';
-import {
-  addImage, removeImage, addCategory, removeCategory,
-} from '../../actions';
+import { loadCategories, loadUserGallery } from '../../actions';
 import handleAddImage from '../../../modules/handle-add-image';
 import handleAddCategory from '../../../modules/handle-add-category';
 import handleRemoveImage from '../../../modules/handle-remove-image';
@@ -64,7 +62,7 @@ class ImageGallery extends React.Component {
     const { dispatch } = this.props;
     handleRemoveImage({ image, userId: userId() })
       .then(() => {
-        dispatch(removeImage(image));
+        dispatch(loadUserGallery());
       })
       .catch(error => console.log(error));
   }
@@ -74,7 +72,8 @@ class ImageGallery extends React.Component {
     const category = document.querySelector('[name="removeCategory"]').value;
     handleRemoveCategory({ category, userId: userId() })
       .then((response) => {
-        dispatch(removeCategory(response));
+        console.log(`Category ${response} removed`)
+        dispatch(loadCategories());
         this.closeUpdateCategoryModal();
       })
       .catch(error => console.log(error));
@@ -87,7 +86,7 @@ class ImageGallery extends React.Component {
     handleAddCategory({ category, userId: userId() })
       .then((response) => {
         this.closeUpdateCategoryModal();
-        dispatch(addCategory(response));
+        dispatch(loadCategories());
         console.log(`You added the category: ${response}`);
       })
       .catch(error => console.log(error));
@@ -101,8 +100,8 @@ class ImageGallery extends React.Component {
     const category = document.querySelector('[name="categoryName"]').value;
     handleAddImage({ image: currentImage, category, userId: userId() })
       .then((response) => {
-        dispatch(addImage(response.fileName));
         this.closeImageModal();
+        dispatch(loadUserGallery());
         console.log(`You added the image: ${response.fileName}`);
       })
       .catch(error => console.log(error));
