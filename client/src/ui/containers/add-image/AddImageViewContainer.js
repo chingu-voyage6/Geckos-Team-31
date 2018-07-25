@@ -1,13 +1,9 @@
 import React from 'react';
-import { createStore } from 'redux';
-import { Provider, connect } from 'react-redux';
-import PropTypes from 'prop-types';
-
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import _ from 'underscore';
 import AddImageView from '../../components/add-image/AddImageView';
-import handleGetUserGallery from '../../../modules/handle-get-user-gallery';
-import handleGetCategories from '../../../modules/handle-get-categories';
-import userId from '../../../testData';
 
 const initialState = {
   userGallery: [],
@@ -15,83 +11,60 @@ const initialState = {
 };
 
 function reducer(state = initialState, action) {
-  if (action.type === 'USER-GALLERY__LOAD-GALLERY') {
+  if (action.type === 'USERGALLERY__LOADGALLERY') {
     const userGallery = action.gallery;
-    const newState = {
+    return Object.assign({}, state, {
       userGallery,
-    }
-    return newState;
+    });
   }
-  if (action.type === 'USER-GALLERY__LOAD-CATEGORIES') {
-    console.log(action.categories)
-    const categories = action.categories;
-    const newState = {
+  if (action.type === 'USERGALLERY__LOADCATEGORIES') {
+    const { categories } = action;
+    return Object.assign({}, state, {
       categories,
-    }
-    return newState;
+    });
   }
-  if (action.type === 'USER-GALLERY__ADD-IMAGE') {
-    const userGallery = state.userGallery.concat(action.fileName);
-    const newState = {
+  if (action.type === 'USERGALLERY__ADDIMAGE') {
+    const userGallery = state.userGallery.concat(action.image);
+    return Object.assign({}, state, {
       userGallery,
-    };
-    return newState;
+    });
   }
-  if (action.type === 'USER-GALLERY__REMOVE-IMAGE') {
+  if (action.type === 'USERGALLERY__REMOVEIMAGE') {
     const userGallery = _.without(state.userGallery, action.image);
-    const newState = {
+    return Object.assign({}, state, {
       userGallery,
-    };
-    return newState;
+    });
   }
-  if (action.type === 'USER-GALLERY__ADD-CATEGORY') {
+  if (action.type === 'USERGALLERY__ADDCATEGORY') {
     const categories = state.categories.concat(action.category);
-    const newState = {
+    return Object.assign({}, state, {
       categories,
-    };
-    return newState;
+    });
   }
-  if (action.type === 'USER-CATEGORY__REMOVE-CATEGORY') {
+  if (action.type === 'USERCATEGORY__REMOVECATEGORY') {
     const categories = _.without(state.categories, action.category);
-    const newState = {
+    return Object.assign({}, state, {
       categories,
-    };
-    return newState;
+    });
   }
   return state;
 }
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 
 
-class AddImageViewContainer extends React.Component {
-  componentDidMount() {
-    handleGetUserGallery({ userId: userId() })
-      .then((response) => {
-        store.dispatch({ type: 'USER-GALLERY__LOAD-GALLERY', gallery: response });
-      })
-      .catch(error => console.log(error));
-    handleGetCategories({ userId: userId() })
-      .then((response) => {
-        store.dispatch({ type: 'USER-GALLERY__LOAD-CATEGORIES', categories: response.categories });
-      })
-      .catch(error => console.log(error));
-  }
-
-  render() {
-    return (
-      <Provider store={store}>
-        <div className="App">
-          <AddImageView />
-        </div>
-      </Provider>
-    );
-  }
-}
+const AddImageViewContainer = () => (
+  <Provider store={store}>
+    <div className="App">
+      <AddImageView />
+    </div>
+  </Provider>
+);
 
 AddImageViewContainer.propTypes = {
 };
 
 AddImageViewContainer.defaultProps = {
+
 };
 
 export default AddImageViewContainer;

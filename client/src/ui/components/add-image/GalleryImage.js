@@ -3,32 +3,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class GalleryImage extends React.Component {
-  constructor(props) {
-    super(props);
-    const { isOwnedByUser } = this.props;
-    this.state = {
-      isOwnedByUser,
-    };
-  }
+const GalleryImage = (props) => {
+  const {
+    image, openImageModal, removeImage, isOwnedByUser,
+  } = props;
+  return (
+    <div
+      className={isOwnedByUser ? 'ImageGallery--user-image' : 'ImageGallery--image'}
+      onClick={!isOwnedByUser ? () => openImageModal(image) : () => removeImage(image)}
+      key={image}
+    >
+      <img
+        src={image}
+        alt={image}
+      />
+    </div>
+  );
+};
 
-  render() {
-    const { isOwnedByUser } = this.state;
-    const { image, openImageModal, removeImage } = this.props;
-    return (
-      <div
-        className={isOwnedByUser ? 'ImageGallery--user-image' : 'ImageGallery--image'}
-        onClick={!isOwnedByUser ? () => openImageModal(image) : () => removeImage(image)}
-        key={image}
-      >
-        <img
-          src={image}
-          alt={image}
-        />
-      </div>
-    );
-  }
-}
 
 GalleryImage.propTypes = {
   image: PropTypes.string,
