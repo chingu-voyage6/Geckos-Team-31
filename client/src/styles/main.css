@@ -177,6 +177,15 @@ select {
   to {
     transform: rotate(360deg); } }
 
+.Login {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+  .Login .Form {
+    width: 30%;
+    background: grey;
+    margin: 20px; }
+
 .TalkBoardMain {
   width: 100%;
   padding: 0;

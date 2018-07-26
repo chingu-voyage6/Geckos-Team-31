@@ -21,12 +21,11 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  heading: PropTypes.string,
+  heading: PropTypes.string.isRequired,
   size: PropTypes.string,
 };
 
 Header.defaultProps = {
-  heading: undefined,
   size: undefined,
 };
 

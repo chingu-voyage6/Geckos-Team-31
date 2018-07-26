@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Login from './Login';
 import TalkBoardMain from '../ui/components/talk/TalkBoardMain';
 import HomePageView from '../ui/components/home/HomePageView';
 import AddImageViewContainer from '../ui/containers/add-image/AddImageViewContainer';
@@ -10,7 +11,8 @@ require('isomorphic-fetch');
 const App = () => (
   <Router>
     <div>
-      <Route exact path="/" component={HomePageView} />
+      <Route exact path="/" component={Login} />
+      <Route exact path="/home" component={HomePageView} />
       <Route exact path="/talk" component={TalkBoardMain} />
       <Route exact path="/add-images" component={AddImageViewContainer} />
     </div>

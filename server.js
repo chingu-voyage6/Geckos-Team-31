@@ -5,15 +5,23 @@ const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const monk = require('monk');
-const db = monk('localhost:27017/pecs-app');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const User = require('./models/users');
-
+const session = require('express-session');
 const app = express();
 const port = 8080;
+const MongoStore = require('connect-mongo')(session);
 
-mongoose.connect('mongodb://localhost:27017/pecs-app');
+mongoose.connect('mongodb://localhost:27017/pecs-app', { useNewUrlParser: true });
+
+var db = mongoose.connection;
+
+//handle mongo error
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  // we're connected!
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -27,6 +35,38 @@ app.use(function(req,res,next){
     req.db = db;
     next();
 });
+
+// session middleware
+
+app.use(session({
+  secret: 'work hard',
+  resave: true,
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: db
+  })
+}));
+//
+
+app.post('/api/log-in', function(req, res, next) {
+  if (req.body.email && req.body.password) {
+   User.authenticate(req.body.email, req.body.password, function (error, user) {
+       if (error || !user) {
+         var err = new Error('Wrong email or password.');
+         err.status = 401;
+         return res.json(err.message);
+      } else {
+         req.session.userId = user._id;
+         return res.json('success');
+       }
+     });
+   } else {
+    var err = new Error('All fields required.');
+    err.status = 400;
+     return res.json(err.message);
+   }
+})
+
 
 // gets all images for gallery display
 
@@ -57,9 +97,11 @@ app.get('/api/images', getDirectoryContent, function(req, res) {
 // new user
 
 app.post('/api/sign-up', function(req, res) {
-  console.log(req.body.email)
-  var db = req.db;
-  var collection = db.get('users');
+  if (req.body.password !== req.body.passwordConf) {
+   var err = new Error('Passwords do not match.');
+   err.status = 400;
+   return next(err);
+  }
   if (req.body.email &&
   req.body.username &&
   req.body.password &&
@@ -69,14 +111,13 @@ app.post('/api/sign-up', function(req, res) {
     email: req.body.email,
     username: req.body.username,
     password: req.body.password,
-    passwordConf: req.body.passwordConf,
   }
   //use schema.create to insert data into the db
   User.create(userData, function (err, user) {
     if (err) {
     res.json(err)
     } else {
-      res.json(user)
+      res.json(user._id)
     }
   });
 }
@@ -87,8 +128,6 @@ app.post('/api/sign-up', function(req, res) {
 // find categories
 
 app.post('/api/categories', function (req, res) {
-    var db = req.db;
-    var collection = db.get('users');
     User.findOne({ _id: req.body.userId }, { categories: 1 }
       , function (err, doc) {
         if (err) {
@@ -105,8 +144,6 @@ app.post('/api/categories', function (req, res) {
 // return all user images
 
 app.post('/api/user-gallery', function (req, res) {
-    var db = req.db;
-    var collection = db.get('users');
     User.findOne({ _id: req.body.userId }, { images: 1}
       , function (err, doc) {
         if (err) {
@@ -124,9 +161,7 @@ app.post('/api/user-gallery', function (req, res) {
 // find user gallery by categories
 
 app.post('/api/user-category', function (req, res) {
-    var db = req.db;
-    var collection = db.get('users');
-    collection.findOne(
+    User.findOne(
       { _id: req.body.userId }
       , function (err, doc) {
         if (err) {
@@ -143,8 +178,6 @@ app.post('/api/user-category', function (req, res) {
 // remove a category
 
 app.post('/api/remove-category', function (req, res) {
-    var db = req.db;
-    var collection = db.get('users');
     User.update({ _id: req.body.userId }, {
         $pull: {
           categories: req.body.category,
@@ -163,8 +196,6 @@ app.post('/api/remove-category', function (req, res) {
 // add a category
 
 app.post('/api/add-category', function (req, res) {
-    var db = req.db;
-    var collection = db.get('users');
     User.update({ _id: req.body.userId }, {
         $addToSet: {
           categories: req.body.category,
@@ -182,8 +213,6 @@ app.post('/api/add-category', function (req, res) {
 
 // add a user input image url
 app.post('/api/add-user-image', function (req, res) {
-    var db = req.db;
-    var collection = db.get('users');
     const image = {
       fileName: req.body.image,
       category: req.body.category,
@@ -208,8 +237,6 @@ app.post('/api/add-user-image', function (req, res) {
 // add image object
 
 app.post('/api/add-image-to-account', function (req, res) {
-    var db = req.db;
-    var collection = db.get('users');
     const image = {
       fileName: req.body.image,
       category: req.body.category,
@@ -232,10 +259,8 @@ app.post('/api/add-image-to-account', function (req, res) {
 })
 
 app.post('/api/remove-image-from-account', function (req, res) {
-    var db = req.db;
-    var collection = db.get('users');
     const image = req.body.image
-    collection.update({ _id: req.body.userId }, {
+    User.update({ _id: req.body.userId }, {
         $pull: { images : { fileName : image }, }
     }, function (err, doc) {
         if (err) {
