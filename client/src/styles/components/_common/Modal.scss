@@ -1,0 +1,30 @@
+.ReactModal__Overlay--after-open {
+  background-color: rgba(173,216,230, 0.4) !important;
+}
+
+.Modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 400px;
+  width: 300px;
+  background: white;
+  margin: 0px auto;
+  margin-top: 150px;
+  border: 2px solid $highlight-red;
+
+
+  .Select {
+    select {
+      width: 150px;
+      height: 25px;
+    }
+  }
+  .Input {
+    margin: 0px auto;
+  }
+  .Button {
+    margin: 0px auto;
+  }
+}
