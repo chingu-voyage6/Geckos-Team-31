@@ -8,6 +8,7 @@ const monk = require('monk');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const User = require('./models/users');
+const Session = require('./models/sessions');
 const session = require('express-session');
 const app = express();
 const port = 8080;
@@ -46,7 +47,36 @@ app.use(session({
     mongooseConnection: db
   })
 }));
-//
+
+
+  app.post('/api/sign-up', function(req, res) {
+    if (req.body.password !== req.body.passwordConf) {
+     var err = new Error('Passwords do not match.');
+     err.status = 400;
+     return next(err);
+    }
+    if (req.body.email &&
+    req.body.username &&
+    req.body.password &&
+    req.body.passwordConf) {
+      console.log('success')
+    var userData = {
+      email: req.body.email,
+      username: req.body.username,
+      password: req.body.password,
+    }
+    User.create(userData, function (err, user) {
+      if (err) {
+      res.json(err)
+      } else {
+        res.json(user._id)
+      }
+    });
+  }
+
+  });
+
+
 
 app.post('/api/log-in', function(req, res, next) {
   if (req.body.email && req.body.password) {
@@ -57,7 +87,7 @@ app.post('/api/log-in', function(req, res, next) {
          return res.json(err.message);
       } else {
          req.session.userId = user._id;
-         return res.json('success');
+         return res.json(req.session.userId);
        }
      });
    } else {
@@ -67,6 +97,39 @@ app.post('/api/log-in', function(req, res, next) {
    }
 })
 
+//
+
+app.post('/api/logout', function (req, res, next) {
+  if (req.session) {
+    // delete session object
+    req.session.destroy(function (err) {
+      if (err) {
+        return next(err);
+      } else {
+        return res.redirect('/');
+      }
+    });
+  }
+});
+
+
+app.post('/api/verify', (req, res, next) => {
+  Session.findOne({ userId : req.body.userId })
+    .exec(function (error, user) {
+      if (error) {
+        return next(error);
+      } else {
+        if (user === null) {
+          var err = new Error('Not authorized! Go back!');
+          err.status = 400;
+          return next(err);
+        } else {
+          return res.json('success')
+        }
+      }
+    });
+  });
+  // new user
 
 // gets all images for gallery display
 
@@ -82,6 +145,7 @@ function getDirectoryContent(req, res, next) {
   });
 }
 
+
 app.get('/api/images', getDirectoryContent, function(req, res) {
   // tests for jpg then sends files
   const regexp = /.jpg/;
@@ -92,36 +156,6 @@ app.get('/api/images', getDirectoryContent, function(req, res) {
     }
   });
   res.send(images);
-});
-
-// new user
-
-app.post('/api/sign-up', function(req, res) {
-  if (req.body.password !== req.body.passwordConf) {
-   var err = new Error('Passwords do not match.');
-   err.status = 400;
-   return next(err);
-  }
-  if (req.body.email &&
-  req.body.username &&
-  req.body.password &&
-  req.body.passwordConf) {
-    console.log('success')
-  var userData = {
-    email: req.body.email,
-    username: req.body.username,
-    password: req.body.password,
-  }
-  //use schema.create to insert data into the db
-  User.create(userData, function (err, user) {
-    if (err) {
-    res.json(err)
-    } else {
-      res.json(user._id)
-    }
-  });
-}
-
 });
 
 
