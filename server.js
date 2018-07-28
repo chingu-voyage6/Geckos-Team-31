@@ -49,6 +49,8 @@ app.use(session({
 }));
 
 
+// login - out and session verify
+
   app.post('/api/sign-up', function(req, res) {
     if (req.body.password !== req.body.passwordConf) {
      var err = new Error('Passwords do not match.');
@@ -97,7 +99,6 @@ app.post('/api/log-in', function(req, res, next) {
    }
 })
 
-//
 
 app.post('/api/logout', function (req, res, next) {
   if (req.session) {
@@ -129,7 +130,9 @@ app.post('/api/verify', (req, res, next) => {
       }
     });
   });
-  // new user
+
+
+
 
 // gets all images for gallery display
 
