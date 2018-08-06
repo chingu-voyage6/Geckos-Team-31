@@ -3,16 +3,40 @@ const path = require('path');
 const mongo = require('mongodb');
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
 const monk = require('monk');
 const fs = require('fs');
 const mongoose = require('mongoose');
-const User = require('./models/users');
-const Session = require('./models/sessions');
-const session = require('express-session');
+const User = require('./models/User');
+const logger = require('morgan');
+const cors = require('cors');
+const chalk = require('chalk');
+const bodyParser = require('body-parser');
+
+
+const PORT = process.env.PORT || 3001;
 const app = express();
-const port = 8080;
-const MongoStore = require('connect-mongo')(session);
+
+// Routes
+const userRoutes = require('./routes/User')
+
+// Database Setup
+mongoose.Promise = global.Promise;
+mongoose
+	.connect('mongodb://localhost:27017/pecs-app', { useNewUrlParser: true })
+	.then(() => console.log(chalk.green('Connected to DB')))
+  .catch(err => console.log(chalk.red(`Error connecting to DB. Error: ${err}`)));
+
+// Middleware
+app.use(logger('dev'))
+app.use(cors())
+app.use(bodyParser.json())
+app.use('/api', userRoutes)
+
+// Start Server
+app.listen(PORT, () => {
+  console.log(chalk.green(`Server running on Port:${PORT}`))
+})
+
 
 mongoose.connect('mongodb://localhost:27017/pecs-app', { useNewUrlParser: true });
 
@@ -24,11 +48,6 @@ db.once('open', function () {
   // we're connected!
 });
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-
 
 // access databse
 
@@ -36,100 +55,6 @@ app.use(function(req,res,next){
     req.db = db;
     next();
 });
-
-// session middleware
-
-app.use(session({
-  secret: 'work hard',
-  resave: true,
-  saveUninitialized: false,
-  store: new MongoStore({
-    mongooseConnection: db
-  })
-}));
-
-
-// login - out and session verify
-
-  app.post('/api/sign-up', function(req, res) {
-    if (req.body.password !== req.body.passwordConf) {
-     var err = new Error('Passwords do not match.');
-     err.status = 400;
-     return next(err);
-    }
-    if (req.body.email &&
-    req.body.username &&
-    req.body.password &&
-    req.body.passwordConf) {
-      console.log('success')
-    var userData = {
-      email: req.body.email,
-      username: req.body.username,
-      password: req.body.password,
-    }
-    User.create(userData, function (err, user) {
-      if (err) {
-      res.json(err)
-      } else {
-        res.json(user._id)
-      }
-    });
-  }
-
-  });
-
-
-
-app.post('/api/log-in', function(req, res, next) {
-  if (req.body.email && req.body.password) {
-   User.authenticate(req.body.email, req.body.password, function (error, user) {
-       if (error || !user) {
-         var err = new Error('Wrong email or password.');
-         err.status = 401;
-         return res.json(err.message);
-      } else {
-         req.session.userId = user._id;
-         return res.json(req.session.userId);
-       }
-     });
-   } else {
-    var err = new Error('All fields required.');
-    err.status = 400;
-     return res.json(err.message);
-   }
-})
-
-
-app.post('/api/logout', function (req, res, next) {
-  if (req.session) {
-    // delete session object
-    req.session.destroy(function (err) {
-      if (err) {
-        return next(err);
-      } else {
-        return res.redirect('/');
-      }
-    });
-  }
-});
-
-
-app.post('/api/verify', (req, res, next) => {
-  Session.findOne({ userId : req.body.userId })
-    .exec(function (error, user) {
-      if (error) {
-        return next(error);
-      } else {
-        if (user === null) {
-          var err = new Error('Not authorized! Go back!');
-          err.status = 400;
-          return next(err);
-        } else {
-          return res.json('success')
-        }
-      }
-    });
-  });
 
 
 
@@ -310,5 +235,3 @@ app.post('/api/remove-image-from-account', function (req, res) {
         }
     });
 })
-
-app.listen(port, () => console.log(`Listening on port ${port}`));

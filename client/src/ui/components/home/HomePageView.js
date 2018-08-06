@@ -3,35 +3,44 @@ import PropTypes from 'prop-types';
 import NavBar from '../_common/NavBar';
 import Button from '../_common/Button';
 
-const logout = (userId) => {
-  fetch('/api/logout', {
-    method: 'POST', // or 'PUT'
-    body: JSON.stringify({
-      userId,
-    }), // data can be `string` or {object}!
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-};
+const HomePageView = (props) => {
+  const logout = () => {
+    const { history } = props;
+    const token = localStorage.getItem('user');
+    fetch('/api/logout', {
+      method: 'GET', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `bearer ${token}`,
+      },
+    })
+      .then(res => res.json(res))
+      .then(() => {
+        localStorage.clear();
+        history.push('/');
+      })
+      .catch(error => console.log(error));
+  };
 
-const HomePageView = props => (
-  <div className="HomePageView">
-    <NavBar />
-    <Button
-      onClick={() => logout(props.userId)}
-      label="Logout"
-    />
-  </div>
-);
+  return (
+    <div className="HomePageView">
+      <NavBar />
+      <Button
+        onClick={() => logout()}
+        label="Logout"
+      />
+    </div>
+  );
+};
 
 
 HomePageView.propTypes = {
-  userId: PropTypes.string,
+  // eslint-disable-next-line
+  history: PropTypes.object,
 };
 
 HomePageView.defaultProps = {
-  userId: undefined,
+  history: undefined,
 };
 
 export default HomePageView;

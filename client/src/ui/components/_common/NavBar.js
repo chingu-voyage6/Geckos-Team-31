@@ -6,7 +6,7 @@ import Button from './Button';
 const NavBar = () => (
   <div className="NavBar">
     <NavLink
-      link="/"
+      link="/home"
       label="Home"
     />
     <NavLink
