@@ -1,5 +1,6 @@
 import handleGetUserGallery from '../modules/handle-get-user-gallery';
 import handleGetCategories from '../modules/handle-get-categories';
+import handleAuthorizeUser from '../modules/handle-authorize-user';
 import userId from '../testData';
 
 const USERGALLERY__LOADGALLERY = 'USERGALLERY__LOADGALLERY';
@@ -8,6 +9,19 @@ const USERGALLERY__ADDIMAGE = 'USERGALLERY__ADDIMAGE';
 const USERGALLERY__REMOVEIMAGE = 'USERGALLERY__REMOVEIMAGE';
 const USERGALLERY__ADDCATEGORY = 'USERGALLERY__ADDIMAGE';
 const USERGALLERY__REMOVECATEGORY = 'USERGALLERY__REMOVEIMAGE';
+
+const AUTHORIZE_USER = 'AUTHORIZE_USER';
+const AUTHORIZE_USER_FAILED = 'AUTHORIZE_USER_FAILED';
+
+export const authorizeUser = ({ token }) => function userAuthentication(dispatch) {
+  return handleAuthorizeUser({ token })
+    .then(response => dispatch({ type: AUTHORIZE_USER, user: response }))
+    .catch((error) => {
+      console.log(error)
+      localStorage.clear();
+      return dispatch({ type: AUTHORIZE_USER_FAILED })
+    });
+};
 
 export const loadUserGallery = () => function loadGallery(dispatch) {
   return handleGetUserGallery({ userId: userId() })

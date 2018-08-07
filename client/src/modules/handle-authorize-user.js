@@ -1,6 +1,6 @@
 let modulePromise;
 
-const authorizeUser = (promise) => {
+const authorizeUser = ({ token } ,promise) => {
   modulePromise = promise;
   try {
     const url = '/api/auth';
@@ -8,6 +8,7 @@ const authorizeUser = (promise) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `bearer ${token}`,
       },
     }).then((response) => {
       if (response.status >= 400) {
@@ -32,8 +33,8 @@ const authorizeUser = (promise) => {
   }
 };
 
-const handleAuthorizeUser = () => new Promise((resolve, reject) => {
-  authorizeUser({ resolve, reject });
+const handleAuthorizeUser = ({ token }) => new Promise((resolve, reject) => {
+  authorizeUser({ token }, { resolve, reject });
 });
 
 export default handleAuthorizeUser;
