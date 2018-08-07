@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { authorizeUser } from '../actions';
 import Form from './_common/Form';
 import Input from './_common/Input';
 import Button from './_common/Button';
@@ -46,6 +48,7 @@ const Login = (props) => {
       .then((res) => {
         if (res) {
           localStorage.setItem('user', res.token);
+          props.dispatch(authorizeUser({ token: res.token }));
           history.push('/home');
         }
       });
@@ -115,4 +118,14 @@ Login.defaultProps = {
 
 };
 
-export default Login;
+Login.propTypes = {
+  // eslint-disable-next-line
+  history: PropTypes.object,
+  dispatch: PropTypes.func,
+};
+
+Login.defaultProps = {
+  history: undefined,
+  dispatch: undefined,
+};
+export default connect()(Login);

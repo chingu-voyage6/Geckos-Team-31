@@ -3,6 +3,7 @@ let modulePromise;
 const authorizeUser = ({ token } ,promise) => {
   modulePromise = promise;
   try {
+    console.log(token)
     const url = '/api/auth';
     fetch(url, {
       method: 'GET',
@@ -14,10 +15,11 @@ const authorizeUser = ({ token } ,promise) => {
       if (response.status >= 400) {
         throw new Error('Bad response from server');
       }
-      return response.json();
+      return response.json(response);
     })
       .then((response) => {
-        modulePromise.resolve(response);
+        const user = response.user;
+        modulePromise.resolve(user._id);
       })
       .catch((error) => {
         modulePromise.reject({

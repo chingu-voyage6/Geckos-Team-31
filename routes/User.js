@@ -69,6 +69,10 @@ router.get('/logout', requireAuth, (req, res) => {
 router.get('/auth', requireAuth, (req, res) => {
   // As with login, if the user passes the correct token then the current user will be available on the req object.
   // If not then we will get unauthorized again.
+  res.json({
+    success: true,
+    user: req.user
+  })
 })
 
 module.exports = router

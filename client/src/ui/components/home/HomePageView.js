@@ -1,11 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { authorizeUser } from '../../actions';
 import NavBar from '../_common/NavBar';
 import Button from '../_common/Button';
 
+
 const HomePageView = (props) => {
   const logout = () => {
-    const { history } = props;
+    const { history, dispatch } = props;
     const token = localStorage.getItem('user');
     fetch('/api/logout', {
       method: 'GET', // or 'PUT'
@@ -17,6 +20,7 @@ const HomePageView = (props) => {
       .then(res => res.json(res))
       .then(() => {
         localStorage.clear();
+        dispatch(authorizeUser({ token: '' }));
         history.push('/');
       })
       .catch(error => console.log(error));
@@ -37,10 +41,12 @@ const HomePageView = (props) => {
 HomePageView.propTypes = {
   // eslint-disable-next-line
   history: PropTypes.object,
+  dispatch: PropTypes.func,
 };
 
 HomePageView.defaultProps = {
   history: undefined,
+  dispatch: undefined,
 };
 
-export default HomePageView;
+export default connect()(HomePageView);

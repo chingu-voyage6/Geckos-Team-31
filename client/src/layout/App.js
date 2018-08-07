@@ -16,6 +16,9 @@ require('isomorphic-fetch');
 const initialState = {
   userId: '',
   token: '',
+  userGallery: [],
+  categories: [],
+  storyBoard: [],
 };
 
 function reducer(state = initialState, action) {
@@ -28,6 +31,50 @@ function reducer(state = initialState, action) {
   if (action.type === 'AUTHORIZE_USER_FAILED') {
     return Object.assign({}, state, {
       userId: '',
+    });
+  }
+  if (action.type === 'USERGALLERY__LOADGALLERY') {
+    const userGallery = action.gallery;
+    return Object.assign({}, state, {
+      userGallery,
+    });
+  }
+  if (action.type === 'USERGALLERY__LOADCATEGORIES') {
+    const { categories } = action;
+    return Object.assign({}, state, {
+      categories,
+    });
+  }
+  if (action.type === 'STORYBOARD__ADD-IMAGE') {
+    const storyBoard = state.storyBoard.concat(action.image);
+    return Object.assign({}, state, {
+      storyBoard,
+    });
+  }
+  if (action.type === 'STORYBOARD__REMOVE-IMAGE') {
+    const storyBoard = state.storyBoard.filter(img => action.image !== img);
+    const newState = {
+      storyBoard,
+    };
+    return newState;
+  }
+  if (action.type === 'STORYBOARD__ARRANGE-IMAGES') {
+    const index = state.storyBoard.indexOf(action.targetImage);
+    if (index >= 0) {
+      const storyBoard = state.storyBoard.filter(img => action.replacementImage !== img);
+      storyBoard.splice(index, 0, action.replacementImage);
+      return Object.assign({}, state, {
+        storyBoard,
+      });
+    }
+  }
+  if (action.type === 'STORYBOARD__SWAP') {
+    const index = state.storyBoard.indexOf(action.targetImage);
+    let { storyBoard } = state;
+    storyBoard.splice(index, 0, action.replacementImage);
+    storyBoard = state.storyBoard.filter(img => action.targetImage !== img);
+    return Object.assign({}, state, {
+      storyBoard,
     });
   }
   return state;

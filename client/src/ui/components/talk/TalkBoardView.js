@@ -1,9 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import TalkBoardSelectContainer from '../../containers/TalkBoardSelectContainer';
 import CategoriesList from './CategoriesList';
 import handleGetCategories from '../../../modules/handle-get-categories';
-import userId from '../../../testData';
 
+const mapStateToProps = state => ({
+  userId: state.userId,
+});
 
 class TalkBoardView extends React.Component {
   constructor(props) {
@@ -18,11 +22,12 @@ class TalkBoardView extends React.Component {
   }
 
   componentDidMount() {
-    handleGetCategories({ userId: userId() })
+    const { userId } = this.props;
+    handleGetCategories({ userId })
       .then((response) => {
         this.setState({
-          category: response.categories[0],
-          categories: response.categories,
+          category: response.categories ? response.categories[0] : '',
+          categories: response.categories ? response.categories : [''],
         });
       })
       .catch(error => console.log(error));
@@ -42,6 +47,7 @@ class TalkBoardView extends React.Component {
 
   render() {
     const { category, fadeBackground, categories } = this.state;
+    const { userId } = this.props;
     return (
       <div
         className="TalkBoardView"
@@ -56,6 +62,7 @@ class TalkBoardView extends React.Component {
               key={category}
               category={category}
               toggleBackgroundFade={this.toggleBackgroundFade}
+              userId={userId}
             />
           ) : null
           }
@@ -65,4 +72,13 @@ class TalkBoardView extends React.Component {
   }
 }
 
-export default TalkBoardView;
+TalkBoardView.propTypes = {
+  userId: PropTypes.string,
+};
+
+TalkBoardView.defaultProps = {
+  userId: undefined,
+};
+
+
+export default connect(mapStateToProps)(TalkBoardView);

@@ -9,6 +9,7 @@ import handleGetGallery from '../../../modules/handle-get-gallery';
 const mapStateToProps = state => ({
   userGallery: state.userGallery,
   categories: state.categories,
+  userId: state.userId,
 });
 
 class ImageGalleryContainer extends React.Component {
@@ -24,7 +25,7 @@ class ImageGalleryContainer extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch, userId } = this.props;
     handleGetGallery()
       .then((response) => {
         this.setState({
@@ -32,8 +33,8 @@ class ImageGalleryContainer extends React.Component {
         });
       })
       .catch(error => console.log(error));
-    dispatch(loadUserGallery());
-    dispatch(loadCategories());
+    dispatch(loadUserGallery({ userId }));
+    dispatch(loadCategories({ userId }));
   }
 
   render() {
@@ -57,6 +58,7 @@ ImageGalleryContainer.propTypes = {
   toggleBackgroundFade: PropTypes.func,
   categories: PropTypes.arrayOf(PropTypes.string),
   userGallery: PropTypes.arrayOf(PropTypes.string),
+  userId: PropTypes.string,
   dispatch: PropTypes.func,
 };
 
@@ -64,6 +66,7 @@ ImageGalleryContainer.defaultProps = {
   toggleBackgroundFade: undefined,
   categories: undefined,
   userGallery: undefined,
+  userId: undefined,
   dispatch: undefined,
 };
 

@@ -12,7 +12,6 @@ const cors = require('cors');
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
 
-
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -36,9 +35,6 @@ app.use('/api', userRoutes)
 app.listen(PORT, () => {
   console.log(chalk.green(`Server running on Port:${PORT}`))
 })
-
-
-mongoose.connect('mongodb://localhost:27017/pecs-app', { useNewUrlParser: true });
 
 var db = mongoose.connection;
 

@@ -1,7 +1,6 @@
 import handleGetUserGallery from '../modules/handle-get-user-gallery';
 import handleGetCategories from '../modules/handle-get-categories';
 import handleAuthorizeUser from '../modules/handle-authorize-user';
-import userId from '../testData';
 
 const USERGALLERY__LOADGALLERY = 'USERGALLERY__LOADGALLERY';
 const USERGALLERY__LOADCATEGORIES = 'USERGALLERY__LOADCATEGORIES';
@@ -14,23 +13,24 @@ const AUTHORIZE_USER = 'AUTHORIZE_USER';
 const AUTHORIZE_USER_FAILED = 'AUTHORIZE_USER_FAILED';
 
 export const authorizeUser = ({ token }) => function userAuthentication(dispatch) {
+  console.log(token);
   return handleAuthorizeUser({ token })
     .then(response => dispatch({ type: AUTHORIZE_USER, user: response }))
     .catch((error) => {
-      console.log(error)
+      console.log(error);
       localStorage.clear();
-      return dispatch({ type: AUTHORIZE_USER_FAILED })
+      return dispatch({ type: AUTHORIZE_USER_FAILED });
     });
 };
 
-export const loadUserGallery = () => function loadGallery(dispatch) {
-  return handleGetUserGallery({ userId: userId() })
+export const loadUserGallery = ({ userId }) => function loadGallery(dispatch) {
+  return handleGetUserGallery({ userId })
     .then(response => dispatch({ type: USERGALLERY__LOADGALLERY, gallery: response }))
     .catch(error => console.log(error));
 };
 
-export const loadCategories = () => function loadCat(dispatch) {
-  return handleGetCategories({ userId: userId() })
+export const loadCategories = ({ userId }) => function loadCat(dispatch) {
+  return handleGetCategories({ userId })
     .then(response => dispatch({
       type: USERGALLERY__LOADCATEGORIES, categories: response.categories,
     }))

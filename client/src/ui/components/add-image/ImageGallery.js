@@ -6,7 +6,6 @@ import _ from 'underscore';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import GalleryImage from './GalleryImage';
-import userId from '../../../testData';
 import { loadCategories, loadUserGallery } from '../../actions';
 import handleAddImage from '../../../modules/handle-add-image';
 import handleAddCategory from '../../../modules/handle-add-category';
@@ -17,6 +16,10 @@ import Header from '../_common/Header';
 import Form from '../_common/Form';
 import Input from '../_common/Input';
 import Button from '../_common/Button';
+
+const mapStateToProps = state => ({
+  userId: state.userId,
+});
 
 class ImageGallery extends React.Component {
   constructor(props) {
@@ -59,34 +62,33 @@ class ImageGallery extends React.Component {
   }
 
   removeImage(image) {
-    const { dispatch } = this.props;
-    handleRemoveImage({ image, userId: userId() })
+    const { dispatch, userId } = this.props;
+    handleRemoveImage({ image, userId })
       .then(() => {
-        dispatch(loadUserGallery());
+        dispatch(loadUserGallery({ userId }));
       })
       .catch(error => console.log(error));
   }
 
   removeCategory() {
-    const { dispatch } = this.props;
+    const { dispatch, userId } = this.props;
     const category = document.querySelector('[name="removeCategory"]').value;
-    handleRemoveCategory({ category, userId: userId() })
+    handleRemoveCategory({ category, userId })
       .then((response) => {
         console.log(`Category ${response} removed`)
-        dispatch(loadCategories());
+        dispatch(loadCategories({ userId }));
         this.closeUpdateCategoryModal();
       })
       .catch(error => console.log(error));
   }
 
   addCategory() {
-    // const { userId } = this.props;
-    const { dispatch } = this.props;
+    const { dispatch, userId } = this.props;
     const category = document.querySelector('[name="categoryName"]').value;
-    handleAddCategory({ category, userId: userId() })
+    handleAddCategory({ category, userId })
       .then((response) => {
         this.closeUpdateCategoryModal();
-        dispatch(loadCategories());
+        dispatch(loadCategories({ userId }));
         console.log(`You added the category: ${response}`);
       })
       .catch(error => console.log(error));
@@ -95,13 +97,12 @@ class ImageGallery extends React.Component {
 
   addImage() {
     const { currentImage } = this.state;
-    const { dispatch } = this.props;
-    // const { userId } = this.props;
+    const { dispatch, userId } = this.props;
     const category = document.querySelector('[name="categoryName"]').value;
-    handleAddImage({ image: currentImage, category, userId: userId() })
+    handleAddImage({ image: currentImage, category, userId })
       .then((response) => {
         this.closeImageModal();
-        dispatch(loadUserGallery());
+        dispatch(loadUserGallery({ userId }));
         console.log(`You added the image: ${response.fileName}`);
       })
       .catch(error => console.log(error));
@@ -243,6 +244,7 @@ ImageGallery.propTypes = {
   userGallery: PropTypes.arrayOf(PropTypes.string),
   categories: PropTypes.arrayOf(PropTypes.string),
   dispatch: PropTypes.func,
+  userId: PropTypes.string,
 };
 
 ImageGallery.defaultProps = {
@@ -250,6 +252,7 @@ ImageGallery.defaultProps = {
   userGallery: undefined,
   categories: undefined,
   dispatch: undefined,
+  userId: undefined,
 };
 
-export default connect()(ImageGallery);
+export default connect(mapStateToProps)(ImageGallery);
