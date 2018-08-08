@@ -1,0 +1,40 @@
+@import '../styles/_variables.scss';
+@import '../styles/global.scss';
+
+
+//common
+
+
+@import '../styles/components/_common/Navbar.scss';
+@import '../styles/components/_common/Modal.scss';
+@import '../styles/components/_common/NavLink.scss';
+@import '../styles/components/_common/Button.scss';
+@import '../styles/components/_common/Form.scss';
+@import '../styles/components/_common/Input.scss';
+@import '../styles/components/_common/ImageCard.scss';
+@import '../styles/components/_common/Header.scss';
+@import '../styles/components/_common/Select.scss';
+
+
+
+@import '../styles/App.scss';
+
+// components
+
+// Main
+
+@import '../styles/Login.scss';
+
+// TalkBoardMain
+
+@import '../styles/components/talk/TalkBoardMain.scss';
+@import '../styles/components/talk/TalkBoardView.scss';
+@import '../styles/components/talk/TalkBoardSelect.scss';
+@import '../styles/components/talk/TalkBoardStory.scss';
+@import '../styles/components/talk/CategoriesList.scss';
+
+//Add Images
+
+@import '../styles/components/add-images/AddImageView.scss';
+@import '../styles/components/add-images/ImageGallery.scss';
+@import '../styles/components/add-images/ImageUpload.scss';

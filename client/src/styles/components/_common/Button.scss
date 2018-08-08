@@ -1,0 +1,43 @@
+.Button{
+  width: 150px;
+  margin: 10px;
+  text-align: center;
+  margin-right: 30px;
+
+}
+
+.Button--list {
+min-width: 180px;
+height: 30px;
+background-color: $highlight-orange;
+border: none;
+border-radius: 5px;
+color: white;
+font-size: 18px;
+box-shadow: $box-shadow;
+cursor: pointer;
+}
+
+.Button--success {
+  width: 150px;
+  height: 30px;
+  background-color: $success-green;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  box-shadow: $box-shadow;
+  cursor: pointer;
+
+}
+
+.Button--upload {
+  width: 150px;
+  height: 30px;
+  background-color: $base-blue;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  box-shadow: $box-shadow;
+  cursor: pointer;
+
+}
