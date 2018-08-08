@@ -61,8 +61,8 @@ class Login extends React.Component {
       .then((res) => {
         if (res) {
           localStorage.setItem('user', res.token);
-          dispatch(authorizeUser({ token: res.token }));
-          history.push('/talk');
+          dispatch(authorizeUser({ token: res.token }))
+            .then(() => history.push('/talk'));
         }
       });
   }
