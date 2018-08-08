@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import Login from '../ui/components/Login';
 import TalkBoardMain from '../ui/components/talk/TalkBoardMain';
 import HomePageView from '../ui/components/home/HomePageView';
-import AddImageViewContainer from '../ui/containers/add-image/AddImageViewContainer';
+import AddImageView from '../ui/components/add-image/AddImageView';
 
 
 require('es6-promise').polyfill();
@@ -96,29 +96,17 @@ const PrivateRoute = ({
 );
 
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      auth: false,
-    };
-  }
-
-  render() {
-    const { userId, auth } = this.state;
-    return (
-      <Provider store={store}>
-        <Router>
-          <div>
-            <Route exact path="/" render={props => <Login {...props} />} />
-            <PrivateRoute path="/home" component={HomePageView} auth={auth} />
-            <PrivateRoute path="/talk" component={TalkBoardMain} auth={auth} />
-            <PrivateRoute userId={userId} path="/add-images" component={AddImageViewContainer} auth={auth} />
-          </div>
-        </Router>
-      </Provider>
-    );
-  }
-}
+const App = () => (
+  <Provider store={store}>
+    <Router>
+      <div>
+        <Route exact path="/" render={props => <Login {...props} />} />
+        <PrivateRoute path="/home" component={HomePageView} />
+        <PrivateRoute path="/talk" component={TalkBoardMain} />
+        <PrivateRoute path="/add-images" component={AddImageView} />
+      </div>
+    </Router>
+  </Provider>
+);
 
 export default App;

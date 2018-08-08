@@ -18,6 +18,7 @@ const authorizeUser = ({ token }, promise) => {
     })
       .then((response) => {
         const { user } = response;
+        // eslint-disable-next-line
         modulePromise.resolve(user._id);
       })
       .catch((error) => {
