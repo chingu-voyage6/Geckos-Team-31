@@ -1,9 +1,8 @@
 let modulePromise;
 
-const authorizeUser = ({ token } ,promise) => {
+const authorizeUser = ({ token }, promise) => {
   modulePromise = promise;
   try {
-    console.log(token)
     const url = '/api/auth';
     fetch(url, {
       method: 'GET',
@@ -18,7 +17,7 @@ const authorizeUser = ({ token } ,promise) => {
       return response.json(response);
     })
       .then((response) => {
-        const user = response.user;
+        const { user } = response;
         modulePromise.resolve(user._id);
       })
       .catch((error) => {

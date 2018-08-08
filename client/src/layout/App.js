@@ -7,7 +7,6 @@ import Login from '../ui/components/Login';
 import TalkBoardMain from '../ui/components/talk/TalkBoardMain';
 import HomePageView from '../ui/components/home/HomePageView';
 import AddImageViewContainer from '../ui/containers/add-image/AddImageViewContainer';
-import { authorizeUser } from '../ui/actions';
 
 
 require('es6-promise').polyfill();
@@ -28,7 +27,7 @@ function reducer(state = initialState, action) {
       userId,
     });
   }
-  if (action.type === 'AUTHORIZE_USER_FAILED') {
+  if (action.type === 'AUTHORIZE__CLEAR_USER_TOKEN') {
     return Object.assign({}, state, {
       userId: '',
     });
@@ -103,11 +102,6 @@ class App extends React.Component {
     this.state = {
       auth: false,
     };
-  }
-
-  componentDidMount() {
-    const token = localStorage.getItem('user');
-    store.dispatch(authorizeUser({ token }));
   }
 
   render() {

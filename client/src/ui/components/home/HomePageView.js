@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { authorizeUser } from '../../actions';
+import { clearUser } from '../../actions';
 import NavBar from '../_common/NavBar';
 import Button from '../_common/Button';
 
@@ -20,7 +20,7 @@ const HomePageView = (props) => {
       .then(res => res.json(res))
       .then(() => {
         localStorage.clear();
-        dispatch(authorizeUser({ token: '' }));
+        dispatch(clearUser());
         history.push('/');
       })
       .catch(error => console.log(error));
