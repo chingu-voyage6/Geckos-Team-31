@@ -28,7 +28,7 @@ const HomePageView = (props) => {
 
   return (
     <div className="HomePageView">
-      <NavBar />
+      <NavBar {...props} />
       <Button
         onClick={() => logout()}
         label="Logout"

@@ -37,7 +37,7 @@ class Login extends React.Component {
       dispatch(authorizeUser({ token }))
         .then((response) => {
           if (response) {
-            history.push('/home');
+            history.push('/talk');
           }
         });
     }
@@ -62,7 +62,7 @@ class Login extends React.Component {
         if (res) {
           localStorage.setItem('user', res.token);
           dispatch(authorizeUser({ token: res.token }));
-          history.push('/home');
+          history.push('/talk');
         }
       });
   }

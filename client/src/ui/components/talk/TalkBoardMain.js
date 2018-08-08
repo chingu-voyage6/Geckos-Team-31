@@ -4,9 +4,9 @@ import TalkBoardView from './TalkBoardView';
 import NavBar from '../_common/NavBar';
 
 
-const TalkBoardMain = () => (
+const TalkBoardMain = props => (
   <div className="TalkBoardMain">
-    <NavBar />
+    <NavBar {...props} />
     <TalkBoardView />
   </div>
 );

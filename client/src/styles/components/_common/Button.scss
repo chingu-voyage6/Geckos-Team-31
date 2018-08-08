@@ -39,5 +39,13 @@ cursor: pointer;
   font-size: 18px;
   box-shadow: $box-shadow;
   cursor: pointer;
+}
+
+.Button--NavLink {
+  text-decoration: none;
+  color: white;
+  background: none;
+  margin: 10px;
+  text-align: center
 
 }
