@@ -8,9 +8,15 @@
   justify-content: flex-end;
 }
   a {
+    font-weight: 600;
     text-decoration: none;
     color: white;
     padding: 0;
     margin: 20px;
     cursor: pointer;
+}
+
+a:focus,
+a:active {
+  border-bottom: 4px solid $highlight-red;
 }

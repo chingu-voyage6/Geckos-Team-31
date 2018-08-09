@@ -1,12 +1,15 @@
 import React from 'react';
+import Loading from 'react-loading-components';
 import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import Login from '../ui/components/Login';
 import TalkBoardMain from '../ui/components/talk/TalkBoardMain';
 import HomePageView from '../ui/components/home/HomePageView';
 import AddImageView from '../ui/components/add-image/AddImageView';
+import { authorizeUser } from '../ui/actions';
+
 
 
 require('es6-promise').polyfill();
@@ -83,30 +86,52 @@ const store = createStore(reducer, applyMiddleware(thunk));
 
 const PrivateRoute = ({
   // eslint-disable-next-line
-  component: Component, ...rest
+  component: Component, ...rest, auth,
 }) => (
   <Route
     {...rest}
     render={props => (
       localStorage.getItem('user')
-        ? <Component {...props} />
+        ?  auth ? <Component {...props} /> : <Loading type='ball_triangle' width={100} height={100} fill='#f44242' />
         : <Redirect to="/" />
     )}
   />
 );
 
 
-const App = () => (
-  <Provider store={store}>
-    <Router>
-      <div>
-        <Route exact path="/" render={props => <Login {...props} />} />
-        <PrivateRoute path="/home" component={HomePageView} />
-        <PrivateRoute path="/talk" component={TalkBoardMain} />
-        <PrivateRoute path="/add-images" component={AddImageView} />
-      </div>
-    </Router>
-  </Provider>
-);
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      auth: false,
+    }
+  }
+
+  componentDidMount() {
+    const token = localStorage.getItem('user')
+    store.dispatch(authorizeUser({ token }))
+    .then((res) => {
+      if(res) {
+      this.setState({ auth: true })
+      }
+    })
+  }
+
+  render() {
+    const { auth } = this.state;
+    return (
+      <Provider store={store}>
+        <Router>
+          <div>
+            <Route exact path="/" render={props => <Login {...props} />} />
+            <PrivateRoute path="/home" component={HomePageView} auth={auth} />
+            <PrivateRoute path="/talk" component={TalkBoardMain} auth={auth} />
+            <PrivateRoute path="/add-images" component={AddImageView} auth={auth} />
+          </div>
+        </Router>
+      </Provider>
+    );
+  }
+}
 
 export default App;
