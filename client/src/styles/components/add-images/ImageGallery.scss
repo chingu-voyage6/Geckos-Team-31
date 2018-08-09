@@ -1,5 +1,5 @@
 .ImageGallery{
-  width: 50%;
+  width: 100%;
   margin: 10px;
   display: flex;
   flex-direction: column;
@@ -9,9 +9,11 @@
 
 .ImageGallery--images{
   width: 100%;
+  overflow-x: scroll;
+  height: 350px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 
   .ImageGallery--image {
