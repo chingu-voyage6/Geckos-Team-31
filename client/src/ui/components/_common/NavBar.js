@@ -28,11 +28,6 @@ const NavBar = (props) => {
   return (
     <div className="NavBar">
       <Link
-        to="/home"
-      >
-      Home
-      </Link>
-      <Link
         to="/talk"
       >
       Talk board

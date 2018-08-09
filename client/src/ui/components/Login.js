@@ -126,16 +126,6 @@ class Login extends React.Component {
 Login.propTypes = {
   // eslint-disable-next-line
   history: PropTypes.object,
-};
-
-Login.defaultProps = {
-  history: undefined,
-
-};
-
-Login.propTypes = {
-  // eslint-disable-next-line
-  history: PropTypes.object,
   dispatch: PropTypes.func,
 };
 

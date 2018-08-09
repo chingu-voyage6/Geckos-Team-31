@@ -1,16 +1,16 @@
 import React from 'react';
 import Loading from 'react-loading-components';
 import { createStore, applyMiddleware } from 'redux';
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Route, Redirect, Switch,
+} from 'react-router-dom';
 import Login from '../ui/components/Login';
 import TalkBoardMain from '../ui/components/talk/TalkBoardMain';
-import HomePageView from '../ui/components/home/HomePageView';
 import AddImageView from '../ui/components/add-image/AddImageView';
 import { authorizeUser } from '../ui/actions';
-
-
+import NotFound from '../ui/components/NotFound';
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
@@ -91,8 +91,9 @@ const PrivateRoute = ({
   <Route
     {...rest}
     render={props => (
+      // eslint-disable-next-line
       localStorage.getItem('user')
-        ?  auth ? <Component {...props} /> : <Loading type='ball_triangle' width={100} height={100} fill='#f44242' />
+        ? auth ? <Component {...props} /> : <Loading className="loading" type="tail_spin" width={100} height={100} fill="#f44242" />
         : <Redirect to="/" />
     )}
   />
@@ -104,17 +105,17 @@ class App extends React.Component {
     super();
     this.state = {
       auth: false,
-    }
+    };
   }
 
   componentDidMount() {
-    const token = localStorage.getItem('user')
+    const token = localStorage.getItem('user');
     store.dispatch(authorizeUser({ token }))
-    .then((res) => {
-      if(res) {
-      this.setState({ auth: true })
-      }
-    })
+      .then((res) => {
+        if (res) {
+          this.setState({ auth: true });
+        }
+      });
   }
 
   render() {
@@ -122,12 +123,12 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <Router>
-          <div>
+          <Switch>
             <Route exact path="/" render={props => <Login {...props} />} />
-            <PrivateRoute path="/home" component={HomePageView} auth={auth} />
             <PrivateRoute path="/talk" component={TalkBoardMain} auth={auth} />
             <PrivateRoute path="/add-images" component={AddImageView} auth={auth} />
-          </div>
+            <Route exact path="/*" component={NotFound} />
+          </Switch>
         </Router>
       </Provider>
     );
