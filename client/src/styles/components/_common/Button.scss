@@ -1,9 +1,13 @@
 .Button{
-  width: 150px;
   margin: 10px;
   text-align: center;
-  margin-right: 30px;
+  display: block;
+  min-width: 100px;
 
+}
+
+.Button__inner {
+  padding: 3px;
 }
 
 .Button--list {
