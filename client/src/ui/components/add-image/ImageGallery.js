@@ -215,21 +215,23 @@ class ImageGallery extends React.Component {
           label="Update Categories"
           onClick={() => this.openUpdateCategoryModal()}
         />
-        <div className="ImageGallery--images">
-          {gallery.map((image) => {
-            let isOwnedByUser = false;
-            if (_.contains(userGallery, image)) {
-              isOwnedByUser = true;
-            }
-            return (
-              <GalleryImage
-                key={image + isOwnedByUser}
-                image={image}
-                isOwnedByUser={isOwnedByUser}
-                removeImage={this.removeImage}
-                openImageModal={this.openImageModal}
-              />);
-          })}
+        <div className="ImageGallery--wrapper">
+          <div className="ImageGallery--images">
+            {gallery.map((image) => {
+              let isOwnedByUser = false;
+              if (_.contains(userGallery, image)) {
+                isOwnedByUser = true;
+              }
+              return (
+                <GalleryImage
+                  key={image + isOwnedByUser}
+                  image={image}
+                  isOwnedByUser={isOwnedByUser}
+                  removeImage={this.removeImage}
+                  openImageModal={this.openImageModal}
+                />);
+            })}
+          </div>
         </div>
         {this.renderAddImageModal()}
         {this.renderUpdateCategoryModal()}

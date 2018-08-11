@@ -30,6 +30,12 @@ const userSignUp = () => {
 };
 
 class Login extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      isLoginView: false,
+    }
+  }
   componentDidMount() {
     const { dispatch, history } = this.props;
     const token = localStorage.getItem('user');
@@ -67,59 +73,78 @@ class Login extends React.Component {
       });
   }
 
+  switchView() {
+    const { isLoginView } = this.state;
+    this.setState({
+      isLoginView: !isLoginView,
+    });
+  }
+
   render() {
+    const { isLoginView } = this.state;
     return (
       <div className="Login">
-        <Form id="sign-up" onSubmit={() => userSignUp()}>
-          <Header
-            heading="Sign up"
-          />
-          <Input
-            label="Email"
-            name="email"
-            type="text"
-          />
-          <Input
-            label="Username"
-            name="username"
-            type="text"
-          />
-          <Input
-            label="Password"
-            name="password"
-            type="password"
-          />
-          <Input
-            label="Password confirm"
-            name="passwordConf"
-            type="password"
-          />
-          <Button
-            label="Sign up"
-            type="submit"
-          />
-        </Form>
-        <Form id="sign-up" onSubmit={() => this.userLogin()}>
-          <Header
-            heading="Log in"
-          />
-          <Input
-            label="Username"
-            name="usernameLogin"
-            type="text"
-          />
-          <Input
-            label="Password"
-            name="passwordLogin"
-            type="password"
-          />
-          <Button
-            label="Sign up"
-            type="submit"
-          />
-        </Form>
-      </div>
-    );
+        {isLoginView
+          ? (
+            <Form id="sign-up" onSubmit={() => userSignUp()}>
+              <Header
+                heading="Sign up"
+              />
+              <Input
+                label="Email"
+                name="email"
+                type="text"
+              />
+              <Input
+                label="Username"
+                name="username"
+                type="text"
+              />
+              <Input
+                label="Password"
+                name="password"
+                type="password"
+              />
+              <Input
+                label="Password confirm"
+                name="passwordConf"
+                type="password"
+              />
+              <Button
+                label="Create account"
+                type="submit"
+              />
+              <Button
+                label="Already have an account?"
+                onClick={() => this.switchView()}
+              />
+            </Form>
+          )
+          : (
+            <Form id="sign-up" onSubmit={() => this.userLogin()}>
+              <Header
+                heading="Log in"
+              />
+              <Input
+                label="Username"
+                name="usernameLogin"
+                type="text"
+              />
+              <Input
+                label="Password"
+                name="passwordLogin"
+                type="password"
+              />
+              <Button
+                label="Log in"
+                type="submit"
+              />
+              <Button
+                label="Need to sign up?"
+                onClick={() => this.switchView()}
+              />
+            </Form>)}
+      </div>);
   }
 }
 
