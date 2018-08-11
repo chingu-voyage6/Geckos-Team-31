@@ -8,11 +8,11 @@ var UserSchema = new mongoose.Schema({
     trim: true
   },
   username: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true
-  },
+  type: String,
+  unique: true,
+  required: true,
+  trim: true
+},
   password: {
     type: String,
     required: true,

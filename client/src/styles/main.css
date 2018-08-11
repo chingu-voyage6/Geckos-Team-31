@@ -2,6 +2,10 @@ body {
   margin: 0;
   font-family: 'Garamond', sans-serif; }
 
+h1 {
+  font-family: 'Garamond', sans-serif;
+  font-size: 30px; }
+
 .NavBar {
   height: 60px;
   width: 100%;
@@ -52,13 +56,25 @@ a:active {
     color: white; }
 
 .Button {
-  margin: 10px;
   text-align: center;
-  display: block;
-  min-width: 100px; }
+  margin: 10px auto;
+  width: 200px;
+  height: 30px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Garamond', sans-serif;
+  font-size: 14px; }
 
 .Button__inner {
-  padding: 3px; }
+  padding: 3px 0px 3px 0px; }
+
+.Button--success {
+  background: rgba(76, 56, 112, 0.8); }
+
+.Button--link {
+  background: none;
+  border: none; }
 
 .Button--list {
   min-width: 180px;
@@ -103,26 +119,29 @@ Form {
   flex-direction: column;
   justify-content: center;
   margin: 0px auto;
-  padding-top: 25px;
-  width: 150px; }
+  width: 100%; }
+
+form {
+  width: 200px; }
 
 Input {
-  padding: 2px;
+  margin: 10px 0;
   width: 100%;
-  margin: 10px auto;
-  height: 20px;
+  height: 35px;
   text-align: center;
   border-radius: 3px;
   background: rgba(250, 250, 250, 0.2);
-  padding: 3px;
+  padding: 5px 0;
   border: none;
-  text-align: left; }
-
-input {
-  padding-left: 10px; }
+  text-align: left;
+  display: block;
+  box-sizing: border-box;
+  padding-left: 15px;
+  color: #1f2225;
+  font-size: 14px; }
 
 label {
-  margin: 10px; }
+  margin: 10px 0 5px 0; }
 
 .ImageCard {
   width: 150px;
@@ -212,11 +231,20 @@ select {
   height: 100vh;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 400'%3E%3Cdefs%3E%3CradialGradient id='a' cx='396' cy='281' r='514' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23D18'/%3E%3Cstop offset='1' stop-color='%23330000'/%3E%3C/radialGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='400' y1='148' x2='400' y2='333'%3E%3Cstop offset='0' stop-color='%23FA3' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23FA3' stop-opacity='0.5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23a)' width='800' height='400'/%3E%3Cg fill-opacity='0.4'%3E%3Ccircle fill='url(%23b)' cx='267.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='532.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='400' cy='30' r='300'/%3E%3C/g%3E%3C/svg%3E");
   background-attachment: fixed;
-  background-size: cover; }
+  background-size: cover;
+  color: #1f2225; }
   .Login .Form {
-    margin: 0 auto;
-    width: 30%;
-    margin: 20px; }
+    margin: 0 auto; }
+  .Login h1 {
+    text-align: left; }
+
+.Login--form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 200px; }
+  .Login--form .Button--link {
+    color: #1f2225; }
 
 .TalkBoardMain {
   width: 100%;

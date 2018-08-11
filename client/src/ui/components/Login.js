@@ -2,43 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { authorizeUser } from '../actions';
+import Modal from 'react-modal';
 import Form from './_common/Form';
 import Input from './_common/Input';
 import Button from './_common/Button';
-import Header from './_common/Header';
-
-
-const userSignUp = () => {
-  const username = document.querySelector('[name="username"]').value;
-  const email = document.querySelector('[name="email"]').value;
-  const password = document.querySelector('[name="password"]').value;
-  const passwordConf = document.querySelector('[name="passwordConf"]').value;
-  fetch('/api/register', {
-    method: 'POST', // or 'PUT'
-    body: JSON.stringify({
-      username,
-      email,
-      password,
-      passwordConf,
-    }), // data can be `string` or {object}!
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then(res => res.json())
-    .catch(error => console.log(error.reason))
-    .then(response => console.log(response));
-};
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      isLoginView: false,
-    }
+      isLoginView: true,
+      isSignUpModalOpen: false,
+    };
   }
+
   componentDidMount() {
     const { dispatch, history } = this.props;
     const token = localStorage.getItem('user');
+    console.log(token)
     if (token) {
       dispatch(authorizeUser({ token }))
         .then((response) => {
@@ -49,14 +30,39 @@ class Login extends React.Component {
     }
   }
 
+  userSignUp() {
+    const email = document.querySelector('[name="email"]').value;
+      const username = document.querySelector('[name="username"]').value;
+    const password = document.querySelector('[name="password"]').value;
+    const passwordConf = document.querySelector('[name="passwordConf"]').value;
+    fetch('/api/register', {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify({
+        email,
+        username,
+        password,
+        passwordConf,
+      }), // data can be `string` or {object}!
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(res => res.json())
+      .catch(error => console.log(error.reason))
+      .then((response) => {
+        this.setState({
+          isSignUpModalOpen: true,
+        })
+      });
+  };
+
   userLogin() {
     const { history, dispatch } = this.props;
-    const username = document.querySelector('[name="usernameLogin"]').value;
+    const email = document.querySelector('[name="emailLogin"]').value;
     const password = document.querySelector('[name="passwordLogin"]').value;
     return fetch('/api/login', {
       method: 'POST',
       body: JSON.stringify({
-        username,
+        email,
         password,
       }),
       headers: {
@@ -75,75 +81,98 @@ class Login extends React.Component {
 
   switchView() {
     const { isLoginView } = this.state;
+    if (isLoginView) {
+      document.querySelector('[name="emailLogin"]').value = '';
+      document.querySelector('[name="passwordLogin"]').value = '';
+    } else {
+      document.querySelector('[name="email"]').value = '';
+      document.querySelector('[name="password"]').value = '';
+      document.querySelector('[name="passwordConf"]').value = '';
+    }
     this.setState({
       isLoginView: !isLoginView,
     });
+  }
+
+  renderSignUpModal() {
+    return (
+      <Modal
+        isOpen={this.state.isSignUpModalOpen}
+        onAfterOpen={this.switchView}
+        onRequestClose={this.closeModal}
+        contentLabel="Succesfull sign up!">
+        <h3>Welcome</h3>
+        <p>Thanks for signing up for Talk Board. Log in to get started</p>
+      </Modal>
+    )
   }
 
   render() {
     const { isLoginView } = this.state;
     return (
       <div className="Login">
-        {isLoginView
-          ? (
-            <Form id="sign-up" onSubmit={() => userSignUp()}>
-              <Header
-                heading="Sign up"
-              />
-              <Input
-                label="Email"
-                name="email"
-                type="text"
-              />
-              <Input
-                label="Username"
-                name="username"
-                type="text"
-              />
-              <Input
-                label="Password"
-                name="password"
-                type="password"
-              />
-              <Input
-                label="Password confirm"
-                name="passwordConf"
-                type="password"
-              />
-              <Button
-                label="Create account"
-                type="submit"
-              />
-              <Button
-                label="Already have an account?"
-                onClick={() => this.switchView()}
-              />
-            </Form>
-          )
-          : (
-            <Form id="sign-up" onSubmit={() => this.userLogin()}>
-              <Header
-                heading="Log in"
-              />
-              <Input
-                label="Username"
-                name="usernameLogin"
-                type="text"
-              />
-              <Input
-                label="Password"
-                name="passwordLogin"
-                type="password"
-              />
-              <Button
-                label="Log in"
-                type="submit"
-              />
-              <Button
-                label="Need to sign up?"
-                onClick={() => this.switchView()}
-              />
-            </Form>)}
+        <div className="Login--form">
+          <h1>
+            Talk Board
+          </h1>
+          {!isLoginView
+            ? (
+              <Form id="sign-up-form">
+                <Input
+                  label="Email address"
+                  name="email"
+                  type="text"
+                />
+                <Input
+                  label="Username"
+                  name="username"
+                  type="text"
+                />
+                <Input
+                  label="Password"
+                  name="password"
+                  type="password"
+                />
+                <Input
+                  label="Confirm password"
+                  name="passwordConf"
+                  type="password"
+                />
+                <Button
+                  label="Create account"
+                  onClick={() => this.userSignUp()}
+                />
+                <Button
+                  label="Already have an account?"
+                  onClick={() => this.switchView()}
+                  theme="link"
+                />
+              </Form>
+            )
+            : (
+              <Form id="log-in-form">
+                <Input
+                  label="Email address"
+                  name="emailLogin"
+                  type="text"
+                />
+                <Input
+                  label="Password"
+                  name="passwordLogin"
+                  type="password"
+                />
+                <Button
+                  label="Log in"
+                  onClick={() => this.userLogin()}
+
+                />
+                <Button
+                  label="Need to sign up?"
+                  onClick={() => this.switchView()}
+                  theme="link"
+                />
+              </Form>)}
+        </div>
       </div>);
   }
 }

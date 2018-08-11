@@ -3,7 +3,9 @@ Form {
   flex-direction: column;
   justify-content: center;
   margin: 0px auto;
-  padding-top: 25px;
-  width: 150px;
+  width: 100%;
+}
 
+form {
+  width: 200px;
 }

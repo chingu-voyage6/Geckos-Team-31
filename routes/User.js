@@ -19,9 +19,10 @@ const userToken = user => {
 // Register User
 router.post('/register', (req, res) => {
   // Create New User - Omitting password until we hash it.
+  console.log(chalk.red(req.body.username))
   let newUser = new User({
     email: req.body.email,
-    username: req.body.username
+    username: req.body.username,
   })
 
   // Using Bcrypt to hash the password. Could move this back to a mongoose.pre if you prefer.
