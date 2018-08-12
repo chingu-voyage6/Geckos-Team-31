@@ -2,24 +2,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
+import Button from '../_common/Button';
 import TalkBoardSelectContainer from '../../containers/TalkBoardSelectContainer';
 import CategoriesList from './CategoriesList';
 import handleGetCategories from '../../../modules/handle-get-categories';
-
+import handleUpdateFirstLogin from '../../../modules/handle-update-first-login';
 
 const mapStateToProps = state => ({
   userId: state.userId,
+  token: state.token,
 });
 
 class TalkBoardView extends React.Component {
   constructor(props) {
     super(props);
-    const firstLogin = this.props.firstLogin;
+    const { firstLogin } = this.props;
     this.state = {
       category: '',
       fadeBackground: false,
       categories: [],
-      isWelcomeModalOpen: this.props.firstLogin,
+      isWelcomeModalOpen: firstLogin,
     };
     this.switchCategories = this.switchCategories.bind(this);
     this.toggleBackgroundFade = this.toggleBackgroundFade.bind(this);
@@ -45,9 +47,14 @@ class TalkBoardView extends React.Component {
   }
 
   closeWelcomeModal() {
-    this.setState({
-      isWelcomeModalOpen: false,
-    });
+    const { firstLogin, userId } = this.props;
+    if (firstLogin) {
+      handleUpdateFirstLogin({ userId })
+      .catch(error => console.log(error))
+      this.setState({
+        isWelcomeModalOpen: false,
+      });
+    }
   }
 
   toggleBackgroundFade({ fade }) {
@@ -70,15 +77,29 @@ class TalkBoardView extends React.Component {
         onRequestClose={this.closeWelcomeModal}
         ariaHideApp={false}
       >
-      <h3>Welcome to Talk Board</h3>
-      <h4>The app which aims to make communication simple</h4>
-      <p>We have added an example category and a few images to get you started</p>
-      <p>
-        To add more head over to <a href="/add-images">Add Images</a> and you can browse our collection or upload your download
-        To start using a new image you will need to add your categories and assign your images to the appropriate one.
-      </p>
-      <br/>
-      <p>Thanks for using Talk Board, let me know if you have any questions or difficulties</p>
+        <h3>
+          Welcome to Talk Board
+        </h3>
+        <h4>
+          The app which aims to make communication simple
+        </h4>
+        <p>
+          We have added an example category and a few images to get you started
+        </p>
+        <p>
+          To add more head over to Add Images and you can browse our collection or
+          upload your download
+          To start using a new image you will need to add your categories and
+          assign your images to the appropriate one.
+        </p>
+        <br />
+        <p>
+          Thanks for using Talk Board, let me know if you have any questions or difficulties
+        </p>
+        <Button
+          label="Continue"
+          onClick={() => this.closeWelcomeModal()}
+        />
       </Modal>
     )
   }

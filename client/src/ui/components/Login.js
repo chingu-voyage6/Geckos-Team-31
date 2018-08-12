@@ -21,7 +21,6 @@ class Login extends React.Component {
   componentDidMount() {
     const { dispatch, history } = this.props;
     const token = localStorage.getItem('user');
-    console.log(token)
     if (token) {
       dispatch(authorizeUser({ token }))
         .then((response) => {

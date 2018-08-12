@@ -18,7 +18,6 @@ require('isomorphic-fetch');
 const initialState = {
   userId: '',
   userOnboarding: {},
-  token: '',
   userGallery: [],
   categories: [],
   storyBoard: [],
