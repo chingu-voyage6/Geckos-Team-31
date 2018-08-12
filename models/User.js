@@ -35,7 +35,7 @@ var UserSchema = new mongoose.Schema({
   },
   'onboarding.firstLogin': {
     type: Boolean,
-    default: false,
+    default: true,
   }
 });
 

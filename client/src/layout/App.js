@@ -17,6 +17,7 @@ require('isomorphic-fetch');
 
 const initialState = {
   userId: '',
+  userOnboarding: {},
   token: '',
   userGallery: [],
   categories: [],
@@ -25,14 +26,18 @@ const initialState = {
 
 function reducer(state = initialState, action) {
   if (action.type === 'AUTHORIZE_USER') {
-    const userId = action.user;
+    console.log(action)
+    const userId = action.user.userId;
+    const userOnboarding = action.user.userOnboarding;
     return Object.assign({}, state, {
       userId,
+      userOnboarding,
     });
   }
   if (action.type === 'AUTHORIZE__CLEAR_USER_TOKEN') {
     return Object.assign({}, state, {
       userId: '',
+      userOnboarding: {},
     });
   }
   if (action.type === 'USERGALLERY__LOADGALLERY') {

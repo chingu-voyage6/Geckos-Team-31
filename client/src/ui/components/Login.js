@@ -107,25 +107,28 @@ class Login extends React.Component {
   }
 
   renderSignUpModal() {
-    const { username } = this.state;
+    const { username, isSignUpModalOpen } = this.state;
     return (
       <Modal
         ariaHideApp={false}
-        isOpen={this.state.isSignUpModalOpen}
+        isOpen={isSignUpModalOpen}
         onRequestClose={this.closeSignUpModal}
-        contentLabel="You have succesfully signed up!">
-        <div className ="Modal">
-        <div className="Modal--closeBar"></div>
-        <h3>
+        contentLabel="You have succesfully signed up!"
+      >
+        <div className="Modal">
+          <div className="Modal--closeBar" />
+          <h3>
           Welcome {username}
-        </h3>
-        <p>Thanks for signing up for Talk Board. Log in to get started</p>
-        <Button
-          label="Log in"
-          theme="success"
-          onClick={() => this.closeSignUpModal()}
+          </h3>
+          <p>
+            Thanks for signing up for Talk Board. Log in to get started
+          </p>
+          <Button
+            label="Log in"
+            theme="success"
+            onClick={() => this.closeSignUpModal()}
           />
-      </div>
+        </div>
       </Modal>
     )
   }
@@ -195,7 +198,7 @@ class Login extends React.Component {
                   theme="link"
                 />
               </Form>)}
-              {this.renderSignUpModal()}
+          {this.renderSignUpModal()}
         </div>
       </div>);
   }

@@ -19,7 +19,11 @@ const authorizeUser = ({ token }, promise) => {
       .then((response) => {
         const { user } = response;
         // eslint-disable-next-line
-        modulePromise.resolve(user._id);
+        modulePromise.resolve({
+          userId: user._id,
+          userOnboarding: user.onboarding,
+
+        });
       })
       .catch((error) => {
         modulePromise.reject({

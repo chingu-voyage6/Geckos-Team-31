@@ -55,7 +55,7 @@ router.post('/login', requireSignIn, (req, res) => {
   // If the users - username/password are incorrect an unauthorised response will be sent.
   res.json({
     success: true,
-    token: userToken(req.user)
+    token: userToken(req.user),
   })
 })
 

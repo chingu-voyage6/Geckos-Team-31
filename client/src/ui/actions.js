@@ -14,7 +14,9 @@ const AUTHORIZE__CLEAR_USER_TOKEN = 'AUTHORIZE__CLEAR_USER_TOKEN';
 
 export const authorizeUser = ({ token }) => function userAuthentication(dispatch) {
   return handleAuthorizeUser({ token })
-    .then(response => dispatch({ type: AUTHORIZE_USER, user: response }))
+    .then(response => dispatch({
+      type: AUTHORIZE_USER, user: response,
+    }))
     .catch((error) => {
       console.log(error);
       localStorage.clear();

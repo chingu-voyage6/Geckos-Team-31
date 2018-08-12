@@ -1,9 +1,16 @@
 .ReactModal__Overlay {
   background-color: rgba(173,216,230, 0.4) !important;
-
+  z-index: 9999;
 }
 
 .ReactModal__Content {
   margin: 100px;
   color: $black;
+  z-index: 9999;
+  a {
+    color: $base-blue  ;
+    font-weight: 400;
+    margin: 0;
+    font-size: inherit;
+  }
 }
