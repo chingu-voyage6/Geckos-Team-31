@@ -59,10 +59,9 @@ function reducer(state = initialState, action) {
   }
   if (action.type === 'STORYBOARD__REMOVE-IMAGE') {
     const storyBoard = state.storyBoard.filter(img => action.image !== img);
-    const newState = {
+    return Object.assign({}, state, {
       storyBoard,
-    };
-    return newState;
+    });
   }
   if (action.type === 'STORYBOARD__ARRANGE-IMAGES') {
     const index = state.storyBoard.indexOf(action.targetImage);

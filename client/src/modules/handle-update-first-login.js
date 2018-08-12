@@ -3,7 +3,6 @@ let modulePromise;
 const updateFirstLogin = ({ userId }, promise) => {
   modulePromise = promise;
   try {
-    console.log(userId)
     const url = '/api/update-first-login';
     fetch(url, {
       method: 'POST',

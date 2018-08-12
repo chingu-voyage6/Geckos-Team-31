@@ -18,6 +18,22 @@ Input {
   }
 }
 
+.Input--invert {
+  margin: 10px 0;
+  width: 100%;
+  height: 35px;
+  text-align: center;
+  border: 3px solid $base-blue;
+  background:rgba(250, 250, 250, 0.2);
+  padding: 5px 0;
+  text-align: left;
+  display:block;
+  box-sizing: border-box;
+  padding-left: 15px;
+  color: $black;
+  font-size: 14px;
+}
+
 
 
 label {

@@ -10,11 +10,13 @@
 .ImageGallery--images{
   width: 100%;
   overflow-x: scroll;
-  height: 350px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
+  box-shadow: $box-shadow;
+  margin: $base-margin auto;
+  background-color: $base-blue;
 
   .ImageGallery--image {
     width: 100px;
@@ -51,8 +53,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 100%;
+  justify-content: flex-start;
   img {
     position: relative;
     margin: 0px auto;

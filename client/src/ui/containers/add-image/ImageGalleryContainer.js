@@ -18,10 +18,6 @@ class ImageGalleryContainer extends React.Component {
     this.state = {
       gallery: [],
     };
-    // this.updateNewImage = this.updateNewImage.bind(this);
-    // this.updateRemoveImage = this.updateRemoveImage.bind(this);
-    // this.updateNewCategory = this.updateNewCategory.bind(this);
-    // this.updateRemoveCategory = this.updateRemoveCategory.bind(this);
   }
 
   componentDidMount() {

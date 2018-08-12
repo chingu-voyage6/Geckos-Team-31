@@ -101,13 +101,12 @@ class TalkBoardView extends React.Component {
           onClick={() => this.closeWelcomeModal()}
         />
       </Modal>
-    )
+    );
   }
 
   render() {
     const { category, fadeBackground, categories } = this.state;
     const { userId, firstLogin } = this.props;
-    console.log(firstLogin)
     return (
       <div
         className="TalkBoardView"
