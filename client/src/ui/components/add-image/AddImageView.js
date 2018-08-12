@@ -8,7 +8,6 @@ const AddImageView = props => (
     <NavBar {...props} />
     <div className="AddImageView">
       <ImageGalleryContainer />
-      <ImageUpload />
     </div>
   </div>
 );

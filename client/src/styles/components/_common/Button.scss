@@ -9,6 +9,7 @@
   cursor: pointer;
   font-family: 'Garamond', sans-serif;
   font-size: 14px;
+  font-weight: 600;
 }
 
 .Button__inner {
@@ -22,6 +23,11 @@
 
 .Button--warning {
   background: $highlight-orange;
+}
+.Button--open {
+  background: $dark-blue;
+  margin: 0px 10px;
+  color:white;
 }
 
 
@@ -60,4 +66,25 @@ cursor: pointer;
   margin: 10px;
   text-align: center
 
+}
+
+.ButtonGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.uploadcare--widget__button {
+  text-align: center;
+  margin: 10px auto;
+  width: 200px;
+  height: 30px;
+// linear-gradient(#1BDF11, #089F00) ;
+  border:none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Garamond', sans-serif;
+  font-size: 14px;
+  background: $base-blue;
+  font-weight: 600;
 }
