@@ -1,9 +1,8 @@
 let modulePromise;
 
-const authorizeUser = ({ token } ,promise) => {
+const authorizeUser = ({ token }, promise) => {
   modulePromise = promise;
   try {
-    console.log(token)
     const url = '/api/auth';
     fetch(url, {
       method: 'GET',
@@ -18,8 +17,13 @@ const authorizeUser = ({ token } ,promise) => {
       return response.json(response);
     })
       .then((response) => {
-        const user = response.user;
-        modulePromise.resolve(user._id);
+        const { user } = response;
+        // eslint-disable-next-line
+        modulePromise.resolve({
+          userId: user._id,
+          userOnboarding: user.onboarding,
+
+        });
       })
       .catch((error) => {
         modulePromise.reject({

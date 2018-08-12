@@ -10,16 +10,17 @@ const USERGALLERY__ADDCATEGORY = 'USERGALLERY__ADDIMAGE';
 const USERGALLERY__REMOVECATEGORY = 'USERGALLERY__REMOVEIMAGE';
 
 const AUTHORIZE_USER = 'AUTHORIZE_USER';
-const AUTHORIZE_USER_FAILED = 'AUTHORIZE_USER_FAILED';
+const AUTHORIZE__CLEAR_USER_TOKEN = 'AUTHORIZE__CLEAR_USER_TOKEN';
 
 export const authorizeUser = ({ token }) => function userAuthentication(dispatch) {
-  console.log(token);
   return handleAuthorizeUser({ token })
-    .then(response => dispatch({ type: AUTHORIZE_USER, user: response }))
+    .then(response => dispatch({
+      type: AUTHORIZE_USER, user: response,
+    }))
     .catch((error) => {
       console.log(error);
       localStorage.clear();
-      return dispatch({ type: AUTHORIZE_USER_FAILED });
+      return dispatch({ type: AUTHORIZE__CLEAR_USER_TOKEN });
     });
 };
 
@@ -37,6 +38,12 @@ export const loadCategories = ({ userId }) => function loadCat(dispatch) {
     .catch(error => console.log(error));
 };
 
+export const clearUser = () => {
+  const action = {
+    type: AUTHORIZE__CLEAR_USER_TOKEN,
+  };
+  return action;
+};
 
 export const addImage = (image) => {
   const action = {

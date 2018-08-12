@@ -231,3 +231,16 @@ app.post('/api/remove-image-from-account', function (req, res) {
         }
     });
 })
+
+app.post('/api/update-first-login', (req, res) => {
+  User.update({ _id: req.body.userId }, {
+    $set: { 'onboarding.firstLogin': false },
+  }, function (err, doc) {
+		if (err) {
+			res.json(err)
+		}
+		else {
+			res.json(doc)
+		}
+	});
+})

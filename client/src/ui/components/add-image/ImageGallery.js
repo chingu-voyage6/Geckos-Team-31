@@ -55,6 +55,7 @@ class ImageGallery extends React.Component {
   }
 
   closeImageModal() {
+    console.log('yo')
     this.setState({
       isAddImageModalOpen: false,
       currentImage: '',
@@ -115,11 +116,16 @@ class ImageGallery extends React.Component {
       <Modal
         isOpen={isUpdateCategoryModalOpen}
         onRequestClose={this.closeUpdateCategoryModal}
-        className="Modal"
         contentLabel="Add Image Details"
         shouldCloseOnOverlayClick
         ariaHideApp={false}
       >
+      <div
+        className="ModalHeader"
+        onClick={() => this.closeImageModal()}
+      >
+      <i className="fa fa-times" />
+    </div>
         <div
           className="UpdateCategoryModal"
         >
@@ -131,9 +137,11 @@ class ImageGallery extends React.Component {
               type="text"
               name="categoryName"
               label="Category Name"
+              className="Input--invert"
             />
             <Button
               label="Add category"
+              theme="success"
               onClick={() => this.addCategory()}
             />
           </Form>
@@ -150,6 +158,7 @@ class ImageGallery extends React.Component {
             </Select>
             <Button
               label="Remove category"
+              theme="warning"
               onClick={() => this.removeCategory()}
             />
           </Form>
@@ -165,32 +174,44 @@ class ImageGallery extends React.Component {
       <Modal
         isOpen={isAddImageModalOpen}
         onRequestClose={this.closeImageModal}
-        className="Modal"
         contentLabel="Add Image Details"
         shouldCloseOnOverlayClick
         ariaHideApp={false}
       >
         <div
-          className="AddImageModal"
+          className="ModalHeader"
+          onClick={() => this.closeImageModal()}
         >
-          <img src={currentImage} alt={currentImage} />
-          <Select
-            label="Select a category"
-            name="categoryName"
-          >
-            {categories ? categories.map(category => (
-              <option
-                value={category}
-                key={category}
-              >
-                {category}
-              </option>
-            )) : null}
-          </Select>
+        <i className="fa fa-times" />
+      </div>
+        <div className="AddImageForm">
+          <GalleryImage
+            key={currentImage}
+            image={currentImage}
+          />
           <Form id="add-image">
+            <Select
+              label="Select a category"
+              name="categoryName"
+            >
+              {categories ? categories.map(category => (
+                <option
+                  value={category}
+                  key={category}
+                >
+                  {category}
+                </option>
+              )) : null}
+            </Select>
             <Button
               label="Add Image"
               onClick={() => this.addImage()}
+              theme="success"
+            />
+            <Button
+              label="Cancel"
+              onClick={() => this.closeImageModal()}
+              theme="link"
             />
           </Form>
         </div>
@@ -213,23 +234,37 @@ class ImageGallery extends React.Component {
         />
         <Button
           label="Update Categories"
+          theme="success"
           onClick={() => this.openUpdateCategoryModal()}
         />
-        <div className="ImageGallery--images">
-          {gallery.map((image) => {
-            let isOwnedByUser = false;
-            if (_.contains(userGallery, image)) {
-              isOwnedByUser = true;
-            }
-            return (
-              <GalleryImage
-                key={image + isOwnedByUser}
-                image={image}
-                isOwnedByUser={isOwnedByUser}
-                removeImage={this.removeImage}
-                openImageModal={this.openImageModal}
-              />);
-          })}
+        <div className="ImageGallery--wrapper">
+          <div className="ImageGallery--images">
+            {gallery.map((image) => {
+              (_.contains(userGallery, image))
+              return _.contains(userGallery, image) ? (
+                <GalleryImage
+                  key={image}
+                  isOwnedByUser
+                  image={image}
+                  removeImage={this.removeImage}
+                  openImageModal={this.openImageModal}
+                />) : null;
+            })}
+          </div>
+        </div>
+        <div className="ImageGallery--wrapper">
+          <div className="ImageGallery--images">
+            {gallery.map((image) => {
+              (_.contains(userGallery, image))
+              return !_.contains(userGallery, image) ? (
+                <GalleryImage
+                  key={image}
+                  image={image}
+                  removeImage={this.removeImage}
+                  openImageModal={this.openImageModal}
+                />) : null;
+            })}
+          </div>
         </div>
         {this.renderAddImageModal()}
         {this.renderUpdateCategoryModal()}

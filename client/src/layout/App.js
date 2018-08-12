@@ -1,21 +1,23 @@
 import React from 'react';
+import Loading from 'react-loading-components';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Route, Redirect, Switch,
+} from 'react-router-dom';
 import Login from '../ui/components/Login';
 import TalkBoardMain from '../ui/components/talk/TalkBoardMain';
-import HomePageView from '../ui/components/home/HomePageView';
-import AddImageViewContainer from '../ui/containers/add-image/AddImageViewContainer';
+import AddImageView from '../ui/components/add-image/AddImageView';
 import { authorizeUser } from '../ui/actions';
-
+import NotFound from '../ui/components/NotFound';
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 const initialState = {
   userId: '',
-  token: '',
+  userOnboarding: {},
   userGallery: [],
   categories: [],
   storyBoard: [],
@@ -23,14 +25,18 @@ const initialState = {
 
 function reducer(state = initialState, action) {
   if (action.type === 'AUTHORIZE_USER') {
-    const userId = action.user;
+    console.log(action)
+    const userId = action.user.userId;
+    const userOnboarding = action.user.userOnboarding;
     return Object.assign({}, state, {
       userId,
+      userOnboarding,
     });
   }
-  if (action.type === 'AUTHORIZE_USER_FAILED') {
+  if (action.type === 'AUTHORIZE__CLEAR_USER_TOKEN') {
     return Object.assign({}, state, {
       userId: '',
+      userOnboarding: {},
     });
   }
   if (action.type === 'USERGALLERY__LOADGALLERY') {
@@ -53,10 +59,9 @@ function reducer(state = initialState, action) {
   }
   if (action.type === 'STORYBOARD__REMOVE-IMAGE') {
     const storyBoard = state.storyBoard.filter(img => action.image !== img);
-    const newState = {
+    return Object.assign({}, state, {
       storyBoard,
-    };
-    return newState;
+    });
   }
   if (action.type === 'STORYBOARD__ARRANGE-IMAGES') {
     const index = state.storyBoard.indexOf(action.targetImage);
@@ -84,13 +89,14 @@ const store = createStore(reducer, applyMiddleware(thunk));
 
 const PrivateRoute = ({
   // eslint-disable-next-line
-  component: Component, ...rest
+  component: Component, ...rest, auth,
 }) => (
   <Route
     {...rest}
     render={props => (
+      // eslint-disable-next-line
       localStorage.getItem('user')
-        ? <Component {...props} />
+        ? auth ? <Component {...props} /> : <Loading className="loading" type="tail_spin" width={100} height={100} fill="#f44242" />
         : <Redirect to="/" />
     )}
   />
@@ -107,20 +113,25 @@ class App extends React.Component {
 
   componentDidMount() {
     const token = localStorage.getItem('user');
-    store.dispatch(authorizeUser({ token }));
+    store.dispatch(authorizeUser({ token }))
+      .then((res) => {
+        if (res) {
+          this.setState({ auth: true });
+        }
+      });
   }
 
   render() {
-    const { userId, auth } = this.state;
+    const { auth } = this.state;
     return (
       <Provider store={store}>
         <Router>
-          <div>
+          <Switch>
             <Route exact path="/" render={props => <Login {...props} />} />
-            <PrivateRoute path="/home" component={HomePageView} auth={auth} />
             <PrivateRoute path="/talk" component={TalkBoardMain} auth={auth} />
-            <PrivateRoute userId={userId} path="/add-images" component={AddImageViewContainer} auth={auth} />
-          </div>
+            <PrivateRoute path="/add-images" component={AddImageView} auth={auth} />
+            <Route exact path="/*" component={NotFound} />
+          </Switch>
         </Router>
       </Provider>
     );

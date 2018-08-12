@@ -19,9 +19,10 @@ const userToken = user => {
 // Register User
 router.post('/register', (req, res) => {
   // Create New User - Omitting password until we hash it.
+  console.log(chalk.red(req.body.username))
   let newUser = new User({
     email: req.body.email,
-    username: req.body.username
+    username: req.body.username,
   })
 
   // Using Bcrypt to hash the password. Could move this back to a mongoose.pre if you prefer.
@@ -42,7 +43,7 @@ router.post('/register', (req, res) => {
         }
         res.json({
           success: true,
-          user
+          user: user.username,
         })
       })
     })
@@ -54,7 +55,7 @@ router.post('/login', requireSignIn, (req, res) => {
   // If the users - username/password are incorrect an unauthorised response will be sent.
   res.json({
     success: true,
-    token: userToken(req.user)
+    token: userToken(req.user),
   })
 })
 
@@ -67,8 +68,6 @@ router.get('/logout', requireAuth, (req, res) => {
 
 // Example of a protected route using the JWT we create when a user logs in.
 router.get('/auth', requireAuth, (req, res) => {
-  // As with login, if the user passes the correct token then the current user will be available on the req object.
-  // If not then we will get unauthorized again.
   res.json({
     success: true,
     user: req.user

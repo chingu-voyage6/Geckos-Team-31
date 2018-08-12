@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Form = ({
-  formId, children, onSubmit, action, method,
+  id, children, onSubmit, action, method,
 }) => (
   <div className="Form">
     <form
-      id={formId}
+      id={id}
       action={action}
       method={method}
       onSubmit={(e) => {
@@ -20,7 +20,7 @@ const Form = ({
 );
 
 Form.propTypes = {
-  formId: PropTypes.string,
+  id: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   onSubmit: PropTypes.func,
   action: PropTypes.string,
@@ -29,7 +29,7 @@ Form.propTypes = {
 
 Form.defaultProps = {
   onSubmit: undefined,
-  formId: undefined,
+  id: undefined,
   children: undefined,
   method: undefined,
   action: undefined,

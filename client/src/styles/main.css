@@ -2,6 +2,10 @@ body {
   margin: 0;
   font-family: 'Garamond', sans-serif; }
 
+h1 {
+  font-family: 'Garamond', sans-serif;
+  font-size: 30px; }
+
 .NavBar {
   height: 60px;
   width: 100%;
@@ -11,27 +15,53 @@ body {
   flex-direction: row;
   justify-content: flex-end; }
 
-.ReactModal__Overlay--after-open {
-  background-color: rgba(173, 216, 230, 0.4) !important; }
+a {
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
+  padding: 0;
+  margin: 20px;
+  cursor: pointer; }
 
-.Modal {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 400px;
-  width: 300px;
-  background: white;
-  margin: 0px auto;
-  margin-top: 150px;
-  border: 2px solid #FF463C; }
-  .Modal .Select select {
-    width: 150px;
-    height: 25px; }
-  .Modal .Input {
-    margin: 0px auto; }
-  .Modal .Button {
-    margin: 0px auto; }
+a:focus,
+a:active {
+  border-bottom: 4px solid #FF463C; }
+
+.ReactModal__Overlay {
+  background-color: rgba(173, 216, 230, 0.4) !important;
+  z-index: 9999; }
+
+.ReactModal__Content {
+  padding: 0 !important;
+  margin: 100px;
+  color: #1f2225;
+  height: 450px;
+  z-index: 9999; }
+  .ReactModal__Content a {
+    color: #38D4E3;
+    font-weight: 400;
+    margin: 0;
+    font-size: inherit; }
+  .ReactModal__Content .ImageGallery--image {
+    width: 200px;
+    margin: 0px auto;
+    display: block; }
+  .ReactModal__Content img {
+    width: 100%; }
+  .ReactModal__Content .Select--input {
+    width: 200px;
+    height: 30px; }
+
+.ModalHeader {
+  width: 100%;
+  height: 22px;
+  background: #FF463C;
+  margin-bottom: 25px;
+  cursor: pointer;
+  z-index: 1000; }
+  .ModalHeader i {
+    padding: 2px;
+    color: #1f2225; }
 
 .NavLink {
   margin: 20px; }
@@ -40,12 +70,30 @@ body {
     color: white; }
 
 .Button {
-  width: 150px;
-  margin: 10px;
   text-align: center;
-  margin-right: 30px; }
+  margin: 10px auto;
+  width: 200px;
+  height: 30px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Garamond', sans-serif;
+  font-size: 14px; }
 
-.Button--list {
+.Button__inner {
+  padding: 3px 0px 3px 0px; }
+
+.Button--success {
+  background: #15CF5A; }
+
+.Button--warning {
+  background: #FFC03C; }
+
+.Button--link {
+  background: none;
+  border: none; }
+
+.Button--categories {
   min-width: 180px;
   height: 30px;
   background-color: #FFC03C;
@@ -53,17 +101,7 @@ body {
   border-radius: 5px;
   color: white;
   font-size: 18px;
-  box-shadow: 0px 5px 13px -4px rgba(0, 0, 0, 0.3);
-  cursor: pointer; }
-
-.Button--success {
-  width: 150px;
-  height: 30px;
-  background-color: #15CF5A;
-  border-radius: 5px;
-  color: white;
-  font-size: 18px;
-  box-shadow: 0px 5px 13px -4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 12px -2px rgba(0, 0, 0, 0.3);
   cursor: pointer; }
 
 .Button--upload {
@@ -73,35 +111,64 @@ body {
   border-radius: 5px;
   color: white;
   font-size: 18px;
-  box-shadow: 0px 5px 13px -4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 12px -2px rgba(0, 0, 0, 0.3);
   cursor: pointer; }
+
+.Button--NavLink {
+  text-decoration: none;
+  color: white;
+  background: none;
+  margin: 10px;
+  text-align: center; }
 
 Form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 0px auto;
-  padding-top: 25px; }
+  width: 100%; }
+
+form {
+  width: 200px; }
 
 Input {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 2px;
-  margin: 10px;
-  width: 150px;
-  height: 20px;
+  margin: 10px 0;
+  width: 100%;
+  height: 35px;
   text-align: center;
   border-radius: 3px;
-  border: 2px solid #38D4E3; }
+  background: rgba(250, 250, 250, 0.2);
+  padding: 5px 0;
+  border: none;
+  text-align: left;
+  display: block;
+  box-sizing: border-box;
+  padding-left: 15px;
+  color: #1f2225;
+  font-size: 14px; }
+
+.Input--invert {
+  margin: 10px 0;
+  width: 100%;
+  height: 35px;
+  text-align: center;
+  border: 3px solid #38D4E3;
+  background: rgba(250, 250, 250, 0.2);
+  padding: 5px 0;
+  text-align: left;
+  display: block;
+  box-sizing: border-box;
+  padding-left: 15px;
+  color: #1f2225;
+  font-size: 14px; }
 
 label {
-  margin: 10px; }
+  margin: 10px 0 5px 0; }
 
 .ImageCard {
   width: 150px;
   margin: 10px;
-  box-shadow: 0px 5px 13px -4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 12px -2px rgba(0, 0, 0, 0.3);
   height: 20vh;
   z-index: 2; }
   .ImageCard img {
@@ -118,7 +185,7 @@ label {
 .ImageCard__highlight {
   width: 400px;
   margin: 10px;
-  box-shadow: 0px 5px 13px -4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 12px -2px rgba(0, 0, 0, 0.3);
   z-index: 10;
   position: absolute;
   padding: 0;
@@ -181,11 +248,25 @@ select {
 .Login {
   display: flex;
   flex-direction: row;
-  justify-content: center; }
+  justify-content: center;
+  background-color: #330000;
+  height: 100vh;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 400'%3E%3Cdefs%3E%3CradialGradient id='a' cx='396' cy='281' r='514' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23D18'/%3E%3Cstop offset='1' stop-color='%23330000'/%3E%3C/radialGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='400' y1='148' x2='400' y2='333'%3E%3Cstop offset='0' stop-color='%23FA3' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23FA3' stop-opacity='0.5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23a)' width='800' height='400'/%3E%3Cg fill-opacity='0.4'%3E%3Ccircle fill='url(%23b)' cx='267.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='532.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='400' cy='30' r='300'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: cover;
+  color: #1f2225; }
   .Login .Form {
-    width: 30%;
-    background: grey;
-    margin: 20px; }
+    margin: 0 auto; }
+  .Login h1 {
+    text-align: left; }
+
+.Login--form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 200px; }
+  .Login--form .Button--link {
+    color: #1f2225; }
 
 .TalkBoardMain {
   width: 100%;
@@ -258,15 +339,17 @@ select {
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap; }
+  .CategoriesList .Button {
+    margin: 0 10px; }
 
 .AddImageView {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center; }
 
 .ImageGallery {
-  width: 50%;
+  width: 100%;
   margin: 10px;
   display: flex;
   flex-direction: column;
@@ -275,10 +358,14 @@ select {
 
 .ImageGallery--images {
   width: 100%;
+  overflow-x: scroll;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap; }
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  box-shadow: 0px 2px 12px -2px rgba(0, 0, 0, 0.3);
+  margin: 25px auto;
+  background-color: #38D4E3; }
   .ImageGallery--images .ImageGallery--image {
     width: 100px;
     height: 100px;
@@ -307,8 +394,7 @@ select {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 100%; }
+  justify-content: flex-start; }
   .UpdateCategoryModal img {
     position: relative;
     margin: 0px auto;
