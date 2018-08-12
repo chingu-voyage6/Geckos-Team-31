@@ -12,7 +12,7 @@ const CategoriesList = (props) => {
           onClick={() => switchCategories({ category: category.toLowerCase() })}
           label={category}
           key={category}
-          className="Button--categories"
+          theme="warning"
         />
       ))}
     </div>

@@ -1,27 +1,24 @@
 .TalkBoardStory--wrapper{
   width: 680px;
-  margin: 0px auto;
   height: 22vh;
   margin-top: $base-margin;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   z-index: 0;
   background-color: white;
-
+  box-sizing: border-box;
+  margin: 0px auto;
 }
 
 .TalkBoardStory {
-  margin: 0px auto;
   border-radius:15px;
   width: 100%;
   height: 100%;
+  margin-top: $base-margin * 1.5;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   position: relative;
-
+  box-sizing: border-box;
   .ImageCard {
     z-index: 10;
   }
@@ -33,4 +30,5 @@
   height: 30px;
   position: absolute;
   z-index: 9;
+  margin: 0px auto;
 }
