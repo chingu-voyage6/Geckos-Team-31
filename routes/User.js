@@ -43,7 +43,7 @@ router.post('/register', (req, res) => {
         }
         res.json({
           success: true,
-          user
+          user: user.username,
         })
       })
     })

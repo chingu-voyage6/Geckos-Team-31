@@ -27,27 +27,12 @@ a:focus,
 a:active {
   border-bottom: 4px solid #FF463C; }
 
-.ReactModal__Overlay--after-open {
+.ReactModal__Overlay {
   background-color: rgba(173, 216, 230, 0.4) !important; }
 
-.Modal {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 400px;
-  width: 300px;
-  background: white;
-  margin: 0px auto;
-  margin-top: 150px;
-  border: 2px solid #FF463C; }
-  .Modal .Select select {
-    width: 150px;
-    height: 25px; }
-  .Modal .Input {
-    margin: 0px auto; }
-  .Modal .Button {
-    margin: 0px auto; }
+.ReactModal__Content {
+  margin: 100px;
+  color: #1f2225; }
 
 .NavLink {
   margin: 20px; }
@@ -70,27 +55,17 @@ a:active {
   padding: 3px 0px 3px 0px; }
 
 .Button--success {
-  background: rgba(76, 56, 112, 0.8); }
+  background: #15CF5A; }
 
 .Button--link {
   background: none;
   border: none; }
 
-.Button--list {
+.Button--categories {
   min-width: 180px;
   height: 30px;
   background-color: #FFC03C;
   border: none;
-  border-radius: 5px;
-  color: white;
-  font-size: 18px;
-  box-shadow: 0px 5px 13px -4px rgba(0, 0, 0, 0.3);
-  cursor: pointer; }
-
-.Button--success {
-  width: 150px;
-  height: 30px;
-  background-color: #15CF5A;
   border-radius: 5px;
   color: white;
   font-size: 18px;

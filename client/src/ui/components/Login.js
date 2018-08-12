@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { authorizeUser } from '../actions';
 import Modal from 'react-modal';
+import $ from 'jquery';
+import { authorizeUser } from '../actions';
 import Form from './_common/Form';
 import Input from './_common/Input';
 import Button from './_common/Button';
@@ -13,6 +14,7 @@ class Login extends React.Component {
     this.state = {
       isLoginView: true,
       isSignUpModalOpen: false,
+      username: '',
     };
   }
 
@@ -32,7 +34,7 @@ class Login extends React.Component {
 
   userSignUp() {
     const email = document.querySelector('[name="email"]').value;
-      const username = document.querySelector('[name="username"]').value;
+    const username = document.querySelector('[name="username"]').value;
     const password = document.querySelector('[name="password"]').value;
     const passwordConf = document.querySelector('[name="passwordConf"]').value;
     fetch('/api/register', {
@@ -49,9 +51,12 @@ class Login extends React.Component {
     }).then(res => res.json())
       .catch(error => console.log(error.reason))
       .then((response) => {
+        console.log(response)
         this.setState({
+          username: response.user,
+        }, () => this.setState({
           isSignUpModalOpen: true,
-        })
+        }))
       });
   };
 
@@ -79,30 +84,48 @@ class Login extends React.Component {
       });
   }
 
+
   switchView() {
     const { isLoginView } = this.state;
     if (isLoginView) {
-      document.querySelector('[name="emailLogin"]').value = '';
-      document.querySelector('[name="passwordLogin"]').value = '';
+      const form = $('#log-in-form');
+      form[0].reset();
     } else {
-      document.querySelector('[name="email"]').value = '';
-      document.querySelector('[name="password"]').value = '';
-      document.querySelector('[name="passwordConf"]').value = '';
+      const form = $('#sign-up-form');
+      form[0].reset();
     }
     this.setState({
       isLoginView: !isLoginView,
     });
   }
 
+  closeSignUpModal() {
+    this.switchView();
+    this.setState({
+      isSignUpModalOpen: false,
+    })
+  }
+
   renderSignUpModal() {
+    const { username } = this.state;
     return (
       <Modal
+        ariaHideApp={false}
         isOpen={this.state.isSignUpModalOpen}
-        onAfterOpen={this.switchView}
-        onRequestClose={this.closeModal}
-        contentLabel="Succesfull sign up!">
-        <h3>Welcome</h3>
+        onRequestClose={this.closeSignUpModal}
+        contentLabel="You have succesfully signed up!">
+        <div className ="Modal">
+        <div className="Modal--closeBar"></div>
+        <h3>
+          Welcome {username}
+        </h3>
         <p>Thanks for signing up for Talk Board. Log in to get started</p>
+        <Button
+          label="Log in"
+          theme="success"
+          onClick={() => this.closeSignUpModal()}
+          />
+      </div>
       </Modal>
     )
   }
@@ -172,6 +195,7 @@ class Login extends React.Component {
                   theme="link"
                 />
               </Form>)}
+              {this.renderSignUpModal()}
         </div>
       </div>);
   }

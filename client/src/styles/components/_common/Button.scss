@@ -17,7 +17,7 @@
 
 
 .Button--success {
-  background: rgba(76, 56, 112, 0.8);
+  background: $success-green;
 }
 
 .Button--link {
@@ -25,7 +25,7 @@
   border: none;
 }
 
-.Button--list {
+.Button--categories {
 min-width: 180px;
 height: 30px;
 background-color: $highlight-orange;
@@ -35,18 +35,6 @@ color: white;
 font-size: 18px;
 box-shadow: $box-shadow;
 cursor: pointer;
-}
-
-.Button--success {
-  width: 150px;
-  height: 30px;
-  background-color: $success-green;
-  border-radius: 5px;
-  color: white;
-  font-size: 18px;
-  box-shadow: $box-shadow;
-  cursor: pointer;
-
 }
 
 .Button--upload {
