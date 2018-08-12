@@ -15,6 +15,7 @@ const Button = ({
     'Button--success': theme === 'success',
     'Button--warning': theme === 'warning',
     'Button--link': theme === 'link',
+    'Button--open': theme === 'open',
     'Button--highlight': theme === 'highlight',
     'Button--medium': size === 'medium',
     'Button--small': size === 'small',

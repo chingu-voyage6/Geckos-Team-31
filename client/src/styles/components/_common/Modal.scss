@@ -5,9 +5,10 @@
 
 .ReactModal__Content {
   padding: 0 !important;
-  margin: 100px;
+  margin: 100px auto;
   color: $black;
   height: 450px;
+  max-width: 600px;
   z-index: 9999;
   a {
     color: $base-blue  ;
@@ -27,6 +28,9 @@
   .Select--input {
     width: 200px;
     height: 30px;
+  }
+  .Button {
+    margin: 0;
   }
 }
 

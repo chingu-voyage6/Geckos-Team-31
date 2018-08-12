@@ -18,31 +18,28 @@ const addNewUserImage = () => {
     .catch(error => console.log(error));
 };
 
-class ImageUpload extends React.Component {
-  render() {
-    return (
-      <div className="ImageUpload">
-        <Header
-          heading="Upload your own image"
-          size="large"
-        />
-        <Form id="upload-image-form">
-          <Input
-            label="Image Category"
-            name="imageCategory"
-            type="text"
-          />
-          <input type="hidden" role="uploadcare-uploader" name="newImageFile" />
-          <Button
-            label="Submit file"
-            onClick={() => addNewUserImage()}
-          />
-        </Form>
-
-      </div>
-    );
-  }
-}
+const ImageUpload = () => (
+  <div className="ImageUpload">
+    <Header
+      heading="Upload your own image"
+      size="large"
+    />
+    <Form id="upload-image-form">
+      <Input
+        label="Image Category"
+        name="imageCategory"
+        type="text"
+        className="Input--invert"
+      />
+      <input type="hidden" role="uploadcare-uploader" name="newImageFile" />
+      <Button
+        label="Submit file"
+        theme="success"
+        onClick={() => addNewUserImage()}
+      />
+    </Form>
+  </div>
+);
 
 ImageUpload.propTypes = {
 

@@ -16,6 +16,7 @@ import Header from '../_common/Header';
 import Form from '../_common/Form';
 import Input from '../_common/Input';
 import Button from '../_common/Button';
+import ImageUpload from './ImageUpload';
 
 const mapStateToProps = state => ({
   userId: state.userId,
@@ -28,11 +29,25 @@ class ImageGallery extends React.Component {
       isAddImageModalOpen: false,
       currentImage: '',
       isUpdateCategoryModalOpen: false,
+      isUploadImageModalOpen: false,
     };
     this.openImageModal = this.openImageModal.bind(this);
     this.closeImageModal = this.closeImageModal.bind(this);
+    this.closeUploadImageModal = this.closeUploadImageModal.bind(this);
     this.closeUpdateCategoryModal = this.closeUpdateCategoryModal.bind(this);
     this.removeImage = this.removeImage.bind(this);
+  }
+
+  openUploadImageModal() {
+    this.setState({
+      isUploadImageModalOpen: true,
+    });
+  }
+
+  closeUploadImageModal() {
+    this.setState({
+      isUploadImageModalOpen: false,
+    });
   }
 
   openUpdateCategoryModal() {
@@ -55,7 +70,6 @@ class ImageGallery extends React.Component {
   }
 
   closeImageModal() {
-    console.log('yo')
     this.setState({
       isAddImageModalOpen: false,
       currentImage: '',
@@ -76,7 +90,7 @@ class ImageGallery extends React.Component {
     const category = document.querySelector('[name="removeCategory"]').value;
     handleRemoveCategory({ category, userId })
       .then((response) => {
-        console.log(`Category ${response} removed`)
+        console.log(`Category ${response} removed`);
         dispatch(loadCategories({ userId }));
         this.closeUpdateCategoryModal();
       })
@@ -120,12 +134,12 @@ class ImageGallery extends React.Component {
         shouldCloseOnOverlayClick
         ariaHideApp={false}
       >
-      <div
-        className="ModalHeader"
-        onClick={() => this.closeImageModal()}
-      >
-      <i className="fa fa-times" />
-    </div>
+        <div
+          className="ModalHeader"
+          onClick={() => this.closeUpdateCategoryModal()}
+        >
+          <i className="fa fa-times" />
+        </div>
         <div
           className="UpdateCategoryModal"
         >
@@ -146,10 +160,10 @@ class ImageGallery extends React.Component {
             />
           </Form>
           <Form id="remove-category">
-            <p>
-              Remove category
-            </p>
-            <Select name="removeCategory">
+            <Select
+              name="removeCategory"
+              label="Remove category"
+            >
               {categories ? categories.map(category => (
                 <option value={category} key={category}>
                   {category}
@@ -167,6 +181,26 @@ class ImageGallery extends React.Component {
     );
   }
 
+  renderUploadImageModal() {
+    const { isUploadImageModalOpen } = this.state;
+    return (
+      <Modal
+        isOpen={isUploadImageModalOpen}
+        onRequestClose={this.closeUploadImageModal}
+        contentLabel="Add Image Details"
+        shouldCloseOnOverlayClick
+        ariaHideApp={false}
+      >
+        <div
+          className="ModalHeader"
+          onClick={() => this.closeUploadImageModal()}
+        >
+          <i className="fa fa-times" />
+        </div>
+        <ImageUpload />
+      </Modal>);
+  }
+
   renderAddImageModal() {
     const { isAddImageModalOpen, currentImage } = this.state;
     const { categories } = this.props;
@@ -182,8 +216,8 @@ class ImageGallery extends React.Component {
           className="ModalHeader"
           onClick={() => this.closeImageModal()}
         >
-        <i className="fa fa-times" />
-      </div>
+          <i className="fa fa-times" />
+        </div>
         <div className="AddImageForm">
           <GalleryImage
             key={currentImage}
@@ -232,15 +266,21 @@ class ImageGallery extends React.Component {
           heading="Add and remove category titles"
           size="small"
         />
-        <Button
-          label="Update Categories"
-          theme="success"
-          onClick={() => this.openUpdateCategoryModal()}
-        />
+        <div className="ButtonGroup">
+          <Button
+            label="Update categories"
+            theme="open"
+            onClick={() => this.openUpdateCategoryModal()}
+          />
+          <Button
+            label="Upload image"
+            theme="open"
+            onClick={() => this.openUploadImageModal()}
+          />
+        </div>
         <div className="ImageGallery--wrapper">
           <div className="ImageGallery--images">
             {gallery.map((image) => {
-              (_.contains(userGallery, image))
               return _.contains(userGallery, image) ? (
                 <GalleryImage
                   key={image}
@@ -255,7 +295,6 @@ class ImageGallery extends React.Component {
         <div className="ImageGallery--wrapper">
           <div className="ImageGallery--images">
             {gallery.map((image) => {
-              (_.contains(userGallery, image))
               return !_.contains(userGallery, image) ? (
                 <GalleryImage
                   key={image}
@@ -268,6 +307,7 @@ class ImageGallery extends React.Component {
         </div>
         {this.renderAddImageModal()}
         {this.renderUpdateCategoryModal()}
+        {this.renderUploadImageModal()}
       </div>
     );
   }

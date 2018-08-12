@@ -1,22 +1,23 @@
 .ImageGallery{
   width: 100%;
-  margin: 10px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex-wrap: wrap;
+
 }
 
 .ImageGallery--images{
-  width: 100%;
-  overflow-x: scroll;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
   box-shadow: $box-shadow;
-  margin: $base-margin auto;
-  background-color: $base-blue;
+  margin: $base-margin 10px;
+  background-color: #FFECC5;
+
 
   .ImageGallery--image {
     width: 100px;
