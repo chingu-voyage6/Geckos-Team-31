@@ -9,6 +9,10 @@ background-attachment: fixed;
 background-size: cover;
 color: $black;
 ///* background by SVGBackgrounds.com */
+.ReactModal__Content {
+  height: 200px;
+  width: 300px;
+}
 .Form {
   margin: 0 auto;
 

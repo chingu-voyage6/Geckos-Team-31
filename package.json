@@ -16,6 +16,7 @@
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "es6-promise": "^4.2.4",
+    "eslint": "^5.3.0",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "http-errors": "~1.6.2",

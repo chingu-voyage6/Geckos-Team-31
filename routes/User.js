@@ -43,7 +43,7 @@ router.post('/register', (req, res) => {
         }
         res.json({
           success: true,
-          user: user.username,
+          user,
         })
       })
     })
@@ -74,4 +74,4 @@ router.get('/auth', requireAuth, (req, res) => {
   })
 })
 
-module.exports = router
+module.exports = router;
