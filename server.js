@@ -12,7 +12,7 @@ const cors = require('cors');
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT3001
 const app = express();
 
 // Routes
@@ -57,7 +57,7 @@ app.use(function(req,res,next){
 
 // gets all images for gallery display
 
-const imagePath = path.resolve(path.resolve(__dirname, 'client/src/assets'), '/images');
+const imagePath = path.join(path.resolve(__dirname, 'client/src/assets'), '/images');
 
 app.use(express.static(imagePath))
 
