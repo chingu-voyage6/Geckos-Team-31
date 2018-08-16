@@ -11,17 +11,18 @@ const logger = require('morgan');
 const cors = require('cors');
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
-
+require('dotenv').config()
 const PORT = process.env.PORT || 3001
 const app = express();
 
 // Routes
 const userRoutes = require('./routes/User')
 
+const url = process.env.MONGOLAB_URI;
 // Database Setup
 mongoose.Promise = global.Promise;
 mongoose
-	.connect('mongodb://jamesvitaly:29hmtwubc08@ds123852.mlab.com:23852/pecs-app', { useNewUrlParser: true })
+	.connect(url, { useNewUrlParser: true })
 	.then(() => console.log(chalk.green('Connected to DB')))
   .catch(err => console.log(chalk.red(`Error connecting to DB. Error: ${err}`)));
 
