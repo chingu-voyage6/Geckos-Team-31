@@ -175,6 +175,11 @@ class ImageGallery extends React.Component {
               theme="warning"
               onClick={() => this.removeCategory()}
             />
+            <Button
+              label="Cancel"
+              theme="link"
+              onClick={() => this.closeUpdateCategoryModal()}
+            />
           </Form>
         </div>
       </Modal>
@@ -182,6 +187,7 @@ class ImageGallery extends React.Component {
   }
 
   renderUploadImageModal() {
+    const { userId } = this.props;
     const { isUploadImageModalOpen } = this.state;
     return (
       <Modal
@@ -197,7 +203,10 @@ class ImageGallery extends React.Component {
         >
           <i className="fa fa-times" />
         </div>
-        <ImageUpload />
+        <ImageUpload
+          userId={userId}
+          onClick={this.closeUploadImageModal}
+        />
       </Modal>);
   }
 
@@ -241,11 +250,13 @@ class ImageGallery extends React.Component {
               label="Add Image"
               onClick={() => this.addImage()}
               theme="success"
+              type="button"
             />
             <Button
               label="Cancel"
               onClick={() => this.closeImageModal()}
               theme="link"
+              type="button"
             />
           </Form>
         </div>
@@ -280,22 +291,26 @@ class ImageGallery extends React.Component {
         </div>
         <div className="ImageGallery--wrapper">
           <div className="ImageGallery--images">
-            {gallery.map((image) => {
-              return _.contains(userGallery, image) ? (
+            {userGallery.map((image) => {
+              const { userSubmitted } = image;
+              return (
                 <GalleryImage
                   key={image}
+                  userSubmitted={userSubmitted}
                   isOwnedByUser
                   image={image}
                   removeImage={this.removeImage}
                   openImageModal={this.openImageModal}
-                />) : null;
-            })}
+                />);
+            })
+              }
           </div>
         </div>
         <div className="ImageGallery--wrapper">
           <div className="ImageGallery--images">
             {gallery.map((image) => {
-              return !_.contains(userGallery, image) ? (
+              const notUserOwner = !_.contains(userGallery, image);
+              return notUserOwner ? (
                 <GalleryImage
                   key={image}
                   image={image}

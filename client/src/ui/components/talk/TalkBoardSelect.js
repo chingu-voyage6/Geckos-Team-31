@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImageCard from '../_common/ImageCard';
 import TalkBoardStory from './TalkBoardStory';
+import NoImages from './NoImages';
 
 class TalkBoardSelect extends React.Component {
   constructor() {
@@ -22,13 +23,13 @@ class TalkBoardSelect extends React.Component {
         <div
           className="TalkBoardSelect--Images"
         >
-          {categoryImages.map(image => (
+          {categoryImages.length > 0 ? categoryImages.map(image => (
             <ImageCard
               key={image}
               image={image}
               toggleBackgroundFade={toggleBackgroundFade}
               isStoryBoardItem={false}
-            />))}
+            />)) : <NoImages />}
         </div>
         <TalkBoardStory />
       </div>

@@ -66,6 +66,9 @@ a:active {
     padding: 2px;
     color: #1f2225; }
 
+.ModalBody {
+  margin: 20px; }
+
 .NavLink {
   margin: 20px; }
   .NavLink a {
@@ -88,7 +91,8 @@ a:active {
   padding: 3px 0px 3px 0px; }
 
 .Button--success {
-  background: #15CF5A; }
+  background: #15CF5A;
+  color: white; }
 
 .Button--warning {
   background: #FFC03C;
@@ -100,6 +104,7 @@ a:active {
   color: white; }
 
 .Button--link {
+  margin-top: 10px !important;
   background: none;
   border: none; }
 
@@ -283,6 +288,9 @@ select {
   background-attachment: fixed;
   background-size: cover;
   color: #1f2225; }
+  .Login .ReactModal__Content {
+    height: 200px;
+    width: 300px; }
   .Login .Form {
     margin: 0 auto; }
   .Login h1 {

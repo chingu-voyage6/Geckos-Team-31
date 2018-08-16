@@ -19,6 +19,7 @@
 
 .Button--success {
   background: $success-green;
+  color: white;
 }
 
 .Button--warning {
@@ -33,6 +34,7 @@
 
 
 .Button--link {
+  margin-top: 10px !important;
   background: none;
   border: none;
 }

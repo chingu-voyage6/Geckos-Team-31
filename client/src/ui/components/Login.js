@@ -8,6 +8,13 @@ import Form from './_common/Form';
 import Input from './_common/Input';
 import Button from './_common/Button';
 
+const customModalStyles = {
+  content: {
+    height: '300px',
+    width: '400px',
+  },
+};
+
 class Login extends React.Component {
   constructor() {
     super();
@@ -15,6 +22,7 @@ class Login extends React.Component {
       isLoginView: true,
       isSignUpModalOpen: false,
       username: '',
+      email: '',
     };
   }
 
@@ -50,12 +58,12 @@ class Login extends React.Component {
     }).then(res => res.json())
       .catch(error => console.log(error.reason))
       .then((response) => {
-        console.log(response)
         this.setState({
-          username: response.user,
+          username: response.user.username,
+          email: response.user.email,
         }, () => this.setState({
           isSignUpModalOpen: true,
-        }))
+        }));
       });
   };
 
@@ -102,7 +110,7 @@ class Login extends React.Component {
     this.switchView();
     this.setState({
       isSignUpModalOpen: false,
-    })
+    });
   }
 
   renderSignUpModal() {
@@ -113,14 +121,15 @@ class Login extends React.Component {
         isOpen={isSignUpModalOpen}
         onRequestClose={this.closeSignUpModal}
         contentLabel="You have succesfully signed up!"
+        style={customModalStyles}
       >
-        <div className="Modal">
-          <div className="Modal--closeBar" />
+        <div className="Modal--closeBar" />
+        <div className="ModalBody">
           <h3>
           Welcome {username}
           </h3>
           <p>
-            Thanks for signing up for Talk Board. Log in to get started
+          Thanks for signing up for Talk Board. Log in to get started
           </p>
           <Button
             label="Log in"
@@ -132,8 +141,9 @@ class Login extends React.Component {
     )
   }
 
+
   render() {
-    const { isLoginView } = this.state;
+    const { isLoginView, email } = this.state;
     return (
       <div className="Login">
         <div className="Login--form">
@@ -147,6 +157,7 @@ class Login extends React.Component {
                   label="Email address"
                   name="email"
                   type="text"
+                  defaultValue={email || null}
                 />
                 <Input
                   label="Username"
