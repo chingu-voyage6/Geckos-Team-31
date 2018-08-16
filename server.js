@@ -54,7 +54,9 @@ app.use(function(req,res,next){
 });
 
 
-
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/public/index.html'));
+});
 
 // gets all images for gallery display
 
