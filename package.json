@@ -1,5 +1,5 @@
 {
-  "name": "PECS App",
+  "name": "pecs-App",
   "description": "Communication app for the verbally impaired",
   "author": "James Vitaly Harding",
   "version": "1.0.0",
@@ -26,7 +26,6 @@
     "express-session": "^1.15.6",
     "http-errors": "~1.6.2",
     "isomorphic-fetch": "^2.2.1",
-    "jade": "~1.11.0",
     "jwt-simple": "^0.5.1",
     "loader": "^2.1.1",
     "mongodb": "^3.1.3",

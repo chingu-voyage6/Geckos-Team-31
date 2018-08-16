@@ -57,7 +57,7 @@ app.use(function(req,res,next){
 
 // gets all images for gallery display
 
-const imagePath = path.join(path.resolve(__dirname, 'client/src/assets'), '/images');
+const imagePath = path.resolve(path.resolve(__dirname, 'client/src/assets'), '/images');
 
 app.use(express.static(imagePath))
 
