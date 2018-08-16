@@ -77,29 +77,38 @@ class TalkBoardView extends React.Component {
         onRequestClose={this.closeWelcomeModal}
         ariaHideApp={false}
       >
-        <h3>
-          Welcome to Talk Board
-        </h3>
-        <h4>
-          The app which aims to make communication simple
-        </h4>
-        <p>
-          We have added an example category and a few images to get you started
-        </p>
-        <p>
-          To add more head over to Add Images and you can browse our collection or
-          upload your download
-          To start using a new image you will need to add your categories and
-          assign your images to the appropriate one.
-        </p>
-        <br />
-        <p>
-          Thanks for using Talk Board, let me know if you have any questions or difficulties
-        </p>
-        <Button
-          label="Continue"
-          onClick={() => this.closeWelcomeModal()}
-        />
+      <div
+        className="ModalHeader"
+        onClick={() => this.closeWelcomeModal()}
+      >
+        <i className="fa fa-times" />
+      </div>
+        <div className="WelcomeModal">
+          <h3>
+            Welcome to Talk Board
+          </h3>
+          <h4>
+            The app which aims to make communication simple
+          </h4>
+          <p>
+            We have added an example category and a few images to get you started
+          </p>
+          <p>
+            To add more head over to Add Images and you can browse our collection or
+            upload your download
+            To start using a new image you will need to add your categories and
+            assign your images to the appropriate one.
+          </p>
+          <br />
+          <p>
+            Thanks for using Talk Board, let me know if you have any questions or difficulties
+          </p>
+          <Button
+            label="Continue"
+            theme="success"
+            onClick={() => this.closeWelcomeModal()}
+          />
+      </div>
       </Modal>
     );
   }
