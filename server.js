@@ -12,7 +12,7 @@ const cors = require('cors');
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
 
-const PORT = process.env.PORT3001
+const PORT = process.env.PORT || 3001
 const app = express();
 
 // Routes
