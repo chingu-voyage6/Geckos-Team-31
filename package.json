@@ -9,7 +9,7 @@
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "engines": {
-    "node": "4.1.1"
+    "node": "8.11.3"
   },
   "dependencies": {
     "axios": "^0.18.0",
