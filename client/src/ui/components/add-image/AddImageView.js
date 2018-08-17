@@ -1,9 +1,9 @@
 import React from 'react';
 import NavBar from '../_common/NavBar';
 import ImageGalleryContainer from '../../containers/add-image/ImageGalleryContainer';
-import ImageUpload from './ImageUpload';
 
 const AddImageView = props => (
+  // eslint-disable-next-line
   <div className="AddImageView--wrapper">
     <NavBar {...props} />
     <div className="AddImageView">

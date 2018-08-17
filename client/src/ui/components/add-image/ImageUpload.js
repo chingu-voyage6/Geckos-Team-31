@@ -22,6 +22,7 @@ class ImageUpload extends React.Component {
   render() {
     const { closeImageUploadModal } = this.props;
     return (
+      // eslint-disable-next-line
       <div className="ImageUpload">
         <Header
           heading="Upload your own image"

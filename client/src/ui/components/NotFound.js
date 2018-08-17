@@ -3,6 +3,7 @@ import Header from './_common/Header';
 
 
 const NotFound = () => (
+  // eslint-disable-next-line
   <div className="NotFound">
     <Header
       size="large"
