@@ -12,7 +12,6 @@ const cors = require('cors');
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
 require('dotenv').config()
-const PORT = process.env.PORT || 3001
 const app = express();
 
 // Routes
@@ -33,6 +32,10 @@ app.use(bodyParser.json())
 app.use('/api', userRoutes)
 
 // Start Server
+
+const PORT = process.env.PORT || 5000;
+
+
 app.listen(PORT, () => {
   console.log(chalk.green(`Server running on Port:${PORT}`))
 })

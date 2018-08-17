@@ -1,1 +1,1 @@
-bot: npm run dev
+web: node server.js
