@@ -4,9 +4,10 @@
   "author": "James Vitaly Harding",
   "version": "1.0.0",
   "scripts": {
+    "start": "node server.js && cd client && npm run start",
     "client": "cd client && npm run start",
     "server": "nodemon server.js",
-    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "engines": {
     "node": "8.11.3"
