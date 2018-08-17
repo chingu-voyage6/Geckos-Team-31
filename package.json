@@ -1,17 +1,15 @@
 {
-  "name": "pecs-App",
+  "name": "PECS App",
   "description": "Communication app for the verbally impaired",
   "author": "James Vitaly Harding",
   "version": "1.0.0",
   "scripts": {
-    "start": "node index.js",
-    "heroku-postbuild": "cd client && npm run start",
     "client": "cd client && npm run start",
-    "server": "nodemon index.js",
+    "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "engines": {
-    "node": "8.11.3"
+    "node": "4.1.1"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -22,13 +20,13 @@
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
     "debug": "~2.6.9",
-    "dotenv": "^6.0.0",
     "es6-promise": "^4.2.4",
     "eslint": "^5.3.0",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "http-errors": "~1.6.2",
     "isomorphic-fetch": "^2.2.1",
+    "jade": "~1.11.0",
     "jwt-simple": "^0.5.1",
     "loader": "^2.1.1",
     "mongodb": "^3.1.3",
@@ -36,35 +34,20 @@
     "monk": "^6.0.5",
     "morgan": "~1.9.0",
     "node-pre-gyp": "^0.11.0",
+    "node-sass": "^4.9.3",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "react-modal": "^3.5.1",
     "serve-index": "^1.9.1",
     "serve-static": "^1.13.2",
-    "underscore": "^1.9.1",
-    "hammerjs": "^2.0.8",
-    "jquery": "^3.3.1",
-    "list-react-files": "^0.2.0",
-    "node-sass-chokidar": "^1.3.3",
-    "npm-run-all": "^4.1.3",
-    "prop-types": "^15.6.2",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-loading-components": "^1.1.12",
-    "react-redux": "^5.0.7",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4",
-    "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0",
-    "uploadcare": "^0.4.5"
+    "underscore": "^1.9.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-import": "^1.8.0",
     "concurrently": "^3.6.1",
     "kexec": "^3.0.0",
-    "node-sass": "^4.9.3",
     "nodemon": "^1.18.3"
   }
 }
