@@ -4,11 +4,9 @@
   "author": "James Vitaly Harding",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run start",
-    "client": "cd client && npm run start",
+    "client": "cd client && npm install --only=dev && npm install --only=dev && npm run start",
     "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "engines": {
     "node": "8.11.3"
