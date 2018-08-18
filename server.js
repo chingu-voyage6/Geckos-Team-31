@@ -249,8 +249,8 @@ app.post('/api/update-first-login', (req, res) => {
 	});
 })
 
-app.use('/static', express.static(path.join(__dirname, '/index.html')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/public/index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/client/public/index.html'));
+// });
