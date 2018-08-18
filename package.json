@@ -4,8 +4,8 @@
   "author": "James Vitaly Harding",
   "version": "1.0.0",
   "scripts": {
-    "client": "cd client && npm install --only=dev && npm install --only=dev && npm run start",
-    "server": "nodemon server.js",
+    "client": "cd client && npm install --only=dev && npm run start",
+    "server": "server.js",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "engines": {
