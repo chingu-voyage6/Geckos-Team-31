@@ -24,6 +24,9 @@
     "underscore": "^1.9.1",
     "uploadcare": "^0.4.5"
   },
+  "engines": {
+    "node": "8.11.3"
+  },
   "scripts": {
     "start-js": "react-scripts start",
     "start": "npm-run-all -p start-js",
