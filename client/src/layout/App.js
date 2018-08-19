@@ -3,9 +3,8 @@ import Loading from 'react-loading-components';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { createBrowserHistory } from 'history';
 import {
-  BrowserRouter as Router, Route, Redirect, Switch, hashRouter,
+  BrowserRouter as Router, Route, Redirect, Switch,
 } from 'react-router-dom';
 import Login from '../ui/components/Login';
 import TalkBoardMain from '../ui/components/talk/TalkBoardMain';
@@ -126,14 +125,14 @@ class App extends React.Component {
     const { auth } = this.state;
     return (
       <Provider store={store}>
-        <hashRouter>
+        <Router>
           <Switch>
             <Route exact path="/" render={props => <Login {...props} />} />
             <PrivateRoute exact path="/talk" component={TalkBoardMain} auth={auth} />
             <PrivateRoute exact path="/add-images" component={AddImageView} auth={auth} />
             <Route exact path="/*" component={NotFound} />
           </Switch>
-        </hashRouter>
+        </Router>
       </Provider>
     );
   }
