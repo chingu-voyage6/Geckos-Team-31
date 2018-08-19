@@ -33,7 +33,7 @@ app.use('/api', userRoutes)
 
 // Start Server
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
 
 app.listen(PORT, () => {
@@ -251,6 +251,10 @@ app.post('/api/update-first-login', (req, res) => {
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/client/public/index.html'));
-// });
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'client/public/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
