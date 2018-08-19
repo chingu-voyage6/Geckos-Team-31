@@ -35,6 +35,15 @@ app.use('/api', userRoutes)
 
 const PORT = process.env.PORT || 3001;
 
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
 app.listen(PORT, () => {
   console.log(chalk.green(`Server running on Port:${PORT}`))
@@ -247,14 +256,4 @@ app.post('/api/update-first-login', (req, res) => {
 			res.json(doc)
 		}
 	});
-})
-
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'client/public/index.html'), function(err) {
-    if (err) {
-      res.status(500).send(err)
-    }
-  })
 })
