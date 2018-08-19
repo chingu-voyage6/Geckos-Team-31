@@ -3,6 +3,7 @@ import Loading from 'react-loading-components';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import { createBrowserHistory } from 'history';
 import {
   BrowserRouter as Router, Route, Redirect, Switch,
 } from 'react-router-dom';
@@ -125,7 +126,7 @@ class App extends React.Component {
     const { auth } = this.state;
     return (
       <Provider store={store}>
-        <Router>
+        <Router history={createBrowserHistory}>
           <Switch>
             <Route exact path="/" render={props => <Login {...props} />} />
             <PrivateRoute exact path="/talk" component={TalkBoardMain} auth={auth} />
