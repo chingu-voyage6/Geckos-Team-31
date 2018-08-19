@@ -128,8 +128,8 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route exact path="/" render={props => <Login {...props} />} />
-            <PrivateRoute path="/talk" component={TalkBoardMain} auth={auth} />
-            <PrivateRoute path="/add-images" component={AddImageView} auth={auth} />
+            <PrivateRoute exact path="/talk" component={TalkBoardMain} auth={auth} />
+            <PrivateRoute exact path="/add-images" component={AddImageView} auth={auth} />
             <Route exact path="/*" component={NotFound} />
           </Switch>
         </Router>
