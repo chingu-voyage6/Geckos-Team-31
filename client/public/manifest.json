@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Talk ",
+  "name": "Talk - A picture based communications app",
   "icons": [
     {
       "src": "favicon.ico",
