@@ -249,7 +249,7 @@ app.post('/api/update-first-login', (req, res) => {
 	});
 })
 
-app.use(express.static(path.join(__dirname, 'client/public')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get('*', function (request, response){
   response.sendFile(path.resolve(__dirname, 'client/public', 'index.html'))
