@@ -2,7 +2,7 @@
   "name": "pecs-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "pecs-app-jvh.herokuapp.com/",
+  "homepage": "https://pecs-app-jvh.herokuapp.com/",
   "engines": {
     "node": "8.11.3",
     "npm": "5.6.0"
