@@ -36,10 +36,6 @@ app.use('/api', userRoutes)
 const PORT = process.env.PORT || 3001;
 
 
-app.listen(PORT, () => {
-  console.log(chalk.green(`Server running on Port:${PORT}`))
-})
-
 var db = mongoose.connection;
 
 //handle mongo error
@@ -254,7 +250,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 
 app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'client/public/index.html'), function(err) {
+  res.sendFile(path.join(__dirname, './client/public/index.html'), function(err) {
     if (err) {
       res.status(500).send(err)
     }
