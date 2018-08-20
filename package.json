@@ -3,7 +3,6 @@
   "description": "Communication app for the verbally impaired",
   "author": "James Vitaly Harding",
   "version": "1.0.0",
-  "homepage": "./client/public/index.html",
   "scripts": {
     "start": "node server.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
