@@ -35,6 +35,9 @@ app.use('/api', userRoutes)
 
 const PORT = process.env.PORT || 3001;
 
+app.listen(PORT, () => {
+  console.log(chalk.green(`Server running on Port:${PORT}`))
+})
 
 var db = mongoose.connection;
 
@@ -245,7 +248,7 @@ app.post('/api/update-first-login', (req, res) => {
 	});
 })
 
-app.use(express.static(path.join(__dirname, './client/build')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 
 
