@@ -250,12 +250,6 @@ app.post('/api/update-first-login', (req, res) => {
 
 app.use(express.static(path.join(__dirname, './client/build')));
 
-
-
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, './client'), function(err) {
-    if (err) {
-      res.status(500).send(err)
-    }
-  })
-})
+app.get('/*', function (req, res) {
+   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+ });
