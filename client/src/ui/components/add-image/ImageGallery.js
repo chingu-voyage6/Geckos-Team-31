@@ -205,7 +205,7 @@ class ImageGallery extends React.Component {
         </div>
         <ImageUpload
           userId={userId}
-          onClick={this.closeUploadImageModal}
+          closeUploadImageModal={this.closeUploadImageModal}
         />
       </Modal>);
   }

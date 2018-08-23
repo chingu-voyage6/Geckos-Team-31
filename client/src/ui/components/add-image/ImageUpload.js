@@ -1,26 +1,31 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from '../_common/Form';
 import Input from '../_common/Input';
 import Button from '../_common/Button';
 import Header from '../_common/Header';
 import handleAddImage from '../../../modules/handle-add-image';
+import { loadUserGallery } from '../../actions';
 
 class ImageUpload extends React.Component {
   addNewUserImage() {
-    const { userId } = this.props;
+    const { userId, closeUploadImageModal, dispatch } = this.props;
     const file = document.querySelector('[name="newImageFile"]').value;
     const category = document.querySelector('[name="imageCategory"]').value;
     const userSubmitted = true;
     handleAddImage({
       image: file, category, userId, userSubmitted,
     })
-      .then(response => console.log(response))
+      .then(() => {
+        dispatch(loadUserGallery({ userId }));
+        closeUploadImageModal();
+      })
       .catch(error => console.log(error));
   }
 
   render() {
-    const { closeImageUploadModal } = this.props;
+    const { closeUploadImageModal } = this.props;
     return (
       // eslint-disable-next-line
       <div className="ImageUpload">
@@ -44,7 +49,7 @@ class ImageUpload extends React.Component {
           />
           <Button
             label="Cancel"
-            onClick={() => closeImageUploadModal()}
+            onClick={() => closeUploadImageModal()}
             theme="link"
             type="button"
           />
@@ -56,12 +61,14 @@ class ImageUpload extends React.Component {
 
 ImageUpload.propTypes = {
   userId: PropTypes.string,
-  closeImageUploadModal: PropTypes.func,
+  closeUploadImageModal: PropTypes.func,
+  dispatch: PropTypes.func,
 };
 
 ImageUpload.defaultProps = {
   userId: undefined,
-  closeImageUploadModal: undefined,
+  closeUploadImageModal: undefined,
+  dispatch: undefined,
 };
 
-export default ImageUpload;
+export default connect()(ImageUpload);
