@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from '../_common/Form';
-import Input from '../_common/Input';
+import Select from '../_common/Select';
 import Button from '../_common/Button';
 import Header from '../_common/Header';
 import handleAddImage from '../../../modules/handle-add-image';
@@ -25,7 +25,7 @@ class ImageUpload extends React.Component {
   }
 
   render() {
-    const { closeUploadImageModal } = this.props;
+    const { closeUploadImageModal, categories } = this.props;
     return (
       // eslint-disable-next-line
       <div className="ImageUpload">
@@ -34,12 +34,16 @@ class ImageUpload extends React.Component {
           size="large"
         />
         <Form id="upload-image-form">
-          <Input
-            label="Image Category"
+          <Select
             name="imageCategory"
-            type="text"
-            className="Input--invert"
-          />
+            label="Remove category"
+          >
+            {categories ? categories.map(category => (
+              <option value={category} key={category}>
+                {category}
+              </option>
+            )) : null}
+          </Select>
           {/* eslint-disable-next-line */ }
           <input type="hidden" role="uploadcare-uploader" name="newImageFile" />
           <Button
@@ -63,12 +67,14 @@ ImageUpload.propTypes = {
   userId: PropTypes.string,
   closeUploadImageModal: PropTypes.func,
   dispatch: PropTypes.func,
+  categories: PropTypes.arrayOf(PropTypes.string),
 };
 
 ImageUpload.defaultProps = {
   userId: undefined,
   closeUploadImageModal: undefined,
   dispatch: undefined,
+  categories: undefined,
 };
 
 export default connect()(ImageUpload);

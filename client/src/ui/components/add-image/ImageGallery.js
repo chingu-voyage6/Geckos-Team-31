@@ -127,6 +127,7 @@ class ImageGallery extends React.Component {
     const { isUpdateCategoryModalOpen } = this.state;
     const { categories } = this.props;
     return (
+      /* eslint-disable */
       <Modal
         isOpen={isUpdateCategoryModalOpen}
         onRequestClose={this.closeUpdateCategoryModal}
@@ -187,7 +188,7 @@ class ImageGallery extends React.Component {
   }
 
   renderUploadImageModal() {
-    const { userId } = this.props;
+    const { userId, categories } = this.props;
     const { isUploadImageModalOpen } = this.state;
     return (
       <Modal
@@ -206,6 +207,7 @@ class ImageGallery extends React.Component {
         <ImageUpload
           userId={userId}
           closeUploadImageModal={this.closeUploadImageModal}
+          categories={categories}
         />
       </Modal>);
   }
